@@ -1,0 +1,15 @@
+# 个人/工具记忆，禁止公开
+.workbuddy/
+
+# macOS 系统文件
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 编辑器/IDE
+.idea/
+.vscode/
+*.swp
+
+# 依赖（本项目为纯静态站，暂不需要）
+node_modules/
