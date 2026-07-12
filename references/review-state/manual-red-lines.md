@@ -46,3 +46,11 @@
 - **层级不倒置**：栏目标题可更大，但正文不得为追求版面缩到手机阅读级小字；标签/导航/图注等次要文字可略小，但投影下仍须可辨（建议 ≥ 1rem）。
 - **对比与遮挡**：正文与背景须保持足够对比度；不得用大面积动画、低对比或装饰遮字。
 - **双宽目检**：新增/修改课件后，须分别在 1920×1080 一体机宽与 390px 手机宽目检文字清晰度；不清晰判不合格。
+
+## 七、发布前账号校验红线（防“网页切了但实际没切”）
+
+> 本次发布实战踩坑：教师在 GitHub **网页**切到 `jzharlan18-web`，但本机 `gh` 命令行的活跃账号仍是 `jerfasadinhu-ux`，导致 `git push` 被 403 拒绝。根因——**网页登录态（cookie）与 gh CLI 的 token 是两套独立认证，互不互通**。以下为防回归硬约束。
+
+- **发布前必须 `gh auth status` 核实真实活跃账号**：收到「审核通过并发布」后、实际 `git push` 前，先运行 `gh auth status`，确认输出的 `Active account` 是具备本仓库写权限的账号（`jzharlan18-web`，token 含 `repo` scope 且为仓库 owner/协作者）。**不得仅凭教师口头“账号切好了”就推送**——须以命令输出为准。
+- **账号切换只能走终端，网页切换无效**：若活跃账号不对或无写权限，须在本机终端执行 `gh auth login`（选 GitHub.com → HTTPS → Login with a web browser，浏览器授权时若恰是目标账号登录态则直接拿到其 token），登录后再 `gh auth switch --user <账号>` 切到目标账号；在 github.com 网页上切换登录**不会改变** gh CLI 的推送身份。
+- **403 / Permission denied 立即停**：`git push` 返回 `remote: Permission to ... denied` 或 403 时，按凭据红线停止，不重试、不强制推送；本地提交保留，报告根因并给出重推指引（待教师用有权限账号授权后，普通 `git push origin main` 即可，无需重做课件）。
