@@ -1,0 +1,557 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>中国人民站起来了 - 第一单元 - 高二语文</title>
+  <link rel="stylesheet" href="../../../../assets/css/style.css">
+  <style>
+    /* 本课专用样式：与站点 style.css 同色系，不另起系统 */
+    /* 投屏可读：正文按“替代 PPT、60 人教室最后排可见”放大 */
+    body { font-size: clamp(1.45rem, 3vw, 2rem); line-height: 1.8; }
+    .lesson-hero {
+      padding: 30px 0 14px;
+    }
+    .lesson-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0 6px;
+    }
+    .lesson-meta .chip {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 1rem;
+      background: var(--panel);
+      color: var(--muted);
+    }
+    .lesson-goal {
+      border-left: 4px solid var(--teal);
+      background: rgba(47, 111, 115, 0.07);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 14px 0 4px;
+    }
+    .lesson-goal strong { color: var(--teal); }
+
+    /* 环节进度导航：吸顶，触摸可横向滚动 */
+    .phase-nav {
+      position: sticky;
+      top: 64px;
+      z-index: 9;
+      background: rgba(251, 250, 246, 0.96);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      margin: 8px 0 4px;
+    }
+    .phase-nav ul {
+      width: min(1120px, calc(100% - var(--mobile-gutter) * 2));
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 0;
+      list-style: none;
+    }
+    .phase-nav a {
+      flex: 0 0 auto;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      font-size: 1.1rem;
+      white-space: nowrap;
+    }
+    .phase-nav a .num {
+      display: inline-flex;
+      width: 22px; height: 22px;
+      align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--soft);
+      color: var(--warm);
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .phase-nav a.active {
+      border-color: var(--ink);
+      background: var(--ink);
+      color: #fff;
+    }
+    .phase-nav a.active .num { background: var(--gold); color: var(--ink); }
+
+    .phase {
+      padding: 30px 0 10px;
+      border-top: 1px dashed var(--line);
+      scroll-margin-top: 130px;
+    }
+    .phase:first-of-type { border-top: none; }
+    .phase h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .phase h2 .step {
+      display: inline-flex;
+      width: 34px; height: 34px;
+      align-items: center; justify-content: center;
+      border-radius: 50%;
+      background: var(--warm);
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      flex: 0 0 auto;
+    }
+    .phase h3 { color: var(--warm); margin-top: 18px; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; }
+
+    /* 图片占位：教师放入 assets/images/kaidian-dadian.jpg 后自动显示 */
+    .img-slot {
+      margin: 16px 0;
+      border: 2px dashed var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--soft);
+    }
+    .img-slot img { display: block; width: 100%; height: auto; }
+    .img-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      min-height: 200px;
+      padding: 24px;
+      text-align: center;
+      color: var(--muted);
+    }
+    .img-placeholder .ph-icon { font-size: 2rem; }
+    .img-placeholder code {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 2px 8px;
+      font-size: 1rem;
+    }
+
+    /* 原文引用块：大字号，与讲解视觉区分 */
+    .quote {
+      border-left: 5px solid var(--gold);
+      background: linear-gradient(0deg, rgba(215,164,65,0.06), rgba(215,164,65,0.06)), var(--panel);
+      padding: 18px 20px;
+      margin: 14px 0;
+      border-radius: 0 10px 10px 0;
+      font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+      line-height: 1.85;
+      font-family: "Songti SC", "Noto Serif SC", "STSong", serif;
+      letter-spacing: 0.02em;
+    }
+    .quote .src {
+      display: block;
+      margin-top: 10px;
+      font-family: "Microsoft YaHei", "Noto Sans SC", sans-serif;
+      font-size: 1rem;
+      color: var(--muted);
+      letter-spacing: 0;
+    }
+    mark.kw {
+      background: rgba(143, 63, 42, 0.16);
+      color: var(--warm);
+      padding: 0 3px;
+      border-radius: 4px;
+      font-weight: 700;
+    }
+
+    /* 揭示按钮 + 面板 */
+    .reveal-btn {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: 1px solid var(--ink);
+      border-radius: 8px;
+      background: var(--ink);
+      color: #fff;
+      padding: 10px 18px;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      margin: 6px 0 14px;
+    }
+    .reveal-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+    .reveal-btn:focus-visible { outline: 3px solid rgba(215,164,65,0.72); outline-offset: 3px; }
+    .reveal-btn .caret { transition: transform 0.2s ease; }
+    .reveal-btn[aria-expanded="true"] .caret { transform: rotate(90deg); }
+    .reveal {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      padding: 16px 18px;
+      margin: 0 0 18px;
+    }
+    .reveal[hidden] { display: none; }
+
+    /* 结构卡片 */
+    .struct-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin: 14px 0;
+    }
+    .struct-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--panel);
+      padding: 16px;
+    }
+    .struct-card .head {
+      display: flex;
+      align-items: baseline;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .struct-card .head .badge {
+      background: var(--teal);
+      color: #fff;
+      border-radius: 6px;
+      padding: 2px 10px;
+      font-weight: 800;
+      font-size: 0.9rem;
+    }
+    .struct-card .head .range { color: var(--muted); font-size: 1.1rem; }
+    .struct-card .axis {
+      display: inline-block;
+      margin-top: 8px;
+      color: var(--warm);
+      font-weight: 700;
+      font-size: 1.1rem;
+    }
+
+    /* 内涵三层 */
+    .layer {
+      border: 1px solid var(--line);
+      border-left: 5px solid var(--teal);
+      border-radius: 10px;
+      background: var(--panel);
+      padding: 14px 16px;
+      margin: 12px 0;
+    }
+    .layer h3 { margin: 0 0 6px; color: var(--teal); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; }
+    .layer .basis { color: var(--muted); font-size: 1.1rem; }
+
+    /* 板书 */
+    .board {
+      border: 1px solid var(--ink);
+      border-radius: 12px;
+      background: #fff;
+      padding: 20px 22px;
+      margin: 22px 0 10px;
+      box-shadow: var(--shadow);
+    }
+    .board h3 { color: var(--ink); margin: 0 0 10px; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 700; }
+    .board pre {
+      margin: 0;
+      font-family: "Songti SC", "STSong", serif;
+      font-size: clamp(1.6rem, 3.2vw, 2.3rem);
+      line-height: 1.9;
+      white-space: pre-wrap;
+      color: var(--ink);
+    }
+    .task-note {
+      border-left: 4px solid var(--gold);
+      background: rgba(215,164,65,0.1);
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin: 14px 0;
+    }
+    .photo-figure {
+      margin: 18px 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+    .photo-figure img {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    .photo-figure figcaption {
+      padding: 10px 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 1rem;
+      background: rgba(47, 111, 115, 0.06);
+    }
+    @media (min-width: 821px) {
+      .struct-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav" aria-label="主导航">
+      <a class="brand" href="../../../../index.html">
+        <img src="../../../../assets/images/site-mark.svg" alt="语文教学资源库">
+        <span>语文教学资源库</span>
+      </a>
+      <div class="nav-links">
+        <a href="../../../../index.html">首页</a>
+        <a href="../../../index.html">教材课文</a>
+        <a href="../../../../gaoer/writing/index.html">作文教学</a>
+        <a href="../../../../gaoer/exam-review/index.html">试卷讲评</a>
+        <a href="../../../../gaoer/thematic-study/index.html">专题训练</a>
+        <a href="../../../../gaoer/ai-tools/index.html">AI 工具</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="page-title lesson-hero">
+      <p class="crumb">
+        <a href="../../../../index.html">首页</a> /
+        <a href="../../../../gaoer/index.html">高二语文</a> /
+        <a href="../../../index.html">教材课文</a> /
+        <a href="../index.html">第一单元</a> /
+        本课
+      </p>
+      <h1>中国人民站起来了</h1>
+      <p class="lead">毛泽东 · 开幕词 —— 10 分钟微课演示课件</p>
+      <div class="lesson-meta">
+        <span class="chip">适用：统编版选择性必修上册</span>
+        <span class="chip">课时：10 分钟微课</span>
+        <span class="chip">类型：新课教学 · 课文细读</span>
+      </div>
+      <div class="lesson-goal">
+        <strong>教学目标：</strong>理解“中国人民站起来了”的深刻含义，感受语言的情感力量。
+      </div>
+    </section>
+
+    <nav class="phase-nav" aria-label="教学环节">
+      <ul>
+        <li><a href="#p1"><span class="num">1</span>导入</a></li>
+        <li><a href="#p2"><span class="num">2</span>背景速览</a></li>
+        <li><a href="#p3"><span class="num">3</span>梳理思路</a></li>
+        <li><a href="#p4"><span class="num">4</span>品读关键语句</a></li>
+        <li><a href="#p5"><span class="num">5</span>理解内涵</a></li>
+        <li><a href="#p6"><span class="num">6</span>课堂小结</a></li>
+      </ul>
+    </nav>
+
+    <!-- ① 导入 -->
+    <section class="phase" id="p1">
+      <h2><span class="step">1</span>课题导入（约 1 分钟）</h2>
+      <p>1949 年 10 月 1 日，毛泽东主席在天安门城楼上庄严宣告“中华人民共和国中央人民政府今天成立了”，30 万军民热血沸腾，全中国为之欢腾。而在开国大典前 10 天——1949 年 9 月 21 日，毛泽东在全国政协第一届全体会议上发表了这篇著名的开幕词，题目就是《中国人民站起来了》。</p>
+      <figure class="img-slot">
+        <img src="assets/images/kaidian-dadian.jpg" alt="1949 年开国大典影像"
+             onerror="this.style.display='none';this.parentNode.querySelector('.img-placeholder').style.display='flex';">
+        <div class="img-placeholder" style="display:none;">
+          <span class="ph-icon" aria-hidden="true">🖼️</span>
+          <span>此处展示 1949 年开国大典影像 / 图片</span>
+          <span>教师请将图片命名为 <code>kaidian-dadian.jpg</code> 放入本课 <code>assets/images/</code> 后自动显示</span>
+        </div>
+      </figure>
+      <p>请大家齐读课题，读出宣告的气势：<strong>“中国人民站起来了！”</strong></p>
+    </section>
+
+    <!-- ② 背景速览 -->
+    <section class="phase" id="p2">
+      <h2><span class="step">2</span>背景速览（约 1 分钟）</h2>
+      <p>本文写于 1949 年 9 月 21 日，当时解放战争已取得基本胜利，新中国成立在即。这次会议的目的，就是筹备建立新中国、制定大政方针。</p>
+      <p>两个关键信息：</p>
+      <ul>
+        <li><strong>这是一篇开幕词</strong>——重要会议开始时领导人的讲话，特点是语言有感染力、结构有逻辑性。</li>
+        <li><strong>题目是后来加上的</strong>——原题《中国人民政协第一届会议上毛主席开幕词》。现题“中国人民站起来了”更有画面感与冲击力。</li>
+      </ul>
+      <button class="reveal-btn" type="button" aria-expanded="false" aria-controls="r-title" data-reveal="r-title">
+        <span class="caret" aria-hidden="true">▸</span> 揭示：为什么“中国人民站起来了”更好？
+      </button>
+      <div class="reveal" id="r-title" hidden>
+        <p>“站起来了”三个字有画面感、有冲击力。它把抽象的“新中国成立”写成一个民族挺直腰杆的动作，比原会议标题更有气势，也更能唤起听众的情感共鸣。</p>
+      </div>
+      <p>那么，中国人民<strong>为什么</strong>要“站起来”？又是<strong>如何</strong>“站起来”的？让我们走进文本。</p>
+    </section>
+
+    <!-- ③ 梳理思路 -->
+    <section class="phase" id="p3">
+      <h2><span class="step">3</span>梳理思路（约 2 分钟）</h2>
+      <p>快速浏览课文，文章可分为五个部分。结构清晰：<strong>从过去到现在，再到未来，逻辑严密，层层推进。</strong></p>
+      <div class="struct-grid">
+        <div class="struct-card">
+          <div class="head"><span class="badge">第一部分</span><span class="range">第 1–2 段</span></div>
+          <p>宣布开幕，介绍会议性质——这是一个<strong>全国人民大团结</strong>的会议。</p>
+          <span class="axis">过去 · 宣布开幕</span>
+        </div>
+        <div class="struct-card">
+          <div class="head"><span class="badge">第二部分</span><span class="range">第 3–4 段</span></div>
+          <p>回顾历史——三年解放战争的胜利，以及此前政协会议被蒋介石破坏的教训。</p>
+          <span class="axis">过去 · 回顾历史</span>
+        </div>
+        <div class="struct-card">
+          <div class="head"><span class="badge">第三部分</span><span class="range">第 5–6 段</span></div>
+          <p>立足当下——宣布“<strong>中国人从此站立起来了</strong>”，并指出当前的任务。</p>
+          <span class="axis">现在 · 庄严宣告</span>
+        </div>
+        <div class="struct-card">
+          <div class="head"><span class="badge">第四部分</span><span class="range">第 7–12 段</span></div>
+          <p>展望未来——从<strong>经济、文化、国防</strong>三个方面规划建设蓝图。</p>
+          <span class="axis">未来 · 建设蓝图</span>
+        </div>
+        <div class="struct-card">
+          <div class="head"><span class="badge">第五部分</span><span class="range">第 13–16 段</span></div>
+          <p>结束语——悼念先烈，庆祝胜利。</p>
+          <span class="axis">未来 · 悼念庆祝</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ④ 品读关键语句 -->
+    <section class="phase" id="p4">
+      <h2><span class="step">4</span>品读关键语句（约 4 分钟）</h2>
+      <p>重点品读文中两个最打动人心的句子。原文如下（逐字照录课文）：</p>
+
+      <h3>（一）第 6 段</h3>
+      <blockquote class="quote">
+        “我们有一个<mark class="kw">共同</mark>的感觉，这就是我们的工作将写在人类的历史上，它将表明：占人类总数四分之一的中国人<mark class="kw">从此</mark><mark class="kw">站立起来了</mark>。”
+        <span class="src">—— 《中国人民站起来了》第 6 段</span>
+      </blockquote>
+      <button class="reveal-btn" type="button" aria-expanded="false" aria-controls="r-read1" data-reveal="r-read1">
+        <span class="caret" aria-hidden="true">▸</span> 揭示：朗读提示与情感
+      </button>
+      <div class="reveal" id="r-read1" hidden>
+        <ul>
+          <li><strong>“共同”要重读</strong>——体现全国人民团结一致的情感。</li>
+          <li><strong>“从此”后稍作停顿</strong>，再读“站立起来了”，掷地有声。</li>
+          <li>“占人类总数四分之一”意味着一个拥有四万万七千五百万人口的古老民族，从此摆脱被奴役、被侮辱的命运——这是<strong>整个民族的自豪</strong>。</li>
+        </ul>
+      </div>
+
+      <h3>（二）第 12 段末尾</h3>
+      <blockquote class="quote">
+        “让那些内外反动派在我们面前<mark class="kw">发抖</mark>罢，让他们去说我们这也不行那也不<mark class="kw">不行</mark>罢，中国人民的不屈不挠的努力必将<mark class="kw">稳步</mark>地达到自己的目的。”
+        <span class="src">—— 《中国人民站起来了》第 12 段</span>
+      </blockquote>
+      <button class="reveal-btn" type="button" aria-expanded="false" aria-controls="r-read2" data-reveal="r-read2">
+        <span class="caret" aria-hidden="true">▸</span> 揭示：三个关键词的妙处
+      </button>
+      <div class="reveal" id="r-read2" hidden>
+        <ul>
+          <li><strong>“发抖”</strong>——细节描写，写出反动派在英勇的中国人民面前是何等虚弱。</li>
+          <li><strong>“不行”</strong>——表现对敌人的蔑视与不屑。</li>
+          <li><strong>“稳步”“不屈不挠”</strong>——展现中国人民坚定的信心。毛主席如此自信，是因为“我们已经具有战胜困难的极其丰富的经验”，因为我们“战胜了强大的内外反动派”。</li>
+        </ul>
+      </div>
+      <p>请全班齐读这两句，读出对敌人的蔑视与对未来的坚定信心。</p>
+    </section>
+
+    <!-- ⑤ 理解内涵 -->
+    <section class="phase" id="p5">
+      <h2><span class="step">5</span>理解“站起来了”的内涵（约 1.5 分钟）</h2>
+      <p>结合课文，同学们谈到了不同层面的理解：</p>
+      <div class="layer">
+        <h3>① 政治上：人民当家作主</h3>
+        <p class="basis">依据：政协代表来自各个党派、各个团体，说明人民可以参政议政了。</p>
+      </div>
+      <div class="layer">
+        <h3>② 民族上：独立自强</h3>
+        <p class="basis">依据：第 6 段明确说“我们的民族将再也不是一个被人侮辱的民族了”。</p>
+      </div>
+      <div class="layer">
+        <h3>③ 精神上：自信昂扬</h3>
+        <p class="basis">依据：有信心建设一个繁荣昌盛的国家，对前途充满必胜信念。</p>
+      </div>
+      <button class="reveal-btn" type="button" aria-expanded="false" aria-controls="r-sum" data-reveal="r-sum">
+        <span class="caret" aria-hidden="true">▸</span> 揭示：教师总结
+      </button>
+      <div class="reveal" id="r-sum" hidden>
+        <p><strong>“站起来”意味着：政治上当家作主，民族上独立自强，精神上自信昂扬。</strong></p>
+      </div>
+    </section>
+
+    <!-- ⑥ 小结 + 迁移 -->
+    <section class="phase" id="p6">
+      <h2><span class="step">6</span>课堂小结与迁移（约 0.5 分钟）</h2>
+      <p>毛泽东的这篇开幕词，既有对历史的深刻总结，又有对未来的坚定展望；既有充沛的情感，又有理性的思考。</p>
+      <blockquote class="quote">
+        “中国人民的不屈不挠的努力必将稳步地达到自己的目的。”
+        <span class="src">—— 结尾齐读</span>
+      </blockquote>
+      <div class="task-note">
+        <strong>课后任务：</strong>选择文中你最有感触的一个句子，写一段 200 字左右的赏析。
+      </div>
+      <figure class="photo-figure">
+        <img src="assets/images/jiangzhu-gandao.jpg" alt="学校主干道">
+        <figcaption>今日校园的和平宁静，正是先辈“站起来”的果实。</figcaption>
+      </figure>
+
+      <div class="board">
+        <h3>板书设计</h3>
+        <pre>中国人民站起来了
+——毛泽东
+开幕词：宣告性、引导性
+
+过去（回顾）→ 现在（宣告）→ 未来（展望）
+
+“站起来了”：
+  ① 人民当家作主
+  ② 民族独立自强
+  ③ 精神自信昂扬</pre>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p><a href="../index.html">返回第一单元目录</a> · <a href="../../../index.html">返回教材课文</a></p>
+  </footer>
+
+  <script>
+    // 揭示按钮：点击展开/收起，支持键盘与触摸
+    (function () {
+      var btns = document.querySelectorAll(".reveal-btn");
+      btns.forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var id = btn.getAttribute("data-reveal");
+          var panel = document.getElementById(id);
+          if (!panel) return;
+          var open = panel.hasAttribute("hidden");
+          if (open) {
+            panel.removeAttribute("hidden");
+            btn.setAttribute("aria-expanded", "true");
+          } else {
+            panel.setAttribute("hidden", "");
+            btn.setAttribute("aria-expanded", "false");
+          }
+        });
+      });
+
+      // 环节导航高亮（滚动时同步）
+      var links = Array.prototype.slice.call(document.querySelectorAll(".phase-nav a"));
+      var sections = links.map(function (a) { return document.querySelector(a.getAttribute("href")); });
+      if ("IntersectionObserver" in window) {
+        var observer = new IntersectionObserver(function (entries) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              var id = "#" + entry.target.id;
+              links.forEach(function (a) {
+                a.classList.toggle("active", a.getAttribute("href") === id);
+              });
+            }
+          });
+        }, { rootMargin: "-45% 0px -50% 0px" });
+        sections.forEach(function (s) { if (s) observer.observe(s); });
+      }
+    })();
+  </script>
+
+  <!-- 课堂白板入口（仅具体课件页加载） -->
+  <script
+    src="../../../../assets/js/classroom-whiteboard.js"
+    data-lesson-title="中国人民站起来了"
+    data-whiteboard-url="../../../../tools/whiteboard/index.html"
+  ></script>
+</body>
+</html>
