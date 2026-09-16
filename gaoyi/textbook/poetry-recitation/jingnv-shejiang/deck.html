@@ -1,0 +1,1518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>古诗词诵读 · 静女 · 涉江采芙蓉（20分钟快课）</title>
+<!--
+  设计说明（教师用）：
+  · 单文件课堂演示页，双击打开即可；键盘 ←/→ 翻页，屏幕左右边缘点击也可翻页。
+  · 标有「▸ 点击出示」的虚线框：学生回答后再点击，答案才出现（结论由课堂生成，不预泄）。
+  · 背诵页四个按钮：全显 → 遮下句（师生接句）→ 留首二字（看头背尾）→ 全遮。
+  · 每页右上角为本环节参考用时（对应教案时间轴，教师控节奏用）。
+  · 全部使用系统字体（楷体），不依赖网络。
+-->
+<style>
+  :root {
+    --paper: #FAF6EE;
+    --ink: #2B2925;
+    --ink2: #6E675C;
+    --cn: #B03A2E;
+    --cn-deep: #8E2F25;
+    --cn-soft: rgba(176, 58, 46, 0.07);
+    --line: rgba(43, 41, 37, 0.16);
+    --kai: "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", "DFKai-SB", "Songti SC", serif;
+    --ui: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--ui);
+    color: var(--ink);
+    background: var(--paper);
+  }
+
+  /* ============ deck-stage starter CSS（规范写法：display 只写在 .active 上） ============ */
+  deck-stage > section {
+    background: var(--paper);
+    overflow: hidden;
+    position: relative;
+  }
+  deck-stage > section:not(.active) { display: none !important; }
+  deck-stage > section.active { display: block; }
+
+  /* ============ 通用页面骨架 ============ */
+  .wrap {
+    width: 1920px;
+    height: 1080px;
+    padding: 70px 130px 60px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 22px;
+    color: var(--ink2);
+    letter-spacing: 0.06em;
+    flex: none;
+  }
+  .hd .ph { color: var(--cn); font-weight: 600; }
+
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .kicker {
+    font-size: 26px;
+    letter-spacing: 0.35em;
+    color: var(--cn);
+    margin-bottom: 26px;
+    font-weight: 600;
+  }
+
+  /* ============ 封面 ============ */
+  .cover .wrap { justify-content: center; align-items: center; text-align: center; }
+  .cover-kicker {
+    font-size: 28px; letter-spacing: 0.5em; color: var(--ink2);
+    margin-bottom: 60px; text-indent: 0.5em;
+  }
+  .cover-title {
+    font-family: var(--kai);
+    font-size: 150px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+  }
+  .cover-title .dot { color: var(--cn); margin: 0 18px; font-weight: 400; }
+  .cover-src {
+    font-family: var(--kai);
+    font-size: 34px;
+    color: var(--ink2);
+    margin-top: 44px;
+    letter-spacing: 0.15em;
+  }
+  .cover-route {
+    margin-top: 90px;
+    font-size: 30px;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+  .cover-route .arr { color: var(--cn); margin: 0 20px; }
+  .cover-sub {
+    margin-top: 26px;
+    font-size: 24px;
+    color: var(--ink2);
+    letter-spacing: 0.2em;
+  }
+  .seal {
+    position: absolute;
+    right: 150px;
+    bottom: 120px;
+    width: 92px;
+    height: 92px;
+    background: var(--cn);
+    color: #FAF6EE;
+    font-family: var(--kai);
+    font-size: 58px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transform: rotate(-3deg);
+    box-shadow: 0 2px 10px rgba(142, 47, 37, 0.25);
+  }
+
+  /* ============ 路线页 ============ */
+  .route-title {
+    font-family: var(--kai);
+    font-size: 72px;
+    font-weight: 700;
+    margin-bottom: 80px;
+  }
+  .route-steps {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+  .rstep { text-align: center; flex: 1; }
+  .rstep .no {
+    font-family: var(--kai);
+    font-size: 30px;
+    color: var(--cn);
+    margin-bottom: 14px;
+    letter-spacing: 0.3em;
+  }
+  .rstep .nm {
+    font-family: var(--kai);
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .rstep .ds {
+    font-size: 26px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+  .rstep .tm {
+    font-size: 22px;
+    color: var(--cn);
+    margin-top: 16px;
+  }
+  .route-arr {
+    font-size: 44px;
+    color: var(--cn);
+    align-self: center;
+    padding: 0 8px;
+    margin-top: 40px;
+  }
+  .route-tail {
+    margin-top: 90px;
+    border-top: 1px solid var(--line);
+    padding-top: 34px;
+    text-align: center;
+    font-size: 30px;
+    color: var(--ink);
+    letter-spacing: 0.1em;
+  }
+  .route-tail b { color: var(--cn); }
+
+  /* ============ 诗体大字 ============ */
+  .poem {
+    font-family: var(--kai);
+    font-size: 56px;
+    line-height: 2.1;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .poem.small { font-size: 52px; }
+  .poem-note {
+    text-align: center;
+    font-size: 27px;
+    color: var(--ink2);
+    margin-top: 46px;
+    letter-spacing: 0.08em;
+  }
+  .poem-note b { color: var(--cn); font-weight: 600; }
+  .poem-title {
+    font-family: var(--kai);
+    font-size: 44px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 34px;
+    letter-spacing: 0.1em;
+  }
+  .poem-title span {
+    font-size: 26px;
+    color: var(--ink2);
+    font-weight: 400;
+    margin-left: 24px;
+  }
+
+  /* ============ 正音通假 ============ */
+  .py-grid {
+    display: flex;
+    gap: 100px;
+    align-items: flex-start;
+  }
+  .py-col { flex: 1; }
+  .py-col h3 {
+    font-family: var(--kai);
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.2em;
+  }
+  .py-col h3 em { font-style: normal; color: var(--cn); }
+  .py-item {
+    display: flex;
+    align-items: baseline;
+    font-size: 34px;
+    padding: 15px 0;
+    border-bottom: 1px dashed rgba(43, 41, 37, 0.1);
+  }
+  .py-item .hz { font-family: var(--kai); font-weight: 700; width: 220px; }
+  .py-item .py { color: var(--cn); font-size: 28px; width: 280px; }
+  .py-item .mn { color: var(--ink2); font-size: 27px; }
+  .tj-item .hz { width: 150px; }
+  .tj-item .py { width: 190px; font-family: var(--kai); font-size: 32px; }
+
+  /* ============ 任务页（自读） ============ */
+  .task-big {
+    font-family: var(--kai);
+    font-size: 84px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .task-big em { font-style: normal; color: var(--cn); }
+  .task-sub {
+    text-align: center;
+    font-size: 32px;
+    color: var(--ink2);
+    margin-top: 56px;
+    letter-spacing: 0.1em;
+  }
+  .task-sub b { color: var(--ink); }
+
+  /* ============ 快问快答 ============ */
+  .qa { margin-bottom: 44px; }
+  .qa .q {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+  .qa .q .qn {
+    font-family: var(--kai);
+    color: var(--cn);
+    font-size: 30px;
+    flex: none;
+  }
+  .qa .a-line {
+    font-size: 31px;
+    line-height: 1.75;
+    color: var(--ink);
+    padding-left: 58px;
+  }
+  .qa .a-line b {
+    font-family: var(--kai);
+    color: var(--cn);
+    font-weight: 700;
+    font-size: 33px;
+  }
+
+  /* ============ 点击出示（reveal） ============ */
+  .rv { cursor: pointer; }
+  .rv .rv-slot {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1.5px dashed rgba(176, 58, 46, 0.45);
+    color: var(--cn);
+    background: var(--cn-soft);
+    font-size: 25px;
+    padding: 10px 26px;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+    user-select: none;
+  }
+  .rv .rv-slot::before { content: "▸"; font-size: 20px; }
+  .rv .rv-body { display: none; }
+  .rv.on .rv-slot { display: none; }
+  .rv.on .rv-body {
+    display: block;
+    animation: rvIn 0.35s ease both;
+  }
+  @keyframes rvIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .rv-slot-wrap { padding-left: 58px; margin-top: 4px; }
+
+  /* ============ 焦点页 ============ */
+  .focus-core {
+    font-family: var(--kai);
+    font-size: 96px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+  }
+  .focus-core .cm { color: var(--cn); }
+  .focus-ans {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .focus-ans .big-word {
+    display: inline-block;
+    font-family: var(--kai);
+    font-size: 100px;
+    font-weight: 700;
+    color: var(--cn);
+    letter-spacing: 0.45em;
+    text-indent: 0.45em;
+    border-top: 3px solid var(--cn);
+    border-bottom: 3px solid var(--cn);
+    padding: 16px 30px;
+  }
+  .focus-note {
+    text-align: center;
+    font-size: 32px;
+    color: var(--ink2);
+    margin-top: 54px;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+  }
+  .focus-note b { color: var(--ink); }
+
+  .deep-item { margin-bottom: 40px; }
+  .deep-item .dline {
+    font-family: var(--kai);
+    font-size: 54px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .deep-item .dline .dn {
+    font-size: 30px;
+    color: var(--cn);
+    margin-right: 26px;
+    font-weight: 400;
+  }
+  .deep-item .dnote { font-size: 30px; color: var(--ink2); padding-left: 66px; line-height: 1.6; }
+  .deep-item .dnote b { color: var(--ink); }
+
+  /* ============ 主问题页 ============ */
+  .mq-big {
+    font-family: var(--kai);
+    font-size: 80px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 60px;
+  }
+  .mq-big em { font-style: normal; color: var(--cn); }
+  .mq-subs {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 66px;
+  }
+  .mq-subs span::before { content: "· "; color: var(--cn); }
+  .chain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    font-family: var(--kai);
+    font-size: 46px;
+    font-weight: 700;
+  }
+  .chain .c-arr { color: var(--cn); font-size: 34px; }
+  .chain .c-end {
+    color: var(--cn);
+    border: 2px solid var(--cn);
+    padding: 6px 26px;
+    border-radius: 3px;
+  }
+
+  /* ============ 检测页 ============ */
+  .ctest { margin-bottom: 66px; }
+  .ctest .ct-q {
+    font-size: 37px;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .ctest .ct-q .src { color: var(--cn); margin-right: 18px; font-family: var(--kai); }
+  .ctest .ct-blank {
+    font-family: var(--kai);
+    color: var(--ink2);
+    font-size: 32px;
+    letter-spacing: 0.2em;
+    padding-left: 58px;
+  }
+  .ctest .rv .rv-body {
+    font-family: var(--kai);
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--cn);
+    letter-spacing: 0.15em;
+  }
+
+  /* ============ 作业页 ============ */
+  .hw-block { margin-bottom: 60px; }
+  .hw-block h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.15em;
+  }
+  .hw-block h3 span {
+    font-size: 24px;
+    color: var(--paper);
+    background: var(--cn);
+    padding: 4px 16px;
+    border-radius: 3px;
+    margin-right: 20px;
+    font-weight: 400;
+    vertical-align: 4px;
+  }
+  .hw-block p { font-size: 31px; line-height: 1.8; color: var(--ink); }
+  .hw-block p b { color: var(--cn); }
+  .hw-end {
+    margin-top: 30px;
+    border-top: 1px solid var(--line);
+    padding-top: 44px;
+    text-align: center;
+    font-family: var(--kai);
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+  .hw-end em { font-style: normal; color: var(--cn); }
+
+  /* ============ 背诵支架 ============ */
+  .recite .poem { margin-bottom: 10px; }
+  .recite .f, .recite .x, .recite .e { transition: color 0.25s ease, background 0.25s ease; }
+  .msk {
+    color: transparent !important;
+    background: linear-gradient(to top, rgba(176, 58, 46, 0.32) 0 10px, transparent 10px);
+    border-radius: 2px;
+  }
+  .recite[data-lv="1"] .e.mskable {}
+  .recite[data-lv="1"] .e { color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px); }
+  .recite[data-lv="2"] .e, .recite[data-lv="2"] .x {
+    color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px);
+  }
+  .recite[data-lv="3"] .e, .recite[data-lv="3"] .x, .recite[data-lv="3"] .f {
+    color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px);
+  }
+  .lv-btns {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    margin-top: 44px;
+  }
+  .lv-btn {
+    font-family: var(--ui);
+    font-size: 28px;
+    letter-spacing: 0.1em;
+    padding: 14px 40px;
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+  .lv-btn:hover { border-color: var(--cn); color: var(--cn); }
+  .lv-btn.on {
+    background: var(--cn);
+    border-color: var(--cn);
+    color: #FAF6EE;
+  }
+  .recite-tip {
+    text-align: center;
+    font-size: 26px;
+    color: var(--ink2);
+    margin-top: 34px;
+    letter-spacing: 0.08em;
+  }
+  .recite-tip b { color: var(--cn); font-weight: 600; }
+
+  /* ============ 讲义导读 ============ */
+  .handout {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    flex: none;
+  }
+  .handout .hb-tag {
+    flex: none;
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    color: #FAF6EE;
+    background: var(--cn);
+    padding: 6px 14px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .handout .hb-body { font-size: 25px; line-height: 1.7; color: var(--ink2); }
+  .handout .hb-body b { color: var(--ink); font-weight: 600; }
+  .handout .hb-body .hb-c { color: var(--cn); font-weight: 600; }
+
+  /* ============ 附页 · 两种读法 ============ */
+  .duel-title {
+    font-family: var(--kai);
+    font-size: 54px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .duel-title span { font-size: 30px; color: var(--ink2); font-weight: 400; margin-left: 16px; }
+  .duel-sub {
+    text-align: center;
+    font-size: 24px;
+    color: var(--ink2);
+    margin-bottom: 28px;
+    letter-spacing: 0.04em;
+  }
+  .duel-grid { display: flex; gap: 56px; }
+  .duel-col {
+    flex: 1;
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 28px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .duel-h {
+    font-family: var(--kai);
+    font-size: 33px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .duel-h span {
+    font-size: 20px;
+    color: #FAF6EE;
+    background: var(--cn);
+    border-radius: 3px;
+    padding: 3px 12px;
+    margin-left: 14px;
+    vertical-align: 4px;
+    font-family: var(--ui);
+    letter-spacing: 0.1em;
+  }
+  .duel-def {
+    font-size: 22px;
+    color: var(--ink);
+    background: var(--cn-soft);
+    padding: 10px 16px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .duel-def b { color: var(--cn); }
+  .du-ev {
+    display: flex;
+    gap: 14px;
+    font-size: 21.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 11px;
+  }
+  .du-ev span { flex: none; font-family: var(--kai); color: var(--cn); font-weight: 700; }
+  .du-ev b { color: var(--cn); font-weight: 600; }
+  .duel-bottom {
+    margin-top: 24px;
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38);
+    padding-top: 16px;
+    font-size: 22.5px;
+    line-height: 1.7;
+    color: var(--ink2);
+  }
+  .duel-bottom b { color: var(--ink); }
+  .duel-bottom .c { color: var(--cn); font-weight: 600; }
+
+  /* ============ 月夜 弹层 ============ */
+  .moonlnk { color: var(--cn); font-weight: 700; text-decoration: underline dotted; text-underline-offset: 6px; }
+  .du-moon-trigger { cursor: pointer; }
+  .moonlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(32, 27, 22, 0.58);
+    display: none; align-items: center; justify-content: center;
+  }
+  .moonlay.open { display: flex; }
+  .moonlay-card {
+    width: 1000px; max-width: 94vw; max-height: 90vh; overflow-y: auto;
+    background: var(--paper); border-radius: 8px;
+    padding: 40px 60px 32px; position: relative;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.4);
+    font-family: var(--ui);
+  }
+  .moon-close {
+    font-family: var(--ui); cursor: pointer;
+    border: 1.5px solid var(--cn); background: transparent; color: var(--cn);
+    font-size: 18px; letter-spacing: 0.1em; padding: 8px 20px; border-radius: 3px;
+  }
+  .moon-close:hover { background: var(--cn); color: #FAF6EE; }
+  .mc-top { position: absolute; top: 26px; right: 30px; }
+  .mc-bottom { display: block; margin: 26px auto 0; font-size: 20px; padding: 12px 44px; }
+  .moon-kicker { font-size: 15px; letter-spacing: 0.3em; color: var(--cn); margin-bottom: 6px; }
+  .moon-title {
+    font-family: var(--kai); font-size: clamp(40px, 4.5vw, 58px); font-weight: 700;
+    text-align: center; letter-spacing: 0.2em; margin-top: 4px;
+  }
+  .moon-author {
+    text-align: center; font-family: var(--kai);
+    font-size: clamp(18px, 1.8vw, 24px); color: var(--ink2); margin: 6px 0 18px;
+  }
+  .moon-poem {
+    font-family: var(--kai); font-size: clamp(24px, 2.6vw, 36px);
+    line-height: 1.9; text-align: center; letter-spacing: 0.12em; margin-bottom: 22px;
+  }
+  .moon-sec { margin-bottom: 20px; }
+  .moon-sec h3 {
+    font-family: var(--kai); font-size: clamp(20px, 2vw, 26px); color: var(--cn);
+    letter-spacing: 0.25em; border-bottom: 1px solid var(--line);
+    padding-bottom: 8px; margin-bottom: 12px;
+  }
+  .moon-notes { padding-left: 24px; }
+  .moon-notes li, .moon-sec p, .moon-list li {
+    font-size: clamp(15px, 1.5vw, 20px); line-height: 1.75; color: var(--ink);
+  }
+  .moon-list { padding-left: 24px; }
+  .moon-list li { margin-bottom: 6px; }
+  .moon-list li b { color: var(--cn); font-family: var(--kai); }
+  .moon-hl { background: var(--cn-soft); padding: 10px 16px; border-radius: 3px; }
+  .moon-sec p b { color: var(--cn); }
+  .moon-bridge {
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38); margin-top: 8px; padding-top: 14px;
+    text-align: center; font-size: clamp(14px, 1.4vw, 18px); color: var(--ink2);
+  }
+</style>
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- 01 封面 -->
+  <section data-screen-label="01 封面">
+    <div class="wrap cover">
+      <div class="cover-kicker">统编版必修上册 · 古诗词诵读</div>
+      <div class="cover-title">静女<span class="dot">·</span>涉江采芙蓉</div>
+      <div class="cover-src">《诗经 · 邶风》 ／ 《古诗十九首》</div>
+      <div class="cover-route">读通<span class="arr">→</span>读懂<span class="arr">→</span>读透<span class="arr">→</span>背会</div>
+      <div class="cover-sub">20 分钟 · 两首 · 当堂成诵</div>
+      <div class="seal">诵</div>
+    </div>
+  </section>
+
+  <!-- 02 路线 -->
+  <section data-screen-label="02 路线">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女 · 涉江采芙蓉</span><span class="ph">定向</span></div>
+      <div class="body">
+        <div class="route-title">这 20 分钟，怎么走</div>
+        <div class="route-steps">
+          <div class="rstep">
+            <div class="no">壹</div>
+            <div class="nm">读通</div>
+            <div class="ds">正音 · 通假<br>两轮齐读</div>
+            <div class="tm">两首 ≈ 3′</div>
+          </div>
+          <div class="route-arr">→</div>
+          <div class="rstep">
+            <div class="no">贰</div>
+            <div class="nm">读懂</div>
+            <div class="ds">借注释自读<br>快问快答</div>
+            <div class="tm">两首 ≈ 4.5′</div>
+          </div>
+          <div class="route-arr">→</div>
+          <div class="rstep">
+            <div class="no">叁</div>
+            <div class="nm">读透</div>
+            <div class="ds">每首只抓<br>一个鉴赏焦点</div>
+            <div class="tm">两首 ≈ 5′</div>
+          </div>
+          <div class="route-arr">→</div>
+          <div class="rstep">
+            <div class="no">肆</div>
+            <div class="nm">背会</div>
+            <div class="ds">降支架背诵<br>当堂成诵</div>
+            <div class="tm">两首 ≈ 4′</div>
+          </div>
+        </div>
+        <div class="route-tail">课末 <b>两句理解性默写</b> · 写在课本空白处 · 同桌互批</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 静女·齐读 -->
+  <section data-screen-label="03 静女·齐读">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女</span><span>读通 · 齐读 <b style="color:var(--cn)">≈1.5′</b></span></div>
+      <div class="body">
+        <div class="poem-title">静 女<span>《诗经 · 邶风》</span></div>
+        <div class="poem">
+          静女其姝，俟我于城隅。爱而不见，搔首踟蹰。<br>
+          静女其娈，贻我彤管。彤管有炜，说怿女美。<br>
+          自牧归荑，洵美且异。匪女之为美，美人之贻。
+        </div>
+        <div class="poem-note">先齐读一遍——<b>读准每一个字</b></div>
+        <div class="handout">
+          <div class="hb-tag">讲义</div>
+          <div class="hb-body">自读卡壳时，翻讲义 <span class="hb-c">第 1 页 · 静女 ·【译文】</span>——先靠注释自己读，译文用来核对你读得对不对。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 静女·正音通假 -->
+  <section data-screen-label="04 静女·正音通假">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女</span><span>读通 · 正音通假 <b style="color:var(--cn)">≈1′</b></span></div>
+      <div class="body">
+        <div class="py-grid">
+          <div class="py-col">
+            <h3>容易读错的字 <em>· 标在书上</em></h3>
+            <div class="py-item"><span class="hz">俟</span><span class="py">sì</span><span class="mn">等待</span></div>
+            <div class="py-item"><span class="hz">踟蹰</span><span class="py">chí chú</span><span class="mn">徘徊不定</span></div>
+            <div class="py-item"><span class="hz">娈</span><span class="py">luán</span><span class="mn">美好</span></div>
+            <div class="py-item"><span class="hz">贻</span><span class="py">yí</span><span class="mn">赠送</span></div>
+            <div class="py-item"><span class="hz">炜</span><span class="py">wěi</span><span class="mn">鲜亮有光</span></div>
+            <div class="py-item"><span class="hz">说怿</span><span class="py">yuè yì</span><span class="mn">喜爱</span></div>
+            <div class="py-item"><span class="hz">荑</span><span class="py">tí</span><span class="mn">初生的嫩茅草</span></div>
+            <div class="py-item"><span class="hz">洵</span><span class="py">xùn</span><span class="mn">确实、实在</span></div>
+          </div>
+          <div class="py-col">
+            <h3>四个通假 <em>· 圈出来</em></h3>
+            <div class="py-item tj-item"><span class="hz">爱</span><span class="py">通「薆」</span><span class="mn">隐藏 —— 「爱而不见」不是「爱却不见」</span></div>
+            <div class="py-item tj-item"><span class="hz">说</span><span class="py">通「悦」</span><span class="mn">喜爱</span></div>
+            <div class="py-item tj-item"><span class="hz">女</span><span class="py">通「汝」</span><span class="mn">你，指彤管</span></div>
+            <div class="py-item tj-item"><span class="hz">归</span><span class="py">通「馈」</span><span class="mn">赠送</span></div>
+          </div>
+        </div>
+        <div class="poem-note" style="margin-top:56px">标好读音，<b>再齐读一遍</b>——这遍要读顺</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 静女·自读任务 -->
+  <section data-screen-label="05 静女·自读圈画">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女</span><span>读懂 · 自读圈画 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="task-big">借助注释，<em>自读</em>《静女》<br>圈出<em>一处</em>——</div>
+        <div class="task-sub">读<b>不懂</b>的地方，或者觉得<b>妙</b>的地方 · 圈在书上 · 90 秒</div>
+        <div class="handout" style="margin-top:60px">
+          <div class="hb-tag">讲义</div>
+          <div class="hb-body">就是这份讲义（微信传的 <b>《高一语文古诗词诵读鉴赏》</b>MD 文档）——只看 <span class="hb-c">第 1 页 ·【译文】</span>帮助读懂；<b>先别翻【作品鉴赏】</b>，等会儿抢答完再看。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 静女·快问快答 -->
+  <section data-screen-label="06 静女·快问快答">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女</span><span>读懂 · 快问快答 <b style="color:var(--cn)">≈2.5′</b></span></div>
+      <div class="body" style="justify-content:center">
+        <div class="qa">
+          <div class="q"><span class="qn">问一</span>约会——谁先到？谁没露面？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生答后，点击出示</div>
+            <div class="rv-body"><div class="a-line">静女先到，却藏了起来——<b>「爱而不见」</b>；男子<b>「搔首踟蹰」</b>，急得原地打转。</div></div>
+          </div></div>
+        </div>
+        <div class="qa">
+          <div class="q"><span class="qn">问二</span>礼物——男子收到几件？他各是什么反应？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生答后，点击出示</div>
+            <div class="rv-body"><div class="a-line">两件：彤管——<b>「彤管有炜，说怿女美」</b>；荑草——<b>「洵美且异」</b>。</div></div>
+          </div></div>
+        </div>
+        <div class="qa">
+          <div class="q"><span class="qn">问三</span>结尾——男子自己「否定」了什么？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生答后，点击出示</div>
+            <div class="rv-body"><div class="a-line"><b>「匪女之为美」</b>——否定的正是荑草本身；<b>「美人之贻」</b>才是真意：草，因人贵。</div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 静女·焦点 -->
+  <section data-screen-label="07 静女·焦点">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女</span><span>读透 · 焦点 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="kicker" style="text-align:center">焦点 · 从「物」回到「人」</div>
+        <div class="focus-core">匪女之为美<span class="cm">，</span>美人之贻</div>
+        <div class="focus-ans">
+          <div class="rv" style="display:inline-block"><div class="rv-slot">学生答后，点击出示四字</div>
+            <div class="rv-body" style="text-align:center"><span class="big-word">物因人贵</span></div>
+          </div>
+        </div>
+        <div class="focus-note">爱的不是草，是<b>送草的人</b>——物，是情的凭证。<br>上一问的「爱而不见」是一次甜蜜的<b>逆转</b>；这一句，是更妙的<b>自我推翻</b>。</div>
+        <div class="handout">
+          <div class="hb-tag">讲义</div>
+          <div class="hb-body">现在读 <span class="hb-c">第 2 页 · 静女（续）·【作品鉴赏】第二段</span>——「说怿女美，一语双关」「匪女之为美……是从人与人的关系投射出来的真理」，看讲义怎么说这两句。再往下读同页第一段：二三章其实是男子等候时的<b>回忆（倒叙）</b>。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 静女·降支架背诵 -->
+  <section data-screen-label="08 静女·背诵">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女</span><span>背会 · 降支架 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="recite" id="recite-jn">
+          <div class="poem">
+            <span class="f">静女</span><span class="x">其姝，</span><span class="e">俟我于城隅。</span><span class="x">爱而不见，</span><span class="e">搔首踟蹰。</span><br>
+            <span class="f">静女</span><span class="x">其娈，</span><span class="e">贻我彤管。</span><span class="x">彤管有炜，</span><span class="e">说怿女美。</span><br>
+            <span class="f">自牧</span><span class="x">归荑，</span><span class="e">洵美且异。</span><span class="x">匪女之为美，</span><span class="e">美人之贻。</span>
+          </div>
+          <div class="lv-btns">
+            <button class="lv-btn on" data-lv="0">全显</button>
+            <button class="lv-btn" data-lv="1">遮下句</button>
+            <button class="lv-btn" data-lv="2">留首二字</button>
+            <button class="lv-btn" data-lv="3">全遮</button>
+          </div>
+          <div class="recite-tip"><b>遮下句</b>＝我说上句，你接下句 ｜ <b>留首二字</b>＝看头背尾 ｜ <b>全遮</b>＝合书背诵</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 涉江·齐读 -->
+  <section data-screen-label="09 涉江·齐读">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜涉江采芙蓉</span><span>读通 · 齐读 <b style="color:var(--cn)">≈1′</b></span></div>
+      <div class="body">
+        <div class="poem-title">涉江采芙蓉<span>《古诗十九首》</span></div>
+        <div class="poem small">
+          涉江采芙蓉，兰泽多芳草。<br>
+          采之欲遗谁？所思在远道。<br>
+          还顾望旧乡，长路漫浩浩。<br>
+          同心而离居，忧伤以终老。
+        </div>
+        <div class="poem-note">两个读音：<b>遗 wèi</b>（赠送）· <b>还顾 huán</b>（回头看）—— 标在书上，齐读一遍</div>
+        <div class="handout">
+          <div class="hb-tag">讲义</div>
+          <div class="hb-body">卡壳就翻 <span class="hb-c">第 2 页 · 涉江采芙蓉 ·【译文】</span>核对；<b>【作者背景】</b>一段可以顺便看——讲的就是我们说的「游宦、游学之风」。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 涉江·主问题 -->
+  <section data-screen-label="10 涉江·主问题">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜涉江采芙蓉</span><span>读懂 · 主问题 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="mq-big">这首诗，字面一读就懂——<br>那它的<em>「深」</em>在哪里？</div>
+        <div class="mq-subs"><span>谁在采花？</span><span>送给谁？</span><span>送得成吗？</span></div>
+        <div style="text-align:center">
+          <div class="rv" style="display:inline-block"><div class="rv-slot">学生答后，点击出示动作链</div>
+            <div class="rv-body">
+              <div class="chain">
+                <span>涉江</span><span class="c-arr">→</span><span>采芙蓉</span><span class="c-arr">→</span><span>欲遗「同心」人</span><span class="c-arr">→</span><span>所思在远道</span><span class="c-arr">⇒</span><span class="c-end">欲赠不能</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 涉江·焦点 -->
+  <section data-screen-label="11 涉江·焦点">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜涉江采芙蓉</span><span>读透 · 焦点 <b style="color:var(--cn)">≈3′</b></span></div>
+      <div class="body">
+        <div class="kicker" style="text-align:center; margin-bottom:40px">焦点 · 浅而能深，近而能远</div>
+        <div style="max-width:1500px; margin:0 auto; width:100%">
+          <div class="deep-item">
+            <div class="dline"><span class="dn">其一</span>采之欲遗谁？</div>
+            <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">点击出示</div>
+              <div class="rv-body"><div class="dnote">一个<b>问句</b>——满腔深情，找不到落点。</div></div>
+            </div></div>
+          </div>
+          <div class="deep-item">
+            <div class="dline"><span class="dn">其二</span>长路漫浩浩</div>
+            <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">点击出示</div>
+              <div class="rv-body"><div class="dnote">「浩浩」本写<b>水大</b>，移来写<b>路</b>——路，把「同心」硬生生隔成了「离居」。</div></div>
+            </div></div>
+          </div>
+          <div class="deep-item">
+            <div class="dline"><span class="dn">其三</span>忧伤以终老</div>
+            <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">点击出示</div>
+              <div class="rv-body"><div class="dnote">不是难过一阵子，是<b>一生</b>。</div></div>
+            </div></div>
+          </div>
+        </div>
+        <div class="focus-note" style="margin-top:20px; font-size:27px">另一读法：「还顾」的，也许是故乡的「她」在望游子——课后从文本找依据，两种都算对。<b style="color:var(--cn)">完整依据见末页附页。</b></div>
+        <div class="handout">
+          <div class="hb-tag">讲义</div>
+          <div class="hb-body">现在读 <span class="hb-c">第 2 页 · 涉江采芙蓉 ·【作品赏析】第一段</span>（页尾）与 <span class="hb-c">第 3 页 · 第一、二段</span>——「芙蓉」谐音「夫容」的<b>思妇说</b>、不写此处写彼处的<b>「悬想」写法</b>（杜甫《月夜》同款），都在这里。课堂作业那道「两种读法」，依据就从这两段里找。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 涉江·降支架背诵 -->
+  <section data-screen-label="12 涉江·背诵">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜涉江采芙蓉</span><span>背会 · 降支架 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="recite" id="recite-sj">
+          <div class="poem small">
+            <span class="f">涉江</span><span class="x">采芙蓉，</span><span class="e">兰泽多芳草。</span><br>
+            <span class="f">采之</span><span class="x">欲遗谁？</span><span class="e">所思在远道。</span><br>
+            <span class="f">还顾</span><span class="x">望旧乡，</span><span class="e">长路漫浩浩。</span><br>
+            <span class="f">同心</span><span class="x">而离居，</span><span class="e">忧伤以终老。</span>
+          </div>
+          <div class="lv-btns">
+            <button class="lv-btn on" data-lv="0">全显</button>
+            <button class="lv-btn" data-lv="1">遮下句</button>
+            <button class="lv-btn" data-lv="2">留首二字</button>
+            <button class="lv-btn" data-lv="3">全遮</button>
+          </div>
+          <div class="recite-tip"><b>遮下句</b>＝我说上句，你接下句 ｜ <b>留首二字</b>＝看头背尾 ｜ <b>全遮</b>＝合书背诵</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 当堂检测 -->
+  <section data-screen-label="13 当堂检测">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜两首</span><span>当堂检测 <b style="color:var(--cn)">≈1.5′</b></span></div>
+      <div class="body">
+        <div class="kicker">当堂检测 · 写在课本空白处 · 同桌互批</div>
+        <div class="ctest">
+          <div class="ct-q"><span class="src">其一</span>《静女》中表现男子痴情等待的两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div>
+            <div class="rv-body">爱而不见，搔首踟蹰。</div>
+          </div></div>
+        </div>
+        <div class="ctest">
+          <div class="ct-q"><span class="src">其二</span>《涉江采芙蓉》中写分隔两地、忧伤一生两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div>
+            <div class="rv-body">同心而离居，忧伤以终老。</div>
+          </div></div>
+        </div>
+        <div class="poem-note" style="margin-top:10px">错字，订正三遍</div>
+        <div class="handout">
+          <div class="hb-tag">讲义</div>
+          <div class="hb-body">做完再核对 <span class="hb-c">第 1 页【译文】末段</span>与 <span class="hb-c">第 2 页 · 涉江【译文】</span>——默写出错，多半是「爱＝藏」「归＝赠」没吃透，译文一读就通了。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 作业收束 -->
+  <section data-screen-label="14 作业收束">
+    <div class="wrap">
+      <div class="hd"><span>古诗词诵读｜静女 · 涉江采芙蓉</span><span>作业 · 收束</span></div>
+      <div class="body">
+        <div class="hw-block">
+          <h3><span>基础 · 全员</span>默写巩固</h3>
+          <p>两首诗<b>各默写一遍</b>，自批订正；<b>明日课前抽背</b>。</p>
+        </div>
+        <div class="hw-block">
+          <h3><span>选做 · 提高</span>理解性默写五句 ＋ 一道理解题</h3>
+          <p>题目见下发题单；理解题：「还顾」两句的<b>两种读法</b>，从文本各找两条依据。</p>
+        </div>
+        <div class="handout" style="margin-top:0; padding-top:20px">
+          <div class="hb-tag">讲义</div>
+          <div class="hb-body">做选做作业前，把 <span class="hb-c">第 3—5 页 · 虞美人 / 鹊桥仙</span>通读一遍——后面的课要用；带着今天的方法读：<b>愁怎么被写得看得见？</b></div>
+        </div>
+        <div class="hw-end">物因人贵，浅语深情——<em>诗要背，更要懂。</em></div>
+        <div class="seal" style="position:absolute; right:150px; bottom:100px">诵</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 附页·两种读法 -->
+  <section data-screen-label="15 附页·两种读法">
+    <div class="wrap" style="padding: 56px 110px 46px">
+      <div class="hd"><span>附页｜涉江采芙蓉 · 研读</span><span>课后研读</span></div>
+      <div class="body" style="justify-content:flex-start; padding-top:6px">
+        <div class="duel-title">「还顾望旧乡」的，是谁？<span>两种读法 · 各找依据</span></div>
+        <div class="duel-sub">分歧只在一个字眼：<b style="color:var(--cn)">「还顾」的那个人是谁</b>——五言诗无主语，全诗没有一句能一锤定音，所以两种读法都成立。</div>
+        <div class="duel-grid">
+          <div class="duel-col">
+            <div class="duel-h">读法一 · 游子望乡<span>教材口径</span></div>
+            <div class="duel-def">采花的是<b>游子</b>；「还顾望旧乡」是游子本人回望故乡。全诗同一主语一贯到底。</div>
+            <div class="du-ev"><span>①</span><div><b>主语一贯</b>：涉、采、欲遗、还顾、望——五个动作同属一人，一气贯通。手捧花草<b>无处可赠</b>（采之欲遗谁），正是游子的怅惘。</div></div>
+            <div class="du-ev"><span>②</span><div><b>空间闭合</b>：「所思在远道」＋「还顾望旧乡」——远道与旧乡同一方向，身在异乡回望才成立，两处互相咬合。</div></div>
+            <div class="du-ev"><span>③</span><div><b>意象一脉</b>：「浩浩」本写水大，移来写路——江水（涉江之江）与长路双重阻隔，是漂泊者实打实的视线。</div></div>
+            <div class="du-ev"><span>④</span><div><b>题旨传统</b>：东汉游宦盛行，「游子」是《古诗十九首》核心形象（如「游子不顾反」）；教材学习提示亦持此说。</div></div>
+          </div>
+          <div class="duel-col">
+            <div class="duel-h">读法二 · 思妇采花<span>讲义观点</span></div>
+            <div class="duel-def">采花的是<b>思妇</b>；她人在旧乡，「望旧乡」于她不通——五六句是她的<b>悬想</b>：想象游子在异乡回望自己。</div>
+            <div class="du-ev"><span>①</span><div><b>「芙蓉」谐「夫容」</b>：江南民歌双关传统（「莲」谐「怜」）；采花赠远本是女子情事（「攀条折其荣，将以遗所思」）。</div></div>
+            <div class="du-ev"><span>②</span><div><b>「还顾」只能反向解</b>：若前四句主语是思妇，她本人就在旧乡——这两句只能是悬想中的游子在望乡，不写己思人而写人思己。</div></div>
+            <div class="du-ev"><span>③</span><div><b>成熟先例</b>：杜甫<span class="moonlnk du-moon-trigger">《月夜》</span>同款章法——不写自己望月，偏写「闺中只独看」，即「对写」（主客移位）。<span style="color:var(--ink2)">（点击《月夜》读原诗）</span></div></div>
+            <div class="du-ev"><span>④</span><div><b>「同心」需双向</b>：两地同时相望（她想象他望乡），双向凝视才坐实「同心而离居」；单向思念说「同心」，隔一层。</div></div>
+          </div>
+        </div>
+        <div class="duel-bottom">怎么判高下：不问「哪种对」，问<b>「哪种依据更硬」</b>——游子说赢在<span class="c">字面一贯（文本直证）</span>，思妇说赢在<span class="c">传统与章法（间接推理）</span>。考试答题按教材口径落笔最稳。 ｜ 依据可翻讲义：第 2 页页尾【作品赏析】＋第 3 页一、二段。</div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+
+<!-- 月夜 弹层（点击附页《月夜》打开） -->
+<div class="moonlay" id="moonlay">
+  <div class="moonlay-card">
+    <div class="mc-top"><button class="moon-close" type="button">✕ 返回课件</button></div>
+    <div class="moon-kicker">拓展研读 · 对写法先例</div>
+    <div class="moon-title">月 夜</div>
+    <div class="moon-author">唐 · 杜甫</div>
+    <div class="moon-poem">
+      今夜鄜州月，闺中只独看。<br>
+      遥怜小儿女，未解忆长安。<br>
+      香雾云鬟湿，清辉玉臂寒。<br>
+      何时倚虚幌，双照泪痕干。
+    </div>
+    <div class="moon-sec">
+      <h3>注 释</h3>
+      <ol class="moon-notes">
+        <li>鄜（fū）州：今陕西富县。安史之乱时，杜甫被困长安，妻儿寄居鄜州。</li>
+        <li>闺中：指妻子。看：读 kān。</li>
+        <li>怜：怜惜。未解：不懂得。</li>
+        <li>云鬟（huán）：女子如云的发髻。</li>
+        <li>清辉：月光。</li>
+        <li>虚幌：轻薄透明的帷幔。</li>
+        <li>双照：月光同时照着两人。</li>
+      </ol>
+    </div>
+    <div class="moon-sec">
+      <h3>白话译文</h3>
+      <p>今晚鄜州的明月，只有妻子一人在闺中独自望月。我远在长安怜惜年幼的儿女，他们还不懂母亲望月是思念困在长安的我。夜雾沾湿了她如云的发髻，清冷月光洒在手臂上，带来阵阵寒意。什么时候我们才能一同靠在帷幔边，让月光照着我们，把相思的泪水擦干？</p>
+    </div>
+    <div class="moon-sec moon-hl">
+      <h3>创作背景 · 对写法</h3>
+      <p>这首五言律诗写于唐肃宗至德元载（756 年）。安史之乱爆发，长安陷落，杜甫被俘困在长安，家人安置在鄜州。诗人望月思家，<b>没有直接写自己思念妻子，而是想象妻子望月思念自己</b>——这种写法叫<b>对写法</b>。正与《涉江采芙蓉》「还顾」两句的另一种读法相通。</p>
+    </div>
+    <div class="moon-sec">
+      <h3>赏 析</h3>
+      <ul class="moon-list">
+        <li><b>首联</b>：想象妻子独自望月，一个「独」字，写出离别孤寂。</li>
+        <li><b>颔联</b>：借儿女年幼不懂母亲心事，反衬妻子思念之苦，情感更含蓄深沉。</li>
+        <li><b>颈联</b>：细节刻画，妻子久立月下，雾湿发髻、月冷玉臂，情景凄婉，是千古名句。</li>
+        <li><b>尾联</b>：期盼团圆，「双照」呼应开篇「独看」，以未来相聚的愿望，反衬当下战乱离散的痛苦。</li>
+      </ul>
+      <p style="margin-top:10px">这首诗把个人相思放在战乱离乱的背景下，情真语悲，是杜甫怀人诗的代表作。</p>
+    </div>
+    <div class="moon-bridge">回到《涉江采芙蓉》：如果采花的是思妇，「还顾望旧乡」正是她想象中的游子在回望自己——与《月夜》「闺中只独看」同一副笔墨。</div>
+    <button class="moon-close mc-bottom" type="button">✕ 返回课件</button>
+  </div>
+</div>
+
+
+<script>
+/* ===== deck-stage web component（幻灯片外壳：缩放/键盘导航/计数/打印） ===== */
+(function() {
+  const STORAGE_KEY_PREFIX = 'deck-stage-slide-';
+
+  class DeckStage extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+      this._currentSlide = 0;
+      this._slides = [];
+      this._storageKey = STORAGE_KEY_PREFIX + (location.pathname || 'default');
+    }
+
+    connectedCallback() {
+      this._width = parseInt(this.getAttribute('width')) || 1920;
+      this._height = parseInt(this.getAttribute('height')) || 1080;
+
+      this._render();
+
+      const init = () => {
+        this._collectSlides();
+        this._setupEventListeners();
+        this._restoreSlide();
+        this._updateDisplay();
+        this._setupPrintStyles();
+      };
+
+      if (this.ownerDocument.readyState === 'loading') {
+        this.ownerDocument.addEventListener('DOMContentLoaded', init, { once: true });
+      } else {
+        requestAnimationFrame(init);
+      }
+    }
+
+    _render() {
+      this.shadowRoot.innerHTML = `
+        <style>
+          :host {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: -apple-system, 'SF Pro Text', 'PingFang SC', sans-serif;
+          }
+
+          :host([noscale]) .stage {
+            transform: none !important;
+            top: 0 !important;
+            left: 0 !important;
+          }
+
+          .stage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: top left;
+            will-change: transform;
+            background: #fff;
+          }
+
+          .slide-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+          }
+
+          ::slotted(section) {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+          }
+
+          ::slotted(section.active) {
+            display: block;
+          }
+
+          .counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-variant-numeric: tabular-nums;
+            z-index: 100;
+            user-select: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+          }
+
+          .counter:hover {
+            opacity: 1;
+          }
+
+          .nav-zone {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 15%;
+            cursor: pointer;
+            z-index: 50;
+          }
+
+          .nav-zone.left { left: 0; }
+          .nav-zone.right { right: 0; }
+
+          .nav-hint {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.2s;
+          }
+
+          .nav-zone.left .nav-hint { left: 20px; }
+          .nav-zone.right .nav-hint { right: 20px; }
+
+          .nav-zone:hover .nav-hint {
+            opacity: 1;
+          }
+
+          @media print {
+            :host {
+              position: static;
+              background: #fff;
+            }
+            .counter, .nav-zone {
+              display: none !important;
+            }
+            .stage {
+              position: static;
+              transform: none !important;
+              page-break-after: always;
+            }
+            ::slotted(section) {
+              display: block !important;
+              position: relative !important;
+              page-break-after: always;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        </style>
+
+        <div class="stage" id="stage" style="width: ${this._width}px; height: ${this._height}px;">
+          <div class="slide-wrapper">
+            <slot></slot>
+          </div>
+        </div>
+
+        <div class="nav-zone left" id="navLeft">
+          <div class="nav-hint">‹</div>
+        </div>
+        <div class="nav-zone right" id="navRight">
+          <div class="nav-hint">›</div>
+        </div>
+
+        <div class="counter" id="counter">1 / 1</div>
+      `;
+    }
+
+    _collectSlides() {
+      this._slides = Array.from(this.querySelectorAll(':scope > section'));
+
+      this._slides.forEach((slide, idx) => {
+        if (!slide.hasAttribute('data-screen-label')) {
+          const num = String(idx + 1).padStart(2, '0');
+          slide.setAttribute('data-screen-label', num);
+        }
+      });
+    }
+
+    _setupEventListeners() {
+      window.addEventListener('resize', () => this._updateScale());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.target.matches('input, textarea, [contenteditable]')) return;
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case ' ':
+          case 'PageDown':
+            e.preventDefault();
+            this.next();
+            break;
+          case 'ArrowLeft':
+          case 'PageUp':
+            e.preventDefault();
+            this.prev();
+            break;
+          case 'Home':
+            e.preventDefault();
+            this.goTo(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            this.goTo(this._slides.length - 1);
+            break;
+        }
+      });
+
+      this.shadowRoot.getElementById('navLeft').addEventListener('click', () => this.prev());
+      this.shadowRoot.getElementById('navRight').addEventListener('click', () => this.next());
+
+      window.addEventListener('hashchange', () => this._handleHash());
+      if (location.hash) {
+        setTimeout(() => this._handleHash(), 0);
+      }
+    }
+
+    _handleHash() {
+      const match = location.hash.match(/^#slide-(\d+)$/);
+      if (match) {
+        const idx = parseInt(match[1]) - 1;
+        if (idx >= 0 && idx < this._slides.length) {
+          this.goTo(idx);
+        }
+      }
+    }
+
+    _restoreSlide() {
+      try {
+        const stored = localStorage.getItem(this._storageKey);
+        if (stored !== null) {
+          const idx = parseInt(stored);
+          if (idx >= 0 && idx < this._slides.length) {
+            this._currentSlide = idx;
+          }
+        }
+      } catch (e) {}
+    }
+
+    _saveSlide() {
+      try {
+        localStorage.setItem(this._storageKey, String(this._currentSlide));
+      } catch (e) {}
+    }
+
+    _updateScale() {
+      if (this.hasAttribute('noscale')) {
+        const stage = this.shadowRoot.getElementById('stage');
+        stage.style.transform = 'none';
+        stage.style.top = '0';
+        stage.style.left = '0';
+        return;
+      }
+
+      const stage = this.shadowRoot.getElementById('stage');
+      if (!stage) return;
+
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+      const scale = Math.min(viewportW / this._width, viewportH / this._height);
+      const scaledW = this._width * scale;
+      const scaledH = this._height * scale;
+      const offsetX = (viewportW - scaledW) / 2;
+      const offsetY = (viewportH - scaledH) / 2;
+
+      stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+      stage.style.top = '0';
+      stage.style.left = '0';
+    }
+
+    _updateDisplay() {
+      this._slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === this._currentSlide);
+      });
+
+      const counter = this.shadowRoot.getElementById('counter');
+      if (counter) {
+        counter.textContent = `${this._currentSlide + 1} / ${this._slides.length}`;
+      }
+
+      this._updateScale();
+
+      try {
+        window.postMessage({
+          slideIndexChanged: this._currentSlide,
+          totalSlides: this._slides.length
+        }, '*');
+      } catch (e) {}
+
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            slideIndexChanged: this._currentSlide,
+            totalSlides: this._slides.length
+          }, '*');
+        }
+      } catch (e) {}
+    }
+
+    _setupPrintStyles() {
+      const printStyle = document.createElement('style');
+      printStyle.textContent = `
+        @media print {
+          @page {
+            size: ${this._width}px ${this._height}px;
+            margin: 0;
+          }
+          body {
+            margin: 0;
+            padding: 0;
+          }
+          deck-stage {
+            position: static !important;
+          }
+          deck-stage > section {
+            display: block !important;
+            position: relative !important;
+            width: ${this._width}px !important;
+            height: ${this._height}px !important;
+            page-break-after: always;
+            overflow: hidden;
+          }
+          deck-stage > section:last-child {
+            page-break-after: auto;
+          }
+        }
+      `;
+      document.head.appendChild(printStyle);
+    }
+
+    next() {
+      if (this._currentSlide < this._slides.length - 1) {
+        this._currentSlide++;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    prev() {
+      if (this._currentSlide > 0) {
+        this._currentSlide--;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    goTo(idx) {
+      if (idx >= 0 && idx < this._slides.length) {
+        this._currentSlide = idx;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    get currentSlide() {
+      return this._currentSlide;
+    }
+
+    get totalSlides() {
+      return this._slides.length;
+    }
+  }
+
+  customElements.define('deck-stage', DeckStage);
+
+  window.DeckStage = DeckStage;
+})();
+</script>
+
+<script>
+/* ===== 教学交互：点击出示（.rv）＋ 背诵降支架（.recite） ===== */
+(function() {
+  // 点击出示：点击虚线框区域切换
+  document.addEventListener('click', function(e) {
+    var rv = e.target.closest('.rv');
+    if (rv) { rv.classList.toggle('on'); }
+  });
+
+  // 背诵降支架：按钮切换层级
+  document.querySelectorAll('.recite').forEach(function(recite) {
+    var btns = recite.querySelectorAll('.lv-btn');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var lv = btn.getAttribute('data-lv');
+        recite.setAttribute('data-lv', lv);
+        btns.forEach(function(b) { b.classList.remove('on'); });
+        btn.classList.add('on');
+      });
+    });
+  });
+
+  // 月夜弹层：打开 / 关闭（按钮、背景、Esc）
+  var moonlay = document.getElementById('moonlay');
+  document.querySelectorAll('.du-moon-trigger').forEach(function(el) {
+    el.addEventListener('click', function(e) { e.stopPropagation(); moonlay.classList.add('open'); });
+  });
+  moonlay.addEventListener('click', function(e) {
+    if (e.target === moonlay || e.target.closest('.moon-close')) moonlay.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') moonlay.classList.remove('open');
+  });
+})();
+</script>
+
+
+</body>
+</html>
