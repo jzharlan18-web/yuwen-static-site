@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>练习一 · 论述类文本阅读（第1—5题）讲评 - 高一语文</title>
+  <link rel="stylesheet" href="../../../assets/css/style.css">
+  <style>
+    body { margin: 0; background: #1c1917; }
+    .lesson-bar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 16px;
+      background: #292524;
+      border-bottom: 1px solid #44403c;
+      color: #fafaf9;
+      font-size: 15px;
+    }
+    .lesson-bar a {
+      color: #fafaf9;
+      text-decoration: none;
+      border: 1px solid #57534e;
+      border-radius: 6px;
+      padding: 5px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .lesson-bar a:hover { background: #44403c; }
+    .lesson-bar .title { font-weight: 700; letter-spacing: .02em; }
+    .lesson-bar .spacer { flex: 1; }
+    .lesson-bar .hint { color: #a8a29e; font-size: 13px; }
+    #deck-frame {
+      display: block;
+      width: 100%;
+      height: calc(100vh - 44px);
+      border: 0;
+      background: #f7f3ec;
+    }
+    /* 课件右下角自带「教师话术 / 全屏」控制条，白板入口收进顶栏，避免压住课件按钮 */
+    .lesson-bar .classroom-whiteboard-launcher {
+      position: static;
+      right: auto;
+      bottom: auto;
+      min-width: 0;
+      min-height: 0;
+      padding: 5px 12px;
+      border: 1px solid #57534e;
+      border-radius: 6px;
+      background: transparent;
+      box-shadow: none;
+      font: inherit;
+      font-weight: 400;
+      backdrop-filter: none;
+    }
+    .lesson-bar .classroom-whiteboard-launcher:hover { background: #44403c; }
+    .lesson-bar .classroom-whiteboard-launcher__icon { font-size: 15px; }
+    @media (max-width: 900px) {
+      .lesson-bar .hint { display: none; }
+    }
+    @media (max-width: 640px) {
+      .lesson-bar .title { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="lesson-bar">
+    <a href="../index.html">← 返回试卷讲评</a>
+    <span class="title">练习一 · 论述类文本阅读（第1—5题）讲评</span>
+    <span class="spacer"></span>
+    <span class="hint">键盘 ← / → 翻页 · 1–5 切题 · 空格显示 · T 教师话术 · 建议按 F11 全屏</span>
+  </div>
+  <iframe id="deck-frame" src="deck.html" title="练习一 · 论述类文本阅读（第1—5题）讲评" allowfullscreen></iframe>
+
+  <script
+    src="../../../assets/js/classroom-whiteboard.js"
+    data-lesson-title="练习一 · 论述类文本阅读（第1—5题）讲评"
+    data-whiteboard-url="../../../tools/whiteboard/index.html"
+  ></script>
+  <script>
+    (function () {
+      var frame = document.getElementById("deck-frame");
+      var bar = document.querySelector(".lesson-bar");
+
+      // 白板入口从右下浮标改为顶栏按钮（课件右下角有控制条，浮标会压住按钮）
+      var launcher = document.querySelector(".classroom-whiteboard-launcher");
+      if (launcher && bar) {
+        var hint = bar.querySelector(".hint");
+        bar.insertBefore(launcher, hint || null);
+      }
+
+      // 课件默认不接收按键，先取得焦点，打开页面即可用键盘翻页
+      function grab() {
+        if (!frame) return;
+        try { frame.contentWindow.focus(); } catch (e) {}
+      }
+      window.addEventListener("load", function () { setTimeout(grab, 120); });
+      frame.addEventListener("load", function () { setTimeout(grab, 120); });
+      document.addEventListener("click", function (e) {
+        if (e.target.closest(".lesson-bar a") || e.target.closest(".classroom-whiteboard-launcher")) return;
+        grab();
+      });
+    })();
+  </script>
+</body>
+</html>

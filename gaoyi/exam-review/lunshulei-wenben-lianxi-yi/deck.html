@@ -1,0 +1,1557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>高一语文检测一 · 现代文阅读（第1—5题）课堂讲评</title>
+<!--
+  设计说明（给后来改版的自己看）
+  · 定位：课堂投屏用的讲评走台。16:9 固定 1280×720 舞台，JS 等比缩放居中，笔记本/投影/大屏都不变形。
+  · 底线：单文件、零外链、零 CDN。教室断网、U 盘拷走、双击即开，都必须能跑。
+  · 视觉坐标：讲义的骨相 + 一点书卷气。宣纸底、墨色字、宋体做标题、朱红只用于「错误与风险」，
+    黛青只用于「文本证据」，赭石只用于「方法与模型」。全篇无渐变、无 emoji、无圆角卡片。
+  · 记号：题号做成朱红印章，是这一版唯一的「用力处」，其余全部收敛。
+  · 新增内容请同步更新 DECK 数据区，不要另起一套样式。
+-->
+<style>
+:root{
+  --paper:#F7F3EC;
+  --paper2:#FDFBF6;
+  --ink:#1E1B17;
+  --ink2:#5B534A;
+  --ink3:#928779;
+  --rule:#E4DAC8;
+  --rule2:#CFC3AE;
+  --zhu:#B1382B;          /* 错误 · 风险 · 结论 */
+  --zhu-soft:rgba(177,56,43,.10);
+  --dai:#2E5F63;          /* 文本证据 */
+  --dai-soft:rgba(46,95,99,.10);
+  --zhe:#9A6B2C;          /* 方法 · 模型 */
+  --zhe-soft:rgba(154,107,44,.10);
+  --serif:"Songti SC","STSong","Source Han Serif SC","Noto Serif CJK SC","SimSun",serif;
+  --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",-apple-system,"Helvetica Neue",sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#EDE7DC}
+body{font-family:var(--sans);color:var(--ink);-webkit-font-smoothing:antialiased}
+
+#stage{
+  position:absolute;left:50%;top:50%;
+  width:1280px;height:720px;
+  transform-origin:center center;
+  background:var(--paper);
+  display:flex;flex-direction:column;
+  overflow:hidden;
+  box-shadow:0 24px 70px rgba(52,42,30,.20);
+}
+
+/* ── 卷首 ───────────────────────────── */
+header{
+  height:58px;flex:0 0 58px;display:flex;align-items:center;
+  padding:0 30px 0 26px;border-bottom:1px solid var(--rule2);
+  gap:16px;
+}
+.vol{display:flex;align-items:baseline;gap:10px;min-width:0}
+.vol .mark{font-family:var(--serif);font-size:15px;color:var(--zhu);letter-spacing:.32em;writing-mode:vertical-rl;line-height:1;padding-top:2px;height:34px}
+.vol h1{font-family:var(--serif);font-size:19px;font-weight:600;letter-spacing:.06em;white-space:nowrap}
+.vol .src{font-size:12.5px;color:var(--ink3);letter-spacing:.04em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.head-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.tabs{display:flex;gap:8px}
+.tab{
+  font-family:var(--serif);font-size:14px;letter-spacing:.08em;
+  border:1px solid var(--rule2);background:transparent;color:var(--ink2);
+  padding:5px 12px;cursor:pointer;transition:.18s;border-radius:1px;
+}
+.tab:hover{border-color:var(--ink3);color:var(--ink)}
+.tab.on{background:var(--zhu);border-color:var(--zhu);color:#fff;font-weight:600}
+.tab .stamp{font-size:11px;opacity:.7;margin-left:5px}
+
+/* ── 主体 ───────────────────────────── */
+.body{flex:1;display:flex;min-height:0}
+
+/* 左侧六步导览 */
+.rail{
+  flex:0 0 182px;border-right:1px solid var(--rule2);
+  padding:20px 0 12px;overflow-y:auto;
+}
+.rail .rl-lab{font-size:11px;letter-spacing:.26em;color:var(--ink3);padding:0 0 12px 22px}
+.rail button{
+  display:flex;align-items:baseline;gap:11px;width:100%;
+  background:none;border:0;cursor:pointer;text-align:left;
+  padding:8px 22px;font-family:var(--sans);font-size:15px;color:var(--ink2);
+  transition:.16s;position:relative;
+}
+.rail button .num{font-family:var(--serif);font-size:15px;color:var(--ink3);width:16px;flex:0 0 16px;transition:.16s}
+.rail button:hover{color:var(--ink);background:rgba(30,27,23,.03)}
+.rail button.on{color:var(--zhu);font-weight:600}
+.rail button.on .num{color:var(--zhu)}
+.rail button.on::before{
+  content:"";position:absolute;left:0;top:50%;transform:translateY(-50%);
+  width:3px;height:16px;background:var(--zhu);
+}
+.rail button.seen .num::after{content:"";display:block;width:4px;height:4px;background:var(--rule2);margin:3px auto 0;border-radius:50%}
+.rail .rl-foot{margin-top:16px;padding:12px 22px 0;border-top:1px solid var(--rule);font-size:11.5px;color:var(--ink3);line-height:1.9}
+.rail .rl-foot b{color:var(--ink2);font-weight:600}
+
+/* 主内容区 */
+.main{flex:1;min-width:0;overflow-y:auto;padding:24px 40px 20px 34px;position:relative}
+.main::-webkit-scrollbar{width:6px}
+.main::-webkit-scrollbar-thumb{background:var(--rule2);border-radius:3px}
+.screen{opacity:0;animation:rise .34s ease forwards}
+@keyframes rise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.screen>h2{
+  font-family:var(--serif);font-size:29px;font-weight:600;letter-spacing:.03em;
+  line-height:1.28;margin-bottom:4px;
+}
+.screen .lede{font-size:14px;color:var(--ink3);letter-spacing:.05em;margin-bottom:18px;padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.hairline{height:1px;background:var(--rule);margin:16px 0}
+
+/* 讲义式「边栏标签 + 内容」 */
+.row{display:flex;gap:14px;margin:13px 0;align-items:flex-start}
+.row>.lab{
+  flex:0 0 78px;font-size:12.5px;letter-spacing:.14em;color:var(--zhu);
+  padding-top:5px;text-align:right;line-height:1.5;
+}
+.row>.lab.dai{color:var(--dai)}
+.row>.lab.zhe{color:var(--zhe)}
+.row>.lab.ink{color:var(--ink3)}
+.row>.val{flex:1;min-width:0;font-size:17px;line-height:1.78}
+.row>.val.sm{font-size:15.5px;line-height:1.72}
+.main p{font-size:17px;line-height:1.78;margin:10px 0}
+.main p.sm{font-size:15.5px;color:var(--ink2)}
+b,strong{font-weight:600}
+.hl{color:var(--zhu);font-weight:600;background:linear-gradient(transparent 62%,var(--zhu-soft) 62%)}
+.ev{color:var(--dai);font-weight:600;background:linear-gradient(transparent 62%,var(--dai-soft) 62%)}
+.md{color:var(--zhe);font-weight:600}
+.quote{
+  font-family:var(--serif);font-size:16.5px;line-height:1.85;color:var(--ink);
+  padding:2px 0 2px 14px;border-left:2px solid var(--rule2);
+}
+.quote.zhu{border-left-color:var(--zhu);color:var(--zhu);font-weight:600}
+.quote.dai{border-left-color:var(--dai)}
+
+ul.dot{list-style:none}
+ul.dot li{position:relative;padding-left:17px;margin:7px 0;font-size:17px;line-height:1.75}
+ul.dot li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;background:var(--rule2);border-radius:50%}
+ul.dot li.zhu::before{background:var(--zhu)}
+ul.dot li.dai::before{background:var(--dai)}
+ul.dot li.zhe::before{background:var(--zhe)}
+
+ol.num{list-style:none;counter-reset:n}
+ol.num li{counter-increment:n;position:relative;padding-left:30px;margin:10px 0;font-size:17px;line-height:1.75}
+ol.num li::before{
+  content:counter(n);position:absolute;left:0;top:.1em;
+  font-family:var(--serif);font-size:15px;color:var(--zhe);
+  width:20px;height:20px;line-height:20px;text-align:center;
+  border:1px solid var(--zhe);border-radius:50%;opacity:.85;
+}
+
+/* 题干与选项 */
+.prompt{font-family:var(--serif);font-size:19px;line-height:1.7;margin-bottom:12px}
+.opts{list-style:none}
+.opts li{display:flex;gap:11px;padding:7px 0;border-bottom:1px dashed var(--rule);font-size:16.5px;line-height:1.72}
+.opts li:last-child{border-bottom:0}
+.opts .k{font-family:var(--serif);font-size:16px;color:var(--ink3);flex:0 0 16px;padding-top:1px}
+.opts li.bad .k{color:var(--zhu);font-weight:700}
+.opts li.bad{color:var(--zhu)}
+
+/* 表格 */
+table{width:100%;border-collapse:collapse}
+th{
+  font-size:12.5px;letter-spacing:.1em;color:var(--ink3);font-weight:500;
+  text-align:left;padding:0 12px 7px 0;border-bottom:1px solid var(--rule2);
+}
+td{font-size:15.5px;line-height:1.7;padding:9px 12px 9px 0;border-bottom:1px dashed var(--rule);vertical-align:top;color:var(--ink)}
+tbody tr:last-child td{border-bottom:0}
+td.k{font-family:var(--serif);font-size:15px;color:var(--ink3);width:44px}
+tr.mark-row td{background:var(--zhu-soft)}
+tr.mark-row td.k{color:var(--zhu);font-weight:700}
+td .tag{
+  display:inline-block;font-size:12px;letter-spacing:.08em;
+  border:1px solid currentColor;padding:1px 6px;border-radius:1px;
+}
+.tag.no{color:var(--zhu)}
+.tag.yes{color:var(--dai)}
+
+/* 双栏 */
+.cols{display:flex;gap:30px;align-items:flex-start}
+.cols>*{min-width:0}
+.cols.c62>.c-l{flex:1 1 62%}
+.cols.c62>.c-r{flex:0 0 34%}
+.panel-box{
+  background:var(--paper2);border:1px solid var(--rule);padding:16px 18px;border-radius:1px;
+}
+.panel-box .pb-lab{
+  font-size:11.5px;letter-spacing:.2em;color:var(--ink3);
+  padding-bottom:9px;margin-bottom:11px;border-bottom:1px solid var(--rule);
+}
+.panel-box p{font-size:14.5px;line-height:1.72;margin:7px 0}
+.panel-box .kv{display:flex;gap:10px;font-size:14px;line-height:1.7;margin:6px 0}
+.panel-box .kv span:first-child{color:var(--ink3);flex:0 0 52px}
+
+/* 印章结论 */
+.seal{
+  display:inline-flex;flex-direction:column;align-items:center;justify-content:center;
+  width:74px;height:74px;background:var(--zhu);color:#fff;border-radius:2px;
+  font-family:var(--serif);line-height:1.1;transform:rotate(-2.5deg);
+  box-shadow:0 3px 10px rgba(177,56,43,.24);
+}
+.seal em{font-style:normal;font-size:10.5px;letter-spacing:.2em;opacity:.86}
+.seal b{font-size:29px;letter-spacing:.02em}
+
+/* 模型卡 */
+.model{border-left:2px solid var(--zhe);padding:2px 0 2px 16px;margin:12px 0}
+.model .m-i{display:flex;gap:12px;margin:9px 0;font-size:16.5px;line-height:1.7}
+.model .m-i i{font-family:var(--serif);font-style:normal;color:var(--zhe);flex:0 0 18px}
+
+/* 可展开 */
+.rv{display:none;margin-top:6px}
+.rv.show{display:block;animation:rise .28s ease}
+.rv-btn{
+  background:none;border:1px dashed var(--rule2);color:var(--ink3);
+  font-family:var(--sans);font-size:12px;letter-spacing:.12em;
+  padding:3px 10px;cursor:pointer;border-radius:1px;transition:.16s;
+}
+.rv-btn:hover{border-color:var(--zhu);color:var(--zhu)}
+.rv-btn.on{border-style:solid;border-color:var(--zhu);color:var(--zhu)}
+
+/* 找错卡 */
+.err{display:flex;gap:14px;padding:13px 0;border-bottom:1px dashed var(--rule);align-items:flex-start}
+.err:last-of-type{border-bottom:0}
+.err .no{
+  font-family:var(--serif);font-size:12.5px;color:var(--zhu);flex:0 0 62px;
+  letter-spacing:.1em;padding-top:3px;
+}
+.err .ct{flex:1;min-width:0}
+.err .said{font-size:16.5px;line-height:1.72;color:var(--ink)}
+
+/* 迁移题 */
+.vary{border:1px solid var(--rule2);padding:16px 18px;border-radius:1px;margin:12px 0}
+.vary .v-q{font-family:var(--serif);font-size:16.5px;line-height:1.75;margin-bottom:11px}
+.vary .v-o{display:flex;gap:10px;font-size:16px;line-height:1.72;margin:6px 0}
+.vary .v-o span:first-child{font-family:var(--serif);color:var(--ink3);flex:0 0 18px}
+
+/* ── 页脚 ───────────────────────────── */
+footer{
+  flex:0 0 42px;height:42px;display:flex;align-items:center;gap:18px;
+  padding:0 26px;border-top:1px solid var(--rule2);background:rgba(255,255,255,.35);
+}
+.dots{display:flex;gap:5px;align-items:center}
+.dots .dot{width:7px;height:7px;background:var(--rule2);border:0;padding:0;cursor:pointer;border-radius:50%;transition:.16s}
+.dots .dot.on{background:var(--zhu);width:18px;border-radius:4px;transform:scale(1.02)}
+.dots .dot:hover:not(.on){background:var(--ink3)}
+.pos{font-family:var(--serif);font-size:13px;color:var(--ink2);letter-spacing:.06em}
+.pos b{color:var(--zhu);font-weight:600}
+.hint{margin-left:auto;font-size:11.5px;color:var(--ink3);letter-spacing:.06em;display:flex;gap:14px;align-items:center}
+.hint kbd{
+  font-family:var(--sans);font-size:10.5px;color:var(--ink2);
+  border:1px solid var(--rule2);padding:1px 5px;border-radius:2px;margin-right:3px;
+}
+.tgl{
+  background:none;border:1px solid var(--rule2);color:var(--ink2);
+  font-family:var(--sans);font-size:11.5px;letter-spacing:.1em;
+  padding:3px 9px;cursor:pointer;border-radius:1px;transition:.16s;
+}
+.tgl:hover{border-color:var(--ink3);color:var(--ink)}
+.tgl.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+
+/* ── 教师面板 ───────────────────────── */
+.tp{
+  position:absolute;top:0;right:0;width:382px;height:100%;
+  background:var(--paper2);border-left:1px solid var(--rule2);
+  transform:translateX(100%);transition:transform .3s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;z-index:20;
+  box-shadow:-14px 0 34px rgba(52,42,30,.10);
+}
+.tp.on{transform:none}
+.tp-head{display:flex;align-items:center;gap:0;border-bottom:1px solid var(--rule2);padding:0 16px;height:46px;flex:0 0 46px}
+.tp-tab{
+  background:none;border:0;font-family:var(--sans);font-size:13.5px;letter-spacing:.1em;
+  color:var(--ink3);padding:6px 12px;cursor:pointer;border-bottom:2px solid transparent;transition:.16s;
+}
+.tp-tab.on{color:var(--zhu);border-bottom-color:var(--zhu);font-weight:600}
+.tp-x{margin-left:auto;background:none;border:0;color:var(--ink3);font-size:17px;cursor:pointer;padding:4px 6px;line-height:1}
+.tp-x:hover{color:var(--zhu)}
+.tp-body{flex:1;overflow-y:auto;padding:16px 18px 24px}
+.tp-body::-webkit-scrollbar{width:5px}
+.tp-body::-webkit-scrollbar-thumb{background:var(--rule2)}
+.tp-sec{margin-bottom:18px}
+.tp-sec .t{font-size:11.5px;letter-spacing:.2em;color:var(--ink3);padding-bottom:7px;margin-bottom:9px;border-bottom:1px solid var(--rule)}
+.tp-line{font-size:14px;line-height:1.8;margin:8px 0;color:var(--ink)}
+.tp-line b{color:var(--zhu);font-weight:600}
+.tp-line.dai b{color:var(--dai)}
+.tp-mini{width:100%;border-collapse:collapse}
+.tp-mini td{font-size:13px;padding:5px 8px 5px 0;border-bottom:1px dotted var(--rule);color:var(--ink2);line-height:1.6}
+.tp-mini td:first-child{color:var(--ink);width:52px;font-weight:600}
+.tp-mini td:nth-child(2){width:44px;color:var(--zhu)}
+.tp-note{font-size:12.5px;color:var(--ink3);line-height:1.75;border-top:1px solid var(--rule);padding-top:10px}
+</style>
+</head>
+<body>
+<div id="stage">
+  <header>
+    <div class="vol">
+      <div class="mark">语文</div>
+      <h1>高一语文检测一 · 现代文阅读讲评</h1>
+      <span class="src">文本：《习近平总书记这样谈中华文明的包容性》（《瞭望》2024年第12期）</span>
+    </div>
+    <div class="head-right">
+      <div class="tabs" id="tabs"></div>
+    </div>
+  </header>
+
+  <div class="body">
+    <nav class="rail" id="rail">
+      <div class="rl-lab">讲评路径</div>
+      <div id="railItems"></div>
+      <div class="rl-foot">
+        <div><b>六步法</b></div>
+        <div>定性 → 找错 → 回文</div>
+        <div>→ 拆干 → 建模 → 迁移</div>
+      </div>
+    </nav>
+    <main class="main" id="main"></main>
+  </div>
+
+  <footer>
+    <div class="dots" id="dots"></div>
+    <div class="pos" id="pos"></div>
+    <div class="hint">
+      <span><kbd>←</kbd><kbd>→</kbd>翻页</span>
+      <span><kbd>空格</kbd>显示</span>
+      <span><kbd>1</kbd>–<kbd>5</kbd>切题</span>
+      <button class="tgl" id="tScript">教师话术 T</button>
+      <button class="tgl" id="tFull">全屏 F</button>
+    </div>
+  </footer>
+
+  <aside class="tp" id="tp">
+    <div class="tp-head">
+      <button class="tp-tab on" data-ptab="script">课堂话术</button>
+      <button class="tp-tab" data-ptab="prep">备课预判</button>
+      <button class="tp-x" id="tpClose">×</button>
+    </div>
+    <div class="tp-body" id="tpBody"></div>
+  </aside>
+</div>
+
+<script>
+/* ══════════════════════════════════════════════════════════════
+   数据区：五题内容。改题、增题只动这里。
+   ══════════════════════════════════════════════════════════════ */
+const RAIL = ['题面','定性','找错','回文','拆干','建模','迁移'];
+const RAIL_NUM = ['卷','一','二','三','四','五','六'];
+
+const DECK = [
+/* ───────────────── 第 1 题 ───────────────── */
+{
+  n:'第1题', type:'内容理解选择题', ans:'C', kind:'选择',
+  board:[
+    ['题型本质','内容理解 + 逻辑限定'],
+    ['错误路径','找到同词 = 判定正确'],
+    ['文本依据','前提 · 根本途径 · 求同存异'],
+    ['核心差异','必要条件 ≠ 充分条件'],
+    ['解题模型','主体 — 范围 — 程度 — 关系'],
+    ['结论','C']
+  ],
+  time:[['定性','1′','追问题目任务'],['找错','2′','呈现两种错因'],['回文','3′','组织四比对表'],['拆干','1′','强调四比对'],['建模','2′','总结四比对法'],['迁移','2′','给出“阅读积累”句']],
+  script:[
+    ['开场','“这道题的四个选项，说的话都在原文里找得到影子。命题人没有编造内容，他动的是关系。”'],
+    ['关键追问','“‘前提’能推出‘就一定能’吗？把这两个词摆在一起读一遍。”'],
+    ['纠错瞬间','“你找到了正确的句子，却放过了错误的连接词。”'],
+    ['模型生成','“比主体、比范围、比程度、比关系——四个比对做完，再下结论。”'],
+    ['收束','“找得到原句只是第一步，比得出差别才是得分点。”']
+  ],
+  prep:[
+    ['真正考什么','判断选项对原文逻辑关系的改写，而不是能否找到原句。'],
+    ['错误路径一','只找原句比对词语，看到“平等是‘容’的前提”便判 C 正确，忽略后半句“就一定能”。'],
+    ['错误路径二','认为 A、D 谈宏大意义属“拔高”而误选。'],
+    ['文本依托','“平等是‘容’的前提……正是因为在民族平等尊重基础上实现了民族团结互助，融合发展。”'],
+    ['关键限制词','“不正确”“相关内容的理解和分析”。'],
+    ['思维模型','条件关系检验：前提 ≠ 充分条件。'],
+    ['可否迁移','可迁移到所有信息类、论述类文本的选择判断题。']
+  ],
+
+  face:`
+    <div class="cols c62">
+      <div class="c-l">
+        <p class="prompt">1．下列对原文相关内容的理解和分析，不正确的一项是（　）</p>
+        <ul class="opts">
+          <li><span class="k">A</span><span class="t">中华文明包容的胸怀与智慧，为当今世界正确处理差异、化解冲突、实现融合，使各方和谐相处、共同发展，提供了中国方案。</span></li>
+          <li><span class="k">B</span><span class="t">“包容”的胸怀不仅包括吸收佛教思想等外来文化，也包括像丝绸之路这样，推动中华文明走向世界，是个双向的交往与交流。</span></li>
+          <li class="bad"><span class="k">C</span><span class="t">平等是“容”的前提，相关各方地位上相同，态度上相互尊重，平等相待，<span class="hl">就一定能</span>实现民族团结互助，融合发展，共抵风险。</span></li>
+          <li><span class="k">D</span><span class="t">包容的特性不仅保障了中华民族的长期生存，塑造了独特的民族形象与气质，而且将会对民族未来的发展与繁荣发挥巨大作用。</span></li>
+        </ul>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">核心素养定位</div>
+          <div class="kv"><span>主导</span><span><b>思维发展与提升</b></span></div>
+          <div class="kv"><span>次级</span><span>语言建构与运用</span></div>
+          <p class="sm" style="margin-top:12px">辨析概念间的关系（前提与结果、必要条件与充分条件），识别选项在程度、范围、关系上的改写。</p>
+          <div class="hairline" style="margin:12px 0"></div>
+          <p style="font-size:13.5px;color:var(--dai);line-height:1.75">思维发展与提升 → 关系判断与逻辑辨析 → 定位原文 → 比对关系词与程度词 → 识别绝对化改写</p>
+        </div>
+        <div class="panel-box" style="margin-top:14px;border-color:var(--zhu);background:rgba(177,56,43,.04)">
+          <div class="pb-lab" style="color:var(--zhu)">本题本质在考什么</div>
+          <p style="color:var(--zhu);font-weight:600;font-size:15px">不是考是否读懂“包容”，而是考能否发现选项把原文的“前提”偷换成了“只要……就一定能”的充分条件。</p>
+        </div>
+      </div>
+    </div>`,
+
+  steps:[
+  /* 一 定性 */
+  `
+    <h2>定性 · 不急着排除，先说这题在考什么</h2>
+    <div class="lede">一 定性　|　1 分钟</div>
+    <div class="row"><div class="lab">学生活动</div><div class="val">合上试卷，用自己的话说：这题要我们判断什么？</div></div>
+    <div class="row"><div class="lab ink">教师动作</div><div class="val sm">不急于讲选项。先让学生把“判断任务”说出来，把课堂话语权交出去。</div></div>
+
+    <div class="row"><div class="lab">引导结论</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示引导结论</button>
+      <div class="rv">
+        <p>判断四个选项对原文的<b>转述是否等值</b>——重点不在“内容有没有”，而在<span class="hl">关系、程度、范围</span>有没有被改动。</p>
+        <p class="sm">四个选项都没有编造内容，命题人动的是“说法和说法的强度”。</p>
+      </div></div>
+    </div></div>
+
+    <div class="row"><div class="lab zhe">本步要立的<br>规矩</div><div class="val sm">定性错了，后面每一步都会用错力气。这一步只解决一个问题：<span class="md">这题比的是“有没有”，还是“对不对、够不够、过不过”？</span></div></div>
+  `,
+
+  /* 二 找错 */
+  `
+    <h2>找错 · 让错误路径显形</h2>
+    <div class="lede">二 找错　|　2 分钟</div>
+
+    <div class="err">
+      <div class="no">错因一</div>
+      <div class="ct">
+        <div class="said">“C 项前半句原文有，所以 C 是对。”</div>
+        <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开追问</button>
+        <div class="rv">
+          <div class="quote zhu">原句 → 选项，后半句发生了什么变化？</div>
+          <p>加入“<span class="hl">就一定能</span>”，把“前提”（必要条件）变成了“有它就一定行”（充分条件）。</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="err">
+      <div class="no">错因二</div>
+      <div class="ct">
+        <div class="said">“A、D 说得太大，属于过度拔高。”</div>
+        <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开追问</button>
+        <div class="rv">
+          <p>原文末段是否写到“对民族未来的发展与繁荣发挥巨大作用”“建设中华民族现代文明”？</p>
+          <p class="sm">凡是把合理表述误判为“拔高”的，都是<span class="hl">没有回文核对</span>，靠对“宏大话语”的语感做题。</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="row"><div class="lab">该由学生<br>说出的话</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示错误逻辑</button>
+      <div class="rv">
+        <div class="quote zhu" style="font-size:17.5px">“我只核对了关键词有没有出现，没有核对关键词之间的关系有没有被改。”</div>
+      </div></div>
+    </div></div>
+  `,
+
+  /* 三 回文 */
+  `
+    <h2>回文 · 逐项建立证据链</h2>
+    <div class="lede">三 回文　|　3 分钟　学生活动：圈画关键句，标出关系词</div>
+    <table>
+      <thead><tr><th style="width:44px">选项</th><th>原文依据</th><th style="width:120px">关系词</th></tr></thead>
+      <tbody>
+        <tr><td class="k">A</td><td>第1段“正确处理差异、化解冲突、实现融合，使各方和谐相处、共同发展”</td><td>并列、目的</td></tr>
+        <tr><td class="k">B</td><td>第3段“中外文明交流交融极大促进中华文化远播世界，也极大促进各国文化和物产传入中国”</td><td>双向</td></tr>
+        <tr class="mark-row"><td class="k">C</td><td>第5段“平等是‘容’的<span class="hl">前提</span>……正是因为在民族平等尊重基础上实现了……”</td><td><b>前提、因果</b></td></tr>
+        <tr><td class="k">D</td><td>末段“对中华民族长时间的生存、发展和繁荣发挥巨大作用，塑造……独特形象和气质”</td><td>递进</td></tr>
+      </tbody>
+    </table>
+
+    <div class="row" style="margin-top:16px"><div class="lab dai">补充<br>证据</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开：实现融合还需要什么</button>
+      <div class="rv">
+        <div class="quote dai">“文明相处需要和而不同的精神。”……中华文明强调<span class="ev">求同存异</span>，把握好同与异、我与他、一与多之间的关系。</div>
+        <p class="sm">这说明实现融合需要处理好同异、我他、一多等多重关系，<b>不是“平等”一项即可保证结果</b>。</p>
+      </div></div>
+    </div></div>
+
+    <div class="row"><div class="lab">提问链</div><div class="val">
+      <ul class="dot">
+        <li>C 项对应原文哪一句？把它整句找出来，圈出原文用来交代“平等”与“结果”关系的词——<span class="ev">“前提”</span>、<span class="ev">“正是因为在……基础上”</span>。</li>
+        <li>原文这两个词说的是哪一类条件？和选项的“只要平等相待，就一定能实现”是同一类吗？</li>
+        <li>补上“和而不同”这处证据后，<b>只靠“平等”一项</b>，还推得出“一定能实现”吗？</li>
+      </ul>
+    </div></div>
+  `,
+
+  /* 四 拆干 */
+  `
+    <h2>拆干 · 把题目要求改写成自己的动作</h2>
+    <div class="lede">四 拆干　|　1 分钟</div>
+    <div class="row"><div class="lab ink">指令词</div><div class="val sm">判断“<b>不正确</b>”的一项。</div></div>
+    <div class="row"><div class="lab ink">限制词</div><div class="val sm">“对原文相关内容的理解和分析”——必须在原文之内判断，不能凭常识、不能凭感觉。</div></div>
+    <div class="row"><div class="lab zhe">隐含任务</div><div class="val">逐项核对<span class="md">主体、范围、程度、关系</span>。四个选项长得都像原文，差别只在其中一个维度上。</div></div>
+    <div class="row"><div class="lab">学生改写</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示改写结果</button>
+      <div class="rv">
+        <div class="quote" style="font-size:17.5px">我要检查每个选项对原文逻辑关系的转述，<b>是否被扩大或绝对化</b>。</div>
+      </div></div>
+    </div></div>
+  `,
+
+  /* 五 建模 */
+  `
+    <h2>建模 · 选择题四比对</h2>
+    <div class="lede">五 建模　|　2 分钟　从一道题到一类题</div>
+    <div class="cols c62">
+      <div class="c-l">
+        <div class="model">
+          <div class="m-i"><i>①</i><div><b>比主体</b>：说的是谁对谁？主体有没有被偷换？</div></div>
+          <div class="m-i"><i>②</i><div><b>比范围</b>：说的是全部还是部分？有没有以偏概全？</div></div>
+          <div class="m-i"><i>③</i><div><b>比程度</b>：可能还是必然？影响还是决定？</div></div>
+          <div class="m-i"><i>④</i><div><b>比关系</b>：并列、因果、条件、递进是否被替换？</div></div>
+        </div>
+
+        <div class="row"><div class="lab">条件关系<br>补充分辨</div><div class="val">
+          <table style="margin-top:2px">
+            <thead><tr><th style="width:130px">关系</th><th>含义</th><th style="width:200px">表述标志</th></tr></thead>
+            <tbody>
+              <tr><td>必要条件</td><td>没有它不行</td><td>前提、基础、重要条件</td></tr>
+              <tr><td>充分条件</td><td>有它就一定行</td><td>只要……就、一定能、必然</td></tr>
+            </tbody>
+          </table>
+          <p class="sm" style="margin-top:10px">选项把原文的“前提”（必要条件）改写成“就一定能”（充分条件），属于<span class="hl">逻辑强度的越界</span>。</p>
+        </div></div>
+      </div>
+
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">板书设计</div>
+          <p style="font-family:var(--serif);font-size:14px;line-height:1.9">
+            第1题　内容理解<br>
+            <span style="color:var(--ink3)">错在何处</span>　前提 → 就一定能<br>
+            <span style="color:var(--ink3)">四比对</span>　主体 / 范围 / 程度 / 关系<br>
+            <span style="color:var(--ink3)">正确依据</span>　“平等是‘容’的前提”
+          </p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:16px;display:flex;align-items:center;gap:20px">
+      <div class="seal"><em>结论</em><b>C</b></div>
+      <p class="sm" style="max-width:640px;margin:0">“平等是前提”不等于“平等就一定能实现”。该项把必要条件表述成了充分条件——<b>错的不是内容，是连接的强度</b>。</p>
+    </div>
+  `,
+
+  /* 六 迁移 */
+  `
+    <h2>迁移 · 当场用四比对法验一遍</h2>
+    <div class="lede">六 迁移　|　2 分钟　学生独立判断并说明理由</div>
+    <div class="vary">
+      <div class="v-q">原文：“阅读积累是写作能力提升的重要基础。”</div>
+      <div class="v-o"><span>甲</span><span>只要多读书，写作能力<span class="hl">就一定能</span>提升。</span></div>
+      <div class="v-o"><span>乙</span><span>阅读积累对写作能力提升有重要作用。</span></div>
+    </div>
+    <div class="row"><div class="lab">要求</div><div class="val sm">先判断，再说清“哪一维被改了”。不要只答“甲错乙对”。</div></div>
+    <div class="row"><div class="lab">迁移答案</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示答案</button>
+      <div class="rv">
+        <p><b>甲不等值</b>：把“重要基础”改写成“只要……就一定能”，必要条件被换成充分条件。</p>
+        <p><b>乙等值</b>：仍停留在“有重要作用”的程度，没有越界。</p>
+      </div></div>
+    </div></div>
+  `
+  ]
+},
+
+/* ───────────────── 第 2 题 ───────────────── */
+{
+  n:'第2题', type:'论证分析选择题', ans:'B', kind:'选择',
+  board:[
+    ['题型本质','论证动作 → 准确命名'],
+    ['错误路径','概念出现 = 论证方法成立'],
+    ['文本动作','界定 — 分述 — 统一'],
+    ['三问法','有没有 → 主要在做什么 → 术语是否相符'],
+    ['关键区分','对比（比较对照）≠ 阐释（分别说明）'],
+    ['结论','B']
+  ],
+  time:[['定性','1′','引导识别论证要素'],['找错','2′','呈现“有概念即正确”'],['回文','3′','组织三问法验证'],['拆干','1′','强调名实相符'],['建模','2′','总结三问法'],['迁移','2′','给出技术教学段']],
+  script:[
+    ['开场','“这四个选项，术语都用对了。问题在于，术语和文本的做法对不对得上。”'],
+    ['关键追问','“反复说明两个概念的关系，算不算充分的对比？”'],
+    ['纠错瞬间','“你有证据，但你的证据只能证明概念出现了，不能证明它被对比了。”'],
+    ['模型生成','“先问有没有，再问是不是这种。”'],
+    ['收束','“论证分析题，考的是名实相符，不是术语背诵。”']
+  ],
+  prep:[
+    ['真正考什么','论证特点与文本实际的对应判断。'],
+    ['错误路径一','看到“对比”二字，想到文中确有“多元/一体”“求同/存异”，便判 B 正确。'],
+    ['错误路径二','认为 D 项“领导人讲话代表国家意志”表述夸张而误选。'],
+    ['文本依托','第2段阐释“多元”与“一体”各自内涵；第7段分别说明“求同”与“存异”。'],
+    ['关键限制词','“不正确”“分析和评价”。'],
+    ['思维模型','术语校验：先问文本有没有，再问是不是这种。'],
+    ['可否迁移','可迁移到“论证特点分析”“论据作用判断”“语言风格评价”等题。']
+  ],
+
+  face:`
+    <div class="cols c62">
+      <div class="c-l">
+        <p class="prompt">2．下列对原文相关内容的分析和评价，不正确的一项是（　）</p>
+        <ul class="opts">
+          <li><span class="k">A</span><span class="t">文章注意字词意义的辨析，如“包”“容”等，对概念作了界定，使在此基础上的判断与推理更加准确，增强了逻辑性。</span></li>
+          <li class="bad"><span class="k">B</span><span class="t">文章对相反相对的概念，如“多元”与“一体”、“求同”与“存异”等，<span class="hl">进行了充分深入的对比</span>，鲜明地表达了观点。</span></li>
+          <li><span class="k">C</span><span class="t">文章举张骞、郑和、玄奘等历史上的名人作为实例，论据具有典型性和代表性，增加了说理的可信度，使论证更具说服力。</span></li>
+          <li><span class="k">D</span><span class="t">文中有许多引用，如《老子》《论语》等古籍，以及领导人讲话，分别代表了悠久的传统思想与当今国家意志，具有权威性。</span></li>
+        </ul>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">核心素养定位</div>
+          <div class="kv"><span>主导</span><span><b>思维发展与提升</b></span></div>
+          <div class="kv"><span>次级</span><span>语言建构与运用</span></div>
+          <p class="sm" style="margin-top:12px">辨别论证方法术语与文本实际写法的对应关系，判断“评价”是否被拔高或偷换。</p>
+          <div class="hairline" style="margin:12px 0"></div>
+          <p style="font-size:13.5px;color:var(--dai);line-height:1.75">思维发展与提升 → 论证分析、术语校验 → 提取文本实际做法 → 对照选项术语 → 判断是否名实相符</p>
+        </div>
+        <div class="panel-box" style="margin-top:14px;border-color:var(--zhu);background:rgba(177,56,43,.04)">
+          <div class="pb-lab" style="color:var(--zhu)">本题本质在考什么</div>
+          <p style="color:var(--zhu);font-weight:600;font-size:15px">选项用了正确的术语，但术语与文本实际写法不匹配——“阐释辩证关系”被说成了“充分深入的对比”。</p>
+        </div>
+      </div>
+    </div>`,
+
+  steps:[
+  `
+    <h2>定性 · 名词都认识，不等于判断正确</h2>
+    <div class="lede">一 定性　|　1 分钟</div>
+    <div class="row"><div class="lab">学生活动</div><div class="val">说出四个选项分别涉及哪种论证要素。</div></div>
+    <div class="row"><div class="lab">预期回答</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示预期</button>
+      <div class="rv">
+        <table>
+          <tbody>
+            <tr><td class="k">A</td><td>概念界定</td><td class="k">C</td><td>举例论证</td></tr>
+            <tr><td class="k">B</td><td>对比论证</td><td class="k">D</td><td>引用论证</td></tr>
+          </tbody>
+        </table>
+        <p class="sm" style="margin-top:8px">四个术语，学生都认识——这恰恰是本题的陷阱所在。</p>
+      </div></div>
+    </div></div>
+    <div class="row"><div class="lab zhe">关键追问</div><div class="val">这题是问“<b>有没有</b>用这些方法”，还是问“<b>用得对不对、说得准不准</b>”？</div></div>
+  `,
+
+  `
+    <h2>找错 · 让“术语正确、对象错误”显形</h2>
+    <div class="lede">二 找错　|　2 分钟</div>
+    <div class="err">
+      <div class="no">典型错因</div>
+      <div class="ct">
+        <div class="said">“文章里确实有‘多元’和‘一体’，也有‘求同’和‘存异’，所以 B 说对比，没错。”</div>
+      </div>
+    </div>
+    <div class="row"><div class="lab">追问一</div><div class="val sm">第2段对“多元”“一体”主要在做什么——是让两者互相比较分出高下，还是分别解释含义并说明统一关系？</div></div>
+    <div class="row"><div class="lab">追问二</div><div class="val sm">第7段“求同”和“存异”，作者是在比较优劣，还是在说明同一态度的两个方面？</div></div>
+    <div class="row"><div class="lab">该由学生<br>说出的话</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示错误逻辑</button>
+      <div class="rv">
+        <div class="quote zhu" style="font-size:17.5px">“我只核对有没有出现这组概念，没有核对这些概念在文中被怎样处理。”</div>
+      </div></div>
+    </div></div>
+  `,
+
+  `
+    <h2>回文 · 验证三种论证的实际做法</h2>
+    <div class="lede">三 回文　|　3 分钟　学生活动：分组标注，完成下表</div>
+    <table>
+      <thead><tr><th style="width:44px">选项</th><th>文中实际做法</th><th>选项说法</th><th style="width:78px">是否相符</th></tr></thead>
+      <tbody>
+        <tr><td class="k">A</td><td>第1段分别解释“包”“容”含义</td><td>对概念作界定，增强逻辑性</td><td><span class="tag yes">相符</span></td></tr>
+        <tr class="mark-row"><td class="k">B</td><td>第2段、第7段<span class="ev">阐释内涵</span>及辩证统一关系</td><td><span class="hl">“进行了充分深入的对比”</span></td><td><span class="tag no">不相符</span></td></tr>
+        <tr><td class="k">C</td><td>第3段举张骞、郑和、玄奘等</td><td>典型、有代表性</td><td><span class="tag yes">相符</span></td></tr>
+        <tr><td class="k">D</td><td>引《老子》《论语》及领导人讲话</td><td>传统思想与国家意志，具权威性</td><td><span class="tag yes">相符</span></td></tr>
+      </tbody>
+    </table>
+    <div class="row" style="margin-top:14px"><div class="lab">结论</div><div class="val">B 项“充分深入的对比”，与文本以<b>阐释内涵、说明统一关系</b>为主的实际写法不符。</div></div>
+  `,
+
+  `
+    <h2>拆干 · 区分“有无”与“是否”</h2>
+    <div class="lede">四 拆干　|　1 分钟</div>
+    <div class="row"><div class="lab ink">题干指向</div><div class="val sm">“对原文相关内容的分析和评价”——选项中既有事实判断，也有价值判断。</div></div>
+    <div class="row"><div class="lab ink">关键限制</div><div class="val sm">选项对论证<b>特点</b>的概括是否准确。</div></div>
+    <div class="row"><div class="lab">学生改写</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示改写结果</button>
+      <div class="rv">
+        <div class="quote" style="font-size:17.5px">我要判断选项所说的论证特点，<b>是否与文本实际写法名实相符</b>。</div>
+      </div></div>
+    </div></div>
+  `,
+
+  `
+    <h2>建模 · 论证分析三问法</h2>
+    <div class="lede">五 建模　|　2 分钟　从一道题到一类题</div>
+    <div class="cols c62">
+      <div class="c-l">
+        <div class="model">
+          <div class="m-i"><i>①</i><div>文本<b>有没有</b>这种做法？</div></div>
+          <div class="m-i"><i>②</i><div>文本<b>主要在做什么</b>——并列、对比、阐释，还是递进？</div></div>
+          <div class="m-i"><i>③</i><div>选项用的是<b>哪种术语</b>，是否与②一致？</div></div>
+        </div>
+        <div class="row"><div class="lab">关键区分</div><div class="val sm"><span class="hl">“对比论证”要求两者存在比较、对照关系</span>；<span class="ev">“阐释关系”重在分别说明</span>，二者不能混同。</div></div>
+        <div class="row"><div class="lab">术语命名的<br>正确次序</div><div class="val">
+          <div class="quote" style="border-left-color:var(--zhe)">①先还原作者在这个语段里做的<b>动作</b> → ②用与之匹配的术语<b>命名</b> → ③再核对<b>程度修饰语</b>（如“充分深入”“鲜明地”）是否成立</div>
+          <p class="sm">只要顺序颠倒，先想好术语再回文中找“样子”，就会把“分别阐释”误判成“充分深入的对比”。</p>
+        </div></div>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">板书设计</div>
+          <p style="font-family:var(--serif);font-size:14px;line-height:1.9">
+            论证分析<br>
+            <span style="color:var(--ink3)">错误路径</span>　概念出现 = 方法成立<br>
+            <span style="color:var(--ink3)">三问法</span>　有没有 → 做什么 → 是否相符<br>
+            <span style="color:var(--ink3)">关键区分</span>　对比 ≠ 阐释
+          </p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:20px">
+      <div class="seal"><em>结论</em><b>B</b></div>
+      <p class="sm" style="max-width:640px;margin:0">术语没错，对象错了。<b>论证分析题考的是名实相符，不是术语背诵。</b></p>
+    </div>
+  `,
+
+  `
+    <h2>迁移 · 判断该段用了哪一种</h2>
+    <div class="lede">六 迁移　|　2 分钟　学生独立判断并说明理由</div>
+    <div class="vary">
+      <div class="v-q">某段落先说明“技术可以提升教学效率”，又说明“技术也可能带来依赖风险”，最后指出要“以人为主导”。</div>
+      <div class="v-o"><span>问</span><span>该段主要运用了“对比论证”还是“辩证分析”？</span></div>
+    </div>
+    <div class="row"><div class="lab">要求</div><div class="val sm">必须说出判据——是“分出高下”，还是“揭示一体两面并给出处理原则”。</div></div>
+    <div class="row"><div class="lab">迁移答案</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示答案</button>
+      <div class="rv">
+        <p><b>辩证分析。</b>它并非让两者互相比较分高下，而是揭示一体两面并给出处理原则。</p>
+        <p class="sm">若答“对比”，说明仍在用“形式相对 = 对比”的旧判据。</p>
+      </div></div>
+    </div></div>
+  `
+  ]
+},
+
+/* ───────────────── 第 3 题 ───────────────── */
+{
+  n:'第3题', type:'观点迁移选择题', ans:'D', kind:'选择',
+  board:[
+    ['题型本质','概念抽取 → 判据检验'],
+    ['错误路径','有“外来/拿来” = 包容'],
+    ['文本判据','态度 · 方法 · 结果'],
+    ['解题模型','定义 — 判据 — 检验'],
+    ['关键边界','吸收转化 ≠ 暴力占有'],
+    ['结论','D']
+  ],
+  time:[['定性','1′','要求提炼动作词'],['找错','2′','呈现“拿来都算包容”'],['回文','3′','组织态度—方法—结果表'],['拆干','1′','强调标准来自原文'],['建模','2′','总结定义—判据—检验'],['迁移','2′','给出课程引进案例']],
+  script:[
+    ['开场','“这四项都有一个共同表象：都涉及外来的东西。命题人正是用这个共同点掩盖本质差异。”'],
+    ['关键追问','“包容的关键，是东西到了我这里，还是我如何对待它、转化它？”'],
+    ['纠错瞬间','“掠夺能造成物品转移，却不能构成文明交流。”'],
+    ['模型生成','“概念迁移题，不凭感觉选例子，要先把概念翻译成判据。”'],
+    ['收束','“真正的包容，是尊重差异基础上的学习、取舍与融合。”']
+  ],
+  prep:[
+    ['真正考什么','用原文概念解释新情境。'],
+    ['错误路径一','认为“把别人的东西拿来”都属于包容。'],
+    ['错误路径二','凭材料熟悉度判断，不先建立“包容”的判据。'],
+    ['文本依托','原文关于平等尊重、互学互鉴、取长补短、去粗取精、求同存异、实现融合的论述。'],
+    ['关键限制词','“不符合”“材料中所说的”。'],
+    ['思维模型','概念迁移三步：定义—判据—检验。'],
+    ['可否迁移','可迁移到“最能体现某观点”“不能作为某论据”等材料匹配题。']
+  ],
+
+  face:`
+    <div class="cols c62">
+      <div class="c-l">
+        <p class="prompt">3．下列内容不符合材料中所说的中华文明包容特性的一项是（　）</p>
+        <ul class="opts">
+          <li><span class="k">A</span><span class="t">毛泽东《反对党八股》：要从外国语言中吸收我们所需要的成分……“干部”两个字，就是从外国学来的。我们还要多多吸收外国的新鲜东西，不但要吸收他们的进步道理，而且要吸收他们的新鲜用语。</span></li>
+          <li><span class="k">B</span><span class="t">毛泽东《改造我们的学习》：要有目的地去研究马克思列宁主义的理论，要使马克思列宁主义的理论和中国革命的实际运动结合起来……去从它找立场，找观点，找方法。</span></li>
+          <li><span class="k">C</span><span class="t">司马光《资治通鉴》：赵武灵王……与肥义谋胡服骑射以教百姓……遂胡服。</span></li>
+          <li class="bad"><span class="k">D</span><span class="t">杜牧《阿房宫赋》：燕赵之收藏，韩魏之经营，齐楚之精英，几世几年，<span class="hl">剽掠其人</span>，倚叠如山。一旦不能有，输来其间……秦人视之，亦不甚惜。</span></li>
+        </ul>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">核心素养定位</div>
+          <div class="kv"><span>主导</span><span><b>思维发展与提升</b></span></div>
+          <div class="kv"><span>次级</span><span>文化传承与理解</span></div>
+          <p class="sm" style="margin-top:12px">把文本中的“包容”由抽象概念转化为可操作判据，再检验新材料是否满足这些判据。</p>
+          <div class="hairline" style="margin:12px 0"></div>
+          <p style="font-size:13.5px;color:var(--dai);line-height:1.75">思维发展与提升 → 概念抽取、类比迁移 → 提炼定义与判据 → 逐项匹配 → 排除表面相似、实质不符者</p>
+        </div>
+        <div class="panel-box" style="margin-top:14px;border-color:var(--zhu);background:rgba(177,56,43,.04)">
+          <div class="pb-lab" style="color:var(--zhu)">本题本质在考什么</div>
+          <p style="color:var(--zhu);font-weight:600;font-size:15px">不是考四则材料是否都涉及“外来事物”，而是考外来事物进入之后，主体采取的是<b>学习转化</b>还是<b>掠夺糟蹋</b>。</p>
+        </div>
+      </div>
+    </div>`,
+
+  steps:[
+  `
+    <h2>定性 · 先定义，再选项</h2>
+    <div class="lede">一 定性　|　1 分钟</div>
+    <div class="row"><div class="lab">学生活动</div><div class="val">合上四个选项，根据原文写出“包容”的三个动作词。</div></div>
+    <div class="row"><div class="lab">可提炼</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示参考</button>
+      <div class="rv">
+        <p style="font-family:var(--serif);font-size:20px;letter-spacing:.06em"><span class="ev">开放吸收</span>　·　<span class="ev">选择转化</span>　·　<span class="ev">尊重融合</span></p>
+        <p class="sm">先有判据，再拿判据去量选项——顺序反了，就变成凭感觉选例子。</p>
+      </div></div>
+    </div></div>
+    <div class="row"><div class="lab zhe">立规矩</div><div class="val sm">四则材料表面都有一个共同点：都涉及“外来的东西”。<span class="md">命题人正是用这个共同点掩盖了本质差异。</span></div></div>
+  `,
+
+  `
+    <h2>找错 · 区分“拿来”与“掠夺”</h2>
+    <div class="lede">二 找错　|　2 分钟</div>
+    <div class="err">
+      <div class="no">典型错误</div>
+      <div class="ct">
+        <div class="said">“D 项也把六国珍宝集中到秦国，属于吸收其他文化成果。”</div>
+      </div>
+    </div>
+    <div class="row"><div class="lab">追问一</div><div class="val sm">原文中的吸收，是否以尊重、学习和发展为目的？</div></div>
+    <div class="row"><div class="lab">追问二</div><div class="val sm">D 项中的动作是交流互鉴，还是暴力占有？</div></div>
+    <div class="row"><div class="lab">追问三</div><div class="val sm">珍宝进入阿房宫之后，被怎样对待？</div></div>
+    <div class="row"><div class="lab">错因</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示错因</button>
+      <div class="rv">
+        <div class="quote zhu" style="font-size:17.5px">只看“物品发生转移”这一表面现象，忽略主体的态度、方式和结果。</div>
+      </div></div>
+    </div></div>
+  `,
+
+  `
+    <h2>回文 · 建立“包容”判据，再逐项匹配</h2>
+    <div class="lede">三 回文　|　3 分钟　学生活动：从原文圈出并归类</div>
+    <div class="cols c62">
+      <div class="c-l">
+        <table>
+          <thead><tr><th style="width:70px">维度</th><th>原文判据</th></tr></thead>
+          <tbody>
+            <tr><td class="k">态度</td><td><span class="ev">平等尊重</span>、开放学习</td></tr>
+            <tr><td class="k">方法</td><td><span class="ev">取长补短</span>、择善而从、去粗取精</td></tr>
+            <tr><td class="k">结果</td><td>化解冲突、<span class="ev">实现融合</span>、促进自身发展</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">逐项匹配</div>
+          <p style="font-size:14.5px;line-height:1.85">
+            <b>A</b>　吸收语言中的有用成分——符合<br>
+            <b>B</b>　外来理论与中国实际结合——符合选择转化<br>
+            <b>C</b>　学习胡服骑射以增强自身——符合取长补短<br>
+            <b style="color:var(--zhu)">D　剽掠、占有、弃掷——不具平等学习与融合目的</b>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="row" style="margin-top:14px"><div class="lab dai">一句话<br>钉住</div><div class="val">三项都在“<b>学习—转化—为我所用</b>”这条线上，只有 D 项是“<b>掠夺—占有—随意丢掷</b>”。</div></div>
+  `,
+
+  `
+    <h2>拆干 · 锁定比较标准</h2>
+    <div class="lede">四 拆干　|　1 分钟</div>
+    <div class="row"><div class="lab ink">指令</div><div class="val sm">判断“符合 / 不符合”。</div></div>
+    <div class="row"><div class="lab ink">标准来源</div><div class="val sm">不是常识，而是“<b>材料中所说的</b>”包容特性——标准必须从原文里长出来。</div></div>
+    <div class="row"><div class="lab zhe">边界</div><div class="val">包容不等于无原则占有，也不等于把异质事物简单搬来。</div></div>
+    <div class="row"><div class="lab">学生改写</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示改写结果</button>
+      <div class="rv">
+        <div class="quote" style="font-size:17.5px">我要用原文的包容判据，检验四则材料的<b>态度、方式和结果</b>。</div>
+      </div></div>
+    </div></div>
+  `,
+
+  `
+    <h2>建模 · 概念迁移三步法</h2>
+    <div class="lede">五 建模　|　2 分钟　从一道题到一类题</div>
+    <div class="cols c62">
+      <div class="c-l">
+        <div class="model">
+          <div class="m-i"><i>定</i><div><b>定义</b>：这个概念说的是什么？</div></div>
+          <div class="m-i"><i>判</i><div><b>判据</b>：它必须满足哪些条件？</div></div>
+          <div class="m-i"><i>验</i><div><b>检验</b>：新材料在态度、方式、结果上是否同时匹配？</div></div>
+        </div>
+        <div class="row"><div class="lab">易错提醒</div><div class="val sm">学生常把“<span class="hl">有外来物</span>”当成“<span class="ev">具包容性</span>”。判据不落到态度和结果上，这一题就只能靠排除法碰运气。</div></div>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">板书设计</div>
+          <p style="font-family:var(--serif);font-size:14px;line-height:1.9">
+            概念迁移<br>
+            <span style="color:var(--ink3)">判据</span>　态度 · 方法 · 结果<br>
+            <span style="color:var(--ink3)">错误路径</span>　有“外来/拿来” = 包容<br>
+            <span style="color:var(--ink3)">模型</span>　定义 — 判据 — 检验
+          </p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:14px;display:flex;align-items:center;gap:20px">
+      <div class="seal"><em>结论</em><b>D</b></div>
+      <p class="sm" style="max-width:640px;margin:0">掠夺能造成物品转移，却不能构成文明交流。<b>区分标准不是“有没有外来物”，而是“怎样对待外来物”。</b></p>
+    </div>
+  `,
+
+  `
+    <h2>迁移 · 哪一种做法更符合“包容”</h2>
+    <div class="lede">六 迁移　|　2 分钟　学生独立判断并说明理由</div>
+    <div class="vary">
+      <div class="v-q">某学校引进外校课程，有两种做法：</div>
+      <div class="v-o"><span>甲</span><span>照搬全部内容，不顾本校学生基础。</span></div>
+      <div class="v-o"><span>乙</span><span>研究其优势，结合本校学情改造后实施。</span></div>
+    </div>
+    <div class="row"><div class="lab">要求</div><div class="val sm">必须用“态度—方法—结果”三维判据作答，不能只说“乙更好”。</div></div>
+    <div class="row"><div class="lab">迁移答案</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示答案</button>
+      <div class="rv">
+        <p><b>乙更符合。</b>它体现主动学习、择善而从和以我为主的转化。</p>
+        <p><b>甲只有搬运，没有融合</b>——与 D 项同属“东西到了我这里，但我没有真正处理它”。</p>
+      </div></div>
+    </div></div>
+  `
+  ]
+},
+
+/* ───────────────── 第 4 题 ───────────────── */
+{
+  n:'第4题', type:'结构图补写', ans:'③④', kind:'主观',
+  board:[
+    ['题型本质','结构图补写'],
+    ['文章骨架','总（包容）— 分（包）— 分（容）— 总（统一与建设）'],
+    ['③层级','整个“容”部分'],
+    ['④层级','全文收束 + 未来方向'],
+    ['模型','定功能 — 找区间 — 提关键词 — 仿句限字']
+  ],
+  time:[['定性','1′','引导判断空格功能，学生标注总—分—分—总'],['找错','2′','展示局部摘抄答案，学生判断层级问题'],['回文','3′','组织段落贴标签，学生提取核心词'],['拆干','1′','强调内容 / 结构 / 字数三重限制'],['建模','2′','给出四步法，学生修改③④答案'],['迁移','2′','呈现阅读结构图，学生独立补写第3格']],
+  script:[
+    ['开场','“先别急着抄原文。空格放在这里，就已经告诉了你它该写哪一层内容。”'],
+    ['关键追问','“③和②是并列关系，你的答案和②处在同一层级吗？”'],
+    ['纠错瞬间','“‘平等’没有错，但它太小，装不下整个‘容’部分。”'],
+    ['模型生成','“概括题不是字越少越好，而是层级准确以后再压缩。”'],
+    ['收束','“位置决定功能，层级决定取舍，限制决定表达。”']
+  ],
+  prep:[
+    ['真正考什么','结构梳理与段意压缩。'],
+    ['错误路径一','③只抄“容的前提是平等”，以局部代替整个“容”部分。'],
+    ['错误路径二','④只写包容的历史作用，遗漏结尾的发展方向。'],
+    ['错误路径三','不参照②的句式，答案层级与已知格不一致。'],
+    ['文本依托','第1段总起；第2—4段写“包”；第5—8段写“容”；末段总结“包容统一”及当代建设方向。'],
+    ['关键限制词','“根据全文”“梳理内容”“每处不超过30个字”。'],
+    ['思维模型','结构空位判断：位置决定功能，功能决定概括层级。'],
+    ['可否迁移','可迁移到流程图、思维导图、段落补写、行文脉络题。']
+  ],
+
+  face:`
+    <div class="cols c62">
+      <div class="c-l">
+        <p class="prompt">4．根据全文，梳理内容，补充填写下面图表中③④两处的内容（每处不超过30个字）。</p>
+        <div style="margin-top:14px">
+          <div class="row"><div class="lab dai">①</div><div class="val">包容是中华民族的胸怀与智慧。</div></div>
+          <div class="row"><div class="lab dai">②</div><div class="val">中华文明具有包纳开放、将各民族文化兼收并蓄的“包”的胸怀。</div></div>
+          <div class="row"><div class="lab zhe">③</div><div class="val" style="color:var(--zhe);letter-spacing:.06em">＿＿＿＿＿＿＿＿＿＿</div></div>
+          <div class="row"><div class="lab zhe">④</div><div class="val" style="color:var(--zhe);letter-spacing:.06em">＿＿＿＿＿＿＿＿＿＿</div></div>
+        </div>
+        <p class="sm" style="margin-top:12px">图表已给出①②，③④需学生补写，每处不超过 30 字——<b>先判断这一格在结构里干什么</b>。</p>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">核心素养定位</div>
+          <div class="kv"><span>主导</span><span><b>语言建构与运用</b></span></div>
+          <div class="kv"><span>次级</span><span>思维发展与提升</span></div>
+          <p class="sm" style="margin-top:12px">梳理段落层次，提取中心内容，并按图表既有句式和字数限制压缩表达。</p>
+          <div class="hairline" style="margin:12px 0"></div>
+          <p style="font-size:13.5px;color:var(--dai);line-height:1.75">语言建构与运用 → 概括 · 整合 · 规范表达 → 划分结构 → 确定空格功能 → 提取关键词 → 仿照句式压缩</p>
+        </div>
+        <div class="panel-box" style="margin-top:14px;border-color:var(--zhu);background:rgba(177,56,43,.04)">
+          <div class="pb-lab" style="color:var(--zhu)">本题本质在考什么</div>
+          <p style="color:var(--zhu);font-weight:600;font-size:15px">不是从原文随意摘两句话，而是把文章的论证骨架重新搭出来——空格的位置，已经规定了它该写哪一层。</p>
+        </div>
+      </div>
+    </div>`,
+
+  steps:[
+  /* 一 定性 */
+  `
+    <h2>定性 · 空格不是同一种任务</h2>
+    <div class="lede">一 定性　|　1 分钟　学生活动：先判断每一格在文章里干什么</div>
+    <div class="row"><div class="lab">学生活动</div><div class="val">只看四格，不看原文：①②③④各承担“总起 / 分述 / 总结”中的哪一种功能？</div></div>
+    <div class="row"><div class="lab ink">教师动作</div><div class="val sm">不急于说答案。把“位置—功能”这条线索交给学生自己找出来，这一步只解决一件事：知道每一格该写哪一层。</div></div>
+
+    <div class="row"><div class="lab">引导结论</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示引导结论</button>
+      <div class="rv">
+        <p>①总起；②分述“包”；③应与②<b>并列</b>，分述“容”；④<b>总结</b>全文。</p>
+        <p class="sm">四格不是四个填空，而是四种功能：<span class="hl">位置决定功能，功能决定概括层级</span>。</p>
+      </div></div>
+    </div></div>
+
+    <div class="row"><div class="lab zhe">本步要立的<br>规矩</div><div class="val sm">先问“这一格在结构里干什么”，再问“写什么内容”。顺序颠倒，就会抄成一句局部的话。</div></div>
+  `,
+
+  /* 二 找错 */
+  `
+    <h2>找错 · 让“局部摘抄”显形</h2>
+    <div class="lede">二 找错　|　2 分钟</div>
+
+    <div class="err">
+      <div class="no">错因一</div>
+      <div class="ct">
+        <div class="said">③“容的前提是平等。”</div>
+        <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开追问</button>
+        <div class="rv">
+          <div class="quote zhu">③与②是什么关系？两份答案的层级是否应当一致？</div>
+          <p>“平等”只是“容”的<b>一个条件</b>，覆盖不了后面的互学互鉴、求同存异——<span class="hl">以局部代替了整个“容”部分</span>。</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="err">
+      <div class="no">错因二</div>
+      <div class="ct">
+        <div class="said">④“包容促进民族发展。”</div>
+        <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开追问</button>
+        <div class="rv">
+          <div class="quote zhu">结尾除了历史作用，还提出了什么面向未来的任务？</div>
+          <p>末段还有“<span class="ev">激发包容特性、建设中华民族现代文明</span>”——只写历史作用，<b>丢掉了发展方向</b>。</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="row"><div class="lab">该由学生<br>说出的话</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示错误逻辑</button>
+      <div class="rv">
+        <div class="quote zhu" style="font-size:17.5px">“我挑了一句原文里最像的话抄进去，没有先想这一格该写哪一层。”</div>
+      </div></div>
+    </div></div>
+  `,
+
+  /* 三 回文 */
+  `
+    <h2>回文 · 给段落贴标签</h2>
+    <div class="lede">三 回文　|　3 分钟　学生活动：逐段贴标签，找骨架句</div>
+    <table>
+      <thead><tr><th style="width:110px">段落</th><th>这一层在写什么</th></tr></thead>
+      <tbody>
+        <tr><td class="k">第1段</td><td>解释“包”“容”二字，提出总观点</td></tr>
+        <tr><td class="k">第2—4段</td><td>“包”的开放胸怀：民族多元一体、对外交流互鉴</td></tr>
+        <tr class="mark-row"><td class="k">第5—8段</td><td>“容”的融合智慧：<b>平等是前提</b>、<b>互学互鉴是根本途径</b>、<b>求同存异</b></td></tr>
+        <tr class="mark-row"><td class="k">第9段</td><td>“包”“容”辩证统一，激发包容特性，建设现代文明</td></tr>
+      </tbody>
+    </table>
+
+    <div class="row" style="margin-top:16px"><div class="lab dai">③的<br>关键词</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开：整个“容”部分的核心词</button>
+      <div class="rv">
+        <div class="quote dai"><span class="ev">尊重差异</span>、化解冲突、<span class="ev">实现融合</span>、与各方和谐相处、共同发展</div>
+        <p class="sm">③要概括的是<b>整个“容”部分</b>，不能只取“平等”这一个条件。</p>
+      </div></div>
+    </div></div>
+
+    <div class="row"><div class="lab dai">④的<br>关键词</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开：末段的核心词</button>
+      <div class="rv">
+        <div class="quote dai">“包”“容”<span class="ev">辩证统一</span>、激发包容特性、建设中华民族现代文明</div>
+      </div></div>
+    </div></div>
+
+    <div class="row"><div class="lab">提问链</div><div class="val">
+      <ul class="dot">
+        <li>②写的是“<span class="ev">包</span>”的胸怀，③该写什么才能与它并列？</li>
+        <li>原文第5—8段一共有几条支撑？只写一条，能代表整段吗？</li>
+        <li>末段的句子分两半：前一半说历史作用，后一半说什么？你是不是只抄了前一半？</li>
+      </ul>
+    </div></div>
+  `,
+
+  /* 四 拆干 */
+  `
+    <h2>拆干 · 三重限制，一个动作</h2>
+    <div class="lede">四 拆干　|　1 分钟</div>
+    <div class="row"><div class="lab ink">内容限制</div><div class="val sm">“<b>根据全文</b>”——不能只概括局部一句，③必须覆盖整个“容”部分。</div></div>
+    <div class="row"><div class="lab ink">结构限制</div><div class="val sm">③与②<b>并列</b>，④与①<b>首尾照应</b>——同一层级的格子，概括层级必须相当。</div></div>
+    <div class="row"><div class="lab ink">表达限制</div><div class="val sm">每处<b>不超过 30 字</b>，句式尽量与图表一致（“××具有……的胸怀 / 智慧”）。</div></div>
+    <div class="row"><div class="lab zhe">学生改写</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示改写结果</button>
+      <div class="rv">
+        <div class="quote" style="font-size:17.5px">我先判断空格在文章结构里的<b>功能</b>，再用<b>同层级</b>的关键词完成限字概括。</div>
+      </div></div>
+    </div></div>
+  `,
+
+  /* 五 建模 */
+  `
+    <h2>建模 · 图表补写四步法</h2>
+    <div class="lede">五 建模　|　2 分钟　从一道题到一类题</div>
+    <div class="cols c62">
+      <div class="c-l">
+        <div class="model">
+          <div class="m-i"><i>位</i><div><b>看前后格</b>：这一格是总起、分述，还是总结？</div></div>
+          <div class="m-i"><i>层</i><div><b>划文章层次</b>：找到与它对应的段落区间。</div></div>
+          <div class="m-i"><i>词</i><div><b>提同层级关键词</b>：舍弃例证，只留概念与判断。</div></div>
+          <div class="m-i"><i>句</i><div><b>仿照已有句式</b>：最后检查字数。</div></div>
+        </div>
+        <div class="row"><div class="lab">易错提醒</div><div class="val sm">学生常把“<span class="hl">最像的一句原文</span>”当成“<span class="ev">这一格该写的内容</span>”。<b>先定层级，再定内容，最后压字数。</b></div></div>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">参考表达</div>
+          <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示参考答案</button>
+          <div class="rv">
+            <p><b>③</b>　中华文明具有尊重差异、实现融合的“容”的智慧。</p>
+            <p><b>④</b>　“包”“容”辩证统一，需激发包容特性，建设中华民族现代文明。</p>
+          </div></div>
+        </div>
+        <div class="panel-box" style="margin-top:14px">
+          <div class="pb-lab">板书设计</div>
+          <p style="font-family:var(--serif);font-size:14px;line-height:1.9">
+            结构图补写<br>
+            <span style="color:var(--ink3)">骨架</span>　总 — 分（包）— 分（容）— 总<br>
+            <span style="color:var(--ink3)">③层级</span>　整个“容”部分<br>
+            <span style="color:var(--ink3)">④层级</span>　全文收束 + 未来方向<br>
+            <span style="color:var(--ink3)">模型</span>　定功能 — 找区间 — 提关键词 — 仿句限字
+          </p>
+        </div>
+      </div>
+    </div>
+  `,
+
+  /* 六 迁移 */
+  `
+    <h2>迁移 · 当场补一格</h2>
+    <div class="lede">六 迁移　|　2 分钟　学生独立补写，同桌互评</div>
+    <div class="vary">
+      <div class="v-q">给出下面的阅读方法结构图，补写第 3 格：</div>
+      <div class="v-o"><span>1</span><span>阅读既需要整体把握，也需要细节辨析。</span></div>
+      <div class="v-o"><span>2</span><span>整体把握帮助确定文章主旨。</span></div>
+      <div class="v-o"><span>3</span><span>＿＿＿＿＿＿＿＿＿＿</span></div>
+      <div class="v-o"><span>4</span><span>二者结合才能形成准确理解。</span></div>
+    </div>
+    <div class="row"><div class="lab">要求</div><div class="val sm">若对应内容主要讲“抓关键词、辨关系、核范围”，请补写第 3 格——<b>不超过 30 字，句式与第 2 格一致</b>。</div></div>
+    <div class="row"><div class="lab">迁移答案</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示答案</button>
+      <div class="rv">
+        <p><b>细节辨析通过抓关键词、辨逻辑关系来校准局部理解。</b></p>
+        <p class="sm">第3格与第2格并列分述，再与第4格形成“分—总”照应——<b>先定层级，再压字数</b>。</p>
+      </div></div>
+    </div></div>
+  `
+  ]
+},
+
+/* ───────────────── 第 5 题 ───────────────── */
+{
+  n:'第5题', type:'跨文本关联与三层比较', ans:'①②③', kind:'主观',
+  board:[
+    ['题型本质','跨文本比较'],
+    ['三层桥','态度 → 方法 → 目标'],
+    ['本文','平等尊重 / 取长补短 / 以我为主'],
+    ['鲁迅','主动拿来 / 使用存放毁灭 / 新主人'],
+    ['错误路径','笼统结论、只复述其一']
+  ],
+  time:[['定性','2′','追问比较维度，学生提出层面'],['找错','2′','展示一句话答案，学生诊断得分点缺失'],['回文','4′','组织双栏取据，两文各圈依据'],['拆干','1′','强调“分析”与比较主体'],['建模','2′','总结三层法，学生完成参考作答'],['迁移','3′','给出互鉴句，用三层法写两层']],
+  script:[
+    ['开场','“这道题最容易写出一句正确但拿不到分的答案。我们先把‘比较的维度’找到。”'],
+    ['关键追问','“‘开放包容’这四个字，是态度、方法，还是目标？只说态度，能拿几个点？”'],
+    ['纠错瞬间','“你把《拿来主义》复述了一遍，但没有告诉阅卷人，它与本文在哪个层面契合。”'],
+    ['模型生成','“跨文本比较，先搭三层桥：态度、方法、目标。”'],
+    ['收束','“比较题的价值，不在于找出相同，而在于说清在哪个层面相同。”']
+  ],
+  prep:[
+    ['真正考什么','跨文本搭桥与多维整合。'],
+    ['错误路径一','只写一句“都主张学习外来文化”，不分层面，得分点单一。'],
+    ['错误路径二','大段复述《拿来主义》内容，不回扣本文“容”的智慧。'],
+    ['错误路径三','忽略题干“简要分析”中的“分析”，只作判断不作说明。'],
+    ['文本依托','本文：平等尊重、互学互鉴、取长补短、去粗取精、以我为主、实现融合。《拿来主义》：主动拿来、使用存放毁灭、成为新主人。'],
+    ['关键限制词','“简要分析”“契合之处”。'],
+    ['思维模型','跨文本比较三层法：态度层、方法层、目标层。'],
+    ['可否迁移','可迁移到所有“与课内文本互证”“材料间关系分析”题。']
+  ],
+
+  face:`
+    <div class="cols c62">
+      <div class="c-l">
+        <p class="prompt">5．鲁迅《拿来主义》中写道：“总之，我们要拿来。我们要或使用，或存放，或毁灭。那么，主人是新主人，宅子也就会成为新宅子。”本文所述“容”的智慧，与鲁迅先生关于对待外来文化的态度有契合之处，请简要分析。</p>
+        <div class="quote dai" style="margin-top:16px">鲁迅《拿来主义》<br>“总之，我们要拿来。我们要或使用，或存放，或毁灭。那么，主人是新主人，宅子也就会成为新宅子。”</div>
+        <p class="sm" style="margin-top:12px">本题 4 分：按“态度 — 方法 — 目标”三点赋分，笼统作答只算一个层面。</p>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">核心素养定位</div>
+          <div class="kv"><span>主导</span><span><b>思维发展与提升</b></span></div>
+          <div class="kv"><span>次级</span><span>文化传承与理解、语言建构与运用</span></div>
+          <p class="sm" style="margin-top:12px">在两个不同文本之间找到共同逻辑，从多个维度整合相同点，并用规范语言分点表达。</p>
+          <div class="hairline" style="margin:12px 0"></div>
+          <p style="font-size:13.5px;color:var(--dai);line-height:1.75">思维发展与提升 → 跨文本比较 · 抽象概括 → 分别提取两文主张 → 寻找共同层面 → 分层归纳 → 分点表述</p>
+        </div>
+        <div class="panel-box" style="margin-top:14px;border-color:var(--zhu);background:rgba(177,56,43,.04)">
+          <div class="pb-lab" style="color:var(--zhu)">本题本质在考什么</div>
+          <p style="color:var(--zhu);font-weight:600;font-size:15px">考的不是“两文都主张吸收外来文化”这句结论，而是能否找到比较的维度，把抽象契合点说成分层的、有依据的观点。</p>
+        </div>
+      </div>
+    </div>`,
+
+  steps:[
+  /* 一 定性 */
+  `
+    <h2>定性 · 先定“比什么”</h2>
+    <div class="lede">一 定性　|　2 分钟　先说出维度，再动笔写答案</div>
+    <div class="row"><div class="lab">学生活动</div><div class="val">不写答案，先回答一个问题：比较两篇文章，应该从哪几个层面找相同点？</div></div>
+    <div class="row"><div class="lab ink">教师动作</div><div class="val sm">学生说到“都主张开放包容”时先不评价，只追问：这是哪一层？还有别的层吗？</div></div>
+
+    <div class="row"><div class="lab">引导结论</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示三个层面</button>
+      <div class="rv">
+        <p><b>态度层</b>（怎么看待外来文化）→ <b>方法层</b>（怎么处理）→ <b>目标层</b>（为了什么）。</p>
+        <p class="sm">这三点不是背下来的，是从两篇文章各自的主张里<span class="ev">提炼</span>出来的——先有文章，后有层面。</p>
+      </div></div>
+    </div></div>
+
+    <div class="row"><div class="lab zhe">本步要立的<br>规矩</div><div class="val sm">跨文本比较题，先搭比较的<b>架子</b>，再往里填内容。没有架子，答案就只能写出一句话。</div></div>
+  `,
+
+  /* 二 找错 */
+  `
+    <h2>找错 · 让“一句话答案”显形</h2>
+    <div class="lede">二 找错　|　2 分钟</div>
+
+    <div class="err">
+      <div class="no">错因一</div>
+      <div class="ct">
+        <div class="said">“两文都主张对待外来文化要开放包容。”</div>
+        <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开追问</button>
+        <div class="rv">
+          <div class="quote zhu">“开放包容”是态度、方法，还是目标？只说一层，能拿几个得分点？</div>
+          <p>《拿来主义》“或使用，或存放，或毁灭”讲的是<b>处理方式</b>，不是态度——这句话把三层压成了一层。</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="err">
+      <div class="no">错因二</div>
+      <div class="ct">
+        <div class="said">“把《拿来主义》的内容复述了一遍。”</div>
+        <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开追问</button>
+        <div class="rv">
+          <div class="quote zhu">复述之后，有没有说明它与本文在<b>哪个层面</b>契合？</div>
+          <p>题干要求“简要<b>分析</b>”——<span class="hl">只下判断、不作说明</span>，得分点就散了。</p>
+        </div></div>
+      </div>
+    </div>
+
+    <div class="row"><div class="lab">该由学生<br>说出的话</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示错误逻辑</button>
+      <div class="rv">
+        <div class="quote zhu" style="font-size:17.5px">“我找到了两文的共同点，但没有把它拆成层面，所以只写出一句正确却拿不到分的话。”</div>
+      </div></div>
+    </div></div>
+  `,
+
+  /* 三 回文 */
+  `
+    <h2>回文 · 双向定位，双向取据</h2>
+    <div class="lede">三 回文　|　4 分钟　学生活动：两栏各圈一句依据</div>
+    <table>
+      <thead><tr><th style="width:76px">层面</th><th>本文“容”的智慧</th><th>《拿来主义》</th></tr></thead>
+      <tbody>
+        <tr><td class="k">态度</td><td>平等尊重、开放学习、承认差异</td><td>主动“拿来”，反对排外</td></tr>
+        <tr class="mark-row"><td class="k">方法</td><td>取长补短、择善而从、去粗取精、去伪存真</td><td>或使用、或存放、或毁灭，有选择地处理</td></tr>
+        <tr><td class="k">目标</td><td>实现融合，以我为主，建设中华民族现代文明</td><td>主人是新主人，造就新文艺</td></tr>
+      </tbody>
+    </table>
+
+    <div class="row" style="margin-top:16px"><div class="lab dai">追问</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>展开：两文有没有不一致的地方</button>
+      <div class="rv">
+        <div class="quote dai">《拿来主义》更强调主体的<b>主动占有与选择</b>，本文更强调<b>平等尊重与融合</b>。</div>
+        <p class="sm">契合<b>而不等同</b>——题干只问“契合之处”，写共同点即可；但心里要清楚这两者的边界在哪里。</p>
+      </div></div>
+    </div></div>
+
+    <div class="row"><div class="lab">提问链</div><div class="val">
+      <ul class="dot">
+        <li>本文写“容”，是从哪几个角度展开的？——《拿来主义》有没有对应的角度？</li>
+        <li>“或使用，或存放，或毁灭”落在三层中的哪一层？</li>
+        <li>“主人是新主人”说的是方法，还是目的？</li>
+      </ul>
+    </div></div>
+  `,
+
+  /* 四 拆干 */
+  `
+    <h2>拆干 · 锁定任务边界</h2>
+    <div class="lede">四 拆干　|　1 分钟</div>
+    <div class="row"><div class="lab ink">指令词</div><div class="val sm">简要<b>分析</b>——必须有说明，不能只下判断。</div></div>
+    <div class="row"><div class="lab ink">比较主体</div><div class="val sm">与“<b>本文所述‘容’的智慧</b>”比较——本文是主，鲁迅是参照，不能只谈《拿来主义》。</div></div>
+    <div class="row"><div class="lab ink">范围</div><div class="val sm">问的是“<b>契合之处</b>”——写共同点，不必展开分歧。</div></div>
+    <div class="row"><div class="lab zhe">学生改写</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示改写结果</button>
+      <div class="rv">
+        <div class="quote" style="font-size:17.5px">我要从<b>态度、方法、目标</b>三个层面，说明两文主张的共同点，并各附一句依据。</div>
+      </div></div>
+    </div></div>
+  `,
+
+  /* 五 建模 */
+  `
+    <h2>建模 · 跨文本三层比较法</h2>
+    <div class="lede">五 建模　|　2 分钟　从一道题到一类题</div>
+    <div class="cols c62">
+      <div class="c-l">
+        <div class="model">
+          <div class="m-i"><i>层</i><div><b>定层面</b>：态度 / 方法 / 目标。</div></div>
+          <div class="m-i"><i>据</i><div><b>双取据</b>：两篇各找一句原文，不凭印象。</div></div>
+          <div class="m-i"><i>连</i><div><b>说契合</b>：用“都主张……都强调……”连接，一层一句。</div></div>
+        </div>
+        <div class="row"><div class="lab">易错提醒</div><div class="val sm">层面不是<span class="hl">编出来的</span>，是从两文主张里<span class="ev">抽出来的</span>。<b>先看文章怎么说，再定用哪个维度比。</b></div></div>
+      </div>
+      <div class="c-r">
+        <div class="panel-box">
+          <div class="pb-lab">参考作答</div>
+          <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示参考答案</button>
+          <div class="rv">
+            <p>①态度上，都主张主动吸收外来文化，反对盲目排外；</p>
+            <p>②方法上，都主张辩证取舍，取精华去糟粕，从实际出发；</p>
+            <p>③目标上，都坚持以我为主，通过吸收外来发展自身文化。</p>
+          </div></div>
+        </div>
+        <div class="panel-box" style="margin-top:14px">
+          <div class="pb-lab">板书设计</div>
+          <p style="font-family:var(--serif);font-size:14px;line-height:1.9">
+            跨文本比较<br>
+            <span style="color:var(--ink3)">三层桥</span>　态度 → 方法 → 目标<br>
+            <span style="color:var(--ink3)">本文</span>　平等尊重 / 取长补短 / 以我为主<br>
+            <span style="color:var(--ink3)">鲁迅</span>　主动拿来 / 使用存放毁灭 / 新主人<br>
+            <span style="color:var(--ink3)">错误路径</span>　笼统结论、只复述其一
+          </p>
+        </div>
+      </div>
+    </div>
+  `,
+
+  /* 六 迁移 */
+  `
+    <h2>迁移 · 用三层法写两层</h2>
+    <div class="lede">六 迁移　|　3 分钟　学生独立撰写，同桌互评</div>
+    <div class="vary">
+      <div class="v-q">某文主张：“文明因交流而多彩，因互鉴而丰富。”它与本文“容”的智慧是否契合？</div>
+      <div class="v-o"><span>要求</span><span>用“态度 / 方法 / 目标”三层法，写出两层即可，每层附一句依据。</span></div>
+    </div>
+    <div class="row"><div class="lab">迁移答案</div><div class="val">
+      <div class="rv-btn-wrap"><button class="rv-btn" data-rv>显示答案</button>
+      <div class="rv">
+        <p><b>态度上</b>，两文都承认文明差异并主张交流；<b>目标上</b>，都指向通过互鉴促进自身文明发展。</p>
+        <p class="sm">同桌互评只看两点：<b>有没有分层</b>、<b>每层有没有依据</b>。</p>
+      </div></div>
+    </div></div>
+  `
+  ]
+}
+];
+
+/* ══════════════════════════════════════════════════════════════
+   渲染与交互
+   ══════════════════════════════════════════════════════════════ */
+const STEP_LABEL = ['题面','定性','找错','回文','拆干','建模','迁移'];
+const STEP_SUB   = ['题干与素养定位','先说清这题在考什么','让错误路径显形','把结论钉回文本','把要求改写成动作','从一题到一类','当场用模型验一遍'];
+const STORE_KEY = 'yuwen-pingjiang-1-3';
+
+const el = {
+  stage:document.getElementById('stage'),
+  tabs:document.getElementById('tabs'),
+  rail:document.getElementById('railItems'),
+  main:document.getElementById('main'),
+  dots:document.getElementById('dots'),
+  pos:document.getElementById('pos'),
+  tp:document.getElementById('tp'),
+  tpBody:document.getElementById('tpBody'),
+  tScript:document.getElementById('tScript'),
+  tFull:document.getElementById('tFull')
+};
+
+let cur = {q:0, s:0, panel:false, ptab:'script'};
+const seen = {};   // 记录已看过的屏，rail 上打小点
+
+/* ── 缩放 ── */
+function fit(){
+  const s = Math.min(window.innerWidth/1280, window.innerHeight/720);
+  el.stage.style.transform = `translate(-50%,-50%) scale(${s})`;
+}
+window.addEventListener('resize', fit);
+
+/* ── 顶栏 tabs ── */
+function drawTabs(){
+  el.tabs.innerHTML = DECK.map((q,i)=>
+    `<button class="tab ${i===cur.q?'on':''}" data-q="${i}">${q.n}<span class="stamp">${q.ans}</span></button>`
+  ).join('');
+}
+
+/* ── 左栏 ── */
+function drawRail(){
+  el.rail.innerHTML = STEP_LABEL.map((lb,i)=>
+    `<button class="${i===cur.s?'on':''} ${seen[cur.q+'-'+i]?'seen':''}" data-s="${i}">
+       <span class="num">${RAIL_NUM[i]}</span><span>${lb}</span>
+     </button>`
+  ).join('');
+}
+
+/* ── 底部圆点 ── */
+function drawDots(){
+  el.dots.innerHTML = STEP_LABEL.map((_,i)=>
+    `<button class="dot ${i===cur.s?'on':''}" data-s="${i}" title="${STEP_LABEL[i]}"></button>`
+  ).join('');
+  el.pos.innerHTML = `${DECK[cur.q].n} · <b>${STEP_LABEL[cur.s]}</b>　${cur.s+1}/${STEP_LABEL.length}`;
+}
+
+/* ── 主内容 ── */
+function drawMain(){
+  const q = DECK[cur.q];
+  const html = cur.s===0 ? q.face : q.steps[cur.s-1];
+  el.main.innerHTML = `<section class="screen">${html}</section>`;
+  el.main.scrollTop = 0;
+  bindReveal();
+  seen[cur.q+'-'+cur.s] = true;
+}
+
+/* ── 可展开块 ── */
+function bindReveal(){
+  el.main.querySelectorAll('[data-rv]').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const wrap = btn.closest('.rv-btn-wrap');
+      const box = wrap.querySelector('.rv');
+      const on = box.classList.toggle('show');
+      btn.classList.toggle('on', on);
+      btn.textContent = on ? '收起' : btn.dataset.label;
+    });
+    if(!btn.dataset.label) btn.dataset.label = btn.textContent;
+  });
+}
+
+/* 空格：一键显示 / 收起当前屏所有折叠内容 */
+function toggleAll(){
+  const btns = [...el.main.querySelectorAll('[data-rv]')];
+  if(!btns.length) return;
+  const anyClosed = btns.some(b=>!b.closest('.rv-btn-wrap').querySelector('.rv').classList.contains('show'));
+  btns.forEach(b=>{
+    const box = b.closest('.rv-btn-wrap').querySelector('.rv');
+    box.classList.toggle('show', anyClosed);
+    b.classList.toggle('on', anyClosed);
+    b.textContent = anyClosed ? '收起' : b.dataset.label;
+  });
+}
+
+/* ── 教师面板 ── */
+function drawPanel(){
+  const q = DECK[cur.q];
+  let h = '';
+  if(cur.ptab==='script'){
+    h += `<div class="tp-sec"><div class="t">课堂话术 · 可直接照读</div>`;
+    q.script.forEach(([k,v],i)=>{
+      h += `<div class="tp-line ${i===1?'dai':''}"><b>${k}</b>　${v}</div>`;
+    });
+    h += `</div>`;
+    h += `<div class="tp-sec"><div class="t">本题本质</div><div class="tp-line">见「题面」屏素养定位卡。</div></div>`;
+  }else{
+    h += `<div class="tp-sec"><div class="t">课前预判</div>`;
+    q.prep.forEach(([k,v])=>{
+      h += `<div class="tp-line"><b>${k}</b><br>${v}</div>`;
+    });
+    h += `</div>`;
+    h += `<div class="tp-sec"><div class="t">时间与活动设计</div>
+      <table class="tp-mini"><tbody>`;
+    q.time.forEach(([a,b,c])=>{ h += `<tr><td>${a}</td><td>${b}</td><td>${c}</td></tr>`; });
+    h += `</tbody></table></div>`;
+    h += `<div class="tp-sec"><div class="t">板书设计</div>`;
+    q.board.forEach(([k,v])=>{ h += `<div class="tp-line"><b>${k}</b>　${v}</div>`; });
+    h += `</div>`;
+    h += `<div class="tp-note">本卷未提供班级错误率与典型答卷，以上错因均为高概率预判，课堂上应以学生口述或答题数据校正后再定讲评重点。</div>`;
+  }
+  el.tpBody.innerHTML = h;
+}
+
+function setPanel(on){
+  cur.panel = on;
+  el.tp.classList.toggle('on', on);
+  el.tScript.classList.toggle('on', on);
+  if(on) drawPanel();
+}
+
+/* ── 统一刷新 ── */
+function render(){
+  drawTabs(); drawRail(); drawDots(); drawMain();
+  if(cur.panel) drawPanel();
+  save();
+}
+function go(q,s){
+  cur.q = Math.max(0, Math.min(DECK.length-1, q));
+  cur.s = Math.max(0, Math.min(STEP_LABEL.length-1, s));
+  render(); hash();
+}
+function save(){
+  try{ localStorage.setItem(STORE_KEY, JSON.stringify({q:cur.q,s:cur.s})); }catch(e){}
+}
+function hash(){
+  if(location.hash !== '#q'+cur.q+'s'+cur.s) history.replaceState(null,'','#q'+cur.q+'s'+cur.s);
+}
+
+/* ── 事件 ── */
+document.addEventListener('click', e=>{
+  const t = e.target.closest('[data-q],[data-s],[data-ptab]');
+  if(!t) return;
+  if(t.dataset.q!==undefined){ go(+t.dataset.q, 0); }
+  else if(t.dataset.s!==undefined){ go(cur.q, +t.dataset.s); }
+  else if(t.dataset.ptab){ cur.ptab = t.dataset.ptab; drawPanel();
+    document.querySelectorAll('.tp-tab').forEach(b=>b.classList.toggle('on', b.dataset.ptab===cur.ptab));
+  }
+});
+document.getElementById('tpClose').addEventListener('click', ()=>setPanel(false));
+el.tScript.addEventListener('click', ()=>setPanel(!cur.panel));
+el.tFull.addEventListener('click', ()=>{
+  if(document.fullscreenElement) document.exitFullscreen();
+  else document.documentElement.requestFullscreen?.();
+});
+
+document.addEventListener('keydown', e=>{
+  const k = e.key;
+  if(k==='ArrowRight'||k==='PageDown'){ e.preventDefault(); cur.s<STEP_LABEL.length-1 ? go(cur.q,cur.s+1) : go(cur.q+1,0); }
+  else if(k==='ArrowLeft'||k==='PageUp'){ e.preventDefault(); cur.s>0 ? go(cur.q,cur.s-1) : go(cur.q-1,STEP_LABEL.length-1); }
+  else if(k==='ArrowDown'){ e.preventDefault(); go(cur.q+1,cur.s); }
+  else if(k==='ArrowUp'){ e.preventDefault(); go(cur.q-1,cur.s); }
+  else if(k===' '||k==='Enter'){ e.preventDefault(); toggleAll(); }
+  else if(/^[1-9]$/.test(k)){ go(+k-1,0); }
+  else if(k==='0'){ go(cur.q,0); }
+  else if(k.toLowerCase()==='t'){ setPanel(!cur.panel); }
+  else if(k.toLowerCase()==='f'){ el.tFull.click(); }
+  else if(k==='Home'){ go(0,0); }
+  else if(k==='End'){ go(DECK.length-1,STEP_LABEL.length-1); }
+  else if(k==='Escape'){ setPanel(false); }
+});
+
+/* ── 启动：先读 hash，再读上次位置 ── */
+(function init(){
+  fit();
+  const m = location.hash.match(/^#q(\d)s(\d)/);
+  if(m){ cur.q=+m[1]; cur.s=+m[2]; }
+  else{
+    try{
+      const old = JSON.parse(localStorage.getItem(STORE_KEY)||'{}');
+      if(typeof old.q==='number'){ cur.q=old.q; cur.s=old.s||0; }
+    }catch(e){}
+  }
+  document.querySelectorAll('.tp-tab').forEach(b=>b.classList.toggle('on', b.dataset.ptab===cur.ptab));
+  render();
+})();
+</script>
+</body>
+</html>
