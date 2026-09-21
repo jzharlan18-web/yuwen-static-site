@@ -7,6 +7,7 @@
 <!--
   设计说明（教师用）：
   · 单文件课堂演示页，双击打开即可；键盘 ←/→ 翻页，屏幕左右边缘点击也可翻页。
+  · 从课程入口打开时，按 M 或点击顶部「投屏字号」可放大整页核心内容；浏览器缩放也会保留放大效果。
   · 标有「▸ 点击出示」的虚线框：学生回答后再点击，答案才出现（结论由课堂生成，不预泄）。
   · 背诵页四个按钮：全显 → 遮下句（师生接句）→ 留首二字（看头背尾）→ 全遮。
   · 每页右上角为本环节参考用时（对应教案时间轴，教师控节奏用）。
@@ -41,6 +42,18 @@
   }
   deck-stage > section:not(.active) { display: none !important; }
   deck-stage > section.active { display: block; }
+
+  /* 投屏字号：固定 16:9 画布会抵消浏览器缩放，改为在画布内部放大内容。 */
+  deck-stage > section > .wrap {
+    transition: transform 180ms ease;
+  }
+  body.projection-font deck-stage > section.active > .wrap {
+    transform: scale(1.12);
+    transform-origin: center center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    deck-stage > section > .wrap { transition: none; }
+  }
 
   /* ============ 通用页面骨架 ============ */
   .wrap {
@@ -729,9 +742,9 @@
   /* 白描大字 */
   .bm-word { display: inline-block; font-family: var(--kai); font-size: 92px; font-weight: 700; color: var(--cn); letter-spacing: 0.4em; text-indent: 0.4em; border-top: 3px solid var(--cn); border-bottom: 3px solid var(--cn); padding: 10px 0 14px; }
   /* 长诗背诵页：缩小行距版 */
-  .recite .poem { font-size: 45px; line-height: 1.76; }
-  .recite .lv-btns { margin-top: 26px; }
-  .recite .recite-tip { margin-top: 22px; font-size: 29px; }
+  .recite .poem { font-size: 44px; line-height: 1.7; }
+  .recite .lv-btns { margin-top: 20px; }
+  .recite .recite-tip { margin-top: 18px; font-size: 28px; }
   </style>
 <body>
 <deck-stage>
@@ -930,7 +943,7 @@
 
     <!-- 13 背诵 -->
 <section data-screen-label="13 背诵">
-    <div class="wrap" style="padding:60px 130px 40px">
+    <div class="wrap" style="padding:60px 130px 70px">
       <div class="hd"><span>归园田居（其一）</span><span>背会 · 降支架 <b style="color:var(--cn)">≈3.5′</b></span></div>
       <div class="body">
         <div class="recite" id="recite-gyt" data-lv="0">
@@ -1021,6 +1034,7 @@
       this.attachShadow({ mode: 'open' });
       this._currentSlide = 0;
       this._slides = [];
+      this._baseDevicePixelRatio = window.devicePixelRatio || 1;
       this._storageKey = STORAGE_KEY_PREFIX + (location.pathname || 'default');
     }
 
@@ -1201,6 +1215,9 @@
 
     _setupEventListeners() {
       window.addEventListener('resize', () => this._updateScale());
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', () => this._updateScale());
+      }
 
       document.addEventListener('keydown', (e) => {
         if (e.target.matches('input, textarea, [contenteditable]')) return;
@@ -1279,7 +1296,13 @@
 
       const viewportW = window.innerWidth;
       const viewportH = window.innerHeight;
-      const scale = Math.min(viewportW / this._width, viewportH / this._height);
+      const fitScale = Math.min(viewportW / this._width, viewportH / this._height);
+
+      /* 固定画布默认会随浏览器缩放缩回窗口，视觉上抵消 ⌘+/Ctrl+。
+         这里把浏览器缩放比例乘回画布：放大时以画面中心扩展，允许边缘裁切。 */
+      const currentDevicePixelRatio = window.devicePixelRatio || this._baseDevicePixelRatio;
+      const browserZoom = currentDevicePixelRatio / this._baseDevicePixelRatio;
+      const scale = fitScale * browserZoom;
       const scaledW = this._width * scale;
       const scaledH = this._height * scale;
       const offsetX = (viewportW - scaledW) / 2;
