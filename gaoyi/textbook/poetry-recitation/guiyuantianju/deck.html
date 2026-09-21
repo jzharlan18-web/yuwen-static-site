@@ -1,0 +1,1418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>归园田居（其一）</title>
+<!--
+  设计说明（教师用）：
+  · 单文件课堂演示页，双击打开即可；键盘 ←/→ 翻页，屏幕左右边缘点击也可翻页。
+  · 标有「▸ 点击出示」的虚线框：学生回答后再点击，答案才出现（结论由课堂生成，不预泄）。
+  · 背诵页四个按钮：全显 → 遮下句（师生接句）→ 留首二字（看头背尾）→ 全遮。
+  · 每页右上角为本环节参考用时（对应教案时间轴，教师控节奏用）。
+  · 全部使用系统字体（楷体），不依赖网络。
+-->
+<style>
+  :root {
+    --paper: #FAF6EE;
+    --ink: #2B2925;
+    --ink2: #6E675C;
+    --cn: #B03A2E;
+    --cn-deep: #8E2F25;
+    --cn-soft: rgba(176, 58, 46, 0.07);
+    --line: rgba(43, 41, 37, 0.16);
+    --kai: "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", "DFKai-SB", "Songti SC", serif;
+    --ui: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--ui);
+    color: var(--ink);
+    background: var(--paper);
+  }
+
+  /* ============ deck-stage starter CSS（规范写法：display 只写在 .active 上） ============ */
+  deck-stage > section {
+    background: var(--paper);
+    overflow: hidden;
+    position: relative;
+  }
+  deck-stage > section:not(.active) { display: none !important; }
+  deck-stage > section.active { display: block; }
+
+  /* ============ 通用页面骨架 ============ */
+  .wrap {
+    width: 1920px;
+    height: 1080px;
+    padding: 70px 130px 60px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 22px;
+    color: var(--ink2);
+    letter-spacing: 0.06em;
+    flex: none;
+  }
+  .hd .ph { color: var(--cn); font-weight: 600; }
+
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .kicker {
+    font-size: 26px;
+    letter-spacing: 0.35em;
+    color: var(--cn);
+    margin-bottom: 26px;
+    font-weight: 600;
+  }
+
+  /* ============ 封面 ============ */
+  .cover .wrap { justify-content: center; align-items: center; text-align: center; }
+  .cover-kicker {
+    font-size: 28px; letter-spacing: 0.5em; color: var(--ink2);
+    margin-bottom: 60px; text-indent: 0.5em;
+  }
+  .cover-title {
+    font-family: var(--kai);
+    font-size: 150px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+  }
+  .cover-title .dot { color: var(--cn); margin: 0 18px; font-weight: 400; }
+  .cover-src {
+    font-family: var(--kai);
+    font-size: 34px;
+    color: var(--ink2);
+    margin-top: 44px;
+    letter-spacing: 0.15em;
+  }
+  .cover-route {
+    margin-top: 90px;
+    font-size: 30px;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+  .cover-route .arr { color: var(--cn); margin: 0 20px; }
+  .cover-sub {
+    margin-top: 26px;
+    font-size: 24px;
+    color: var(--ink2);
+    letter-spacing: 0.2em;
+  }
+  .seal {
+    position: absolute;
+    right: 150px;
+    bottom: 120px;
+    width: 92px;
+    height: 92px;
+    background: var(--cn);
+    color: #FAF6EE;
+    font-family: var(--kai);
+    font-size: 58px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transform: rotate(-3deg);
+    box-shadow: 0 2px 10px rgba(142, 47, 37, 0.25);
+  }
+
+  /* ============ 路线页 ============ */
+  .route-title {
+    font-family: var(--kai);
+    font-size: 72px;
+    font-weight: 700;
+    margin-bottom: 80px;
+  }
+  .route-steps {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+  .rstep { text-align: center; flex: 1; }
+  .rstep .no {
+    font-family: var(--kai);
+    font-size: 30px;
+    color: var(--cn);
+    margin-bottom: 14px;
+    letter-spacing: 0.3em;
+  }
+  .rstep .nm {
+    font-family: var(--kai);
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .rstep .ds {
+    font-size: 26px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+  .rstep .tm {
+    font-size: 22px;
+    color: var(--cn);
+    margin-top: 16px;
+  }
+  .route-arr {
+    font-size: 44px;
+    color: var(--cn);
+    align-self: center;
+    padding: 0 8px;
+    margin-top: 40px;
+  }
+  .route-tail {
+    margin-top: 90px;
+    border-top: 1px solid var(--line);
+    padding-top: 34px;
+    text-align: center;
+    font-size: 30px;
+    color: var(--ink);
+    letter-spacing: 0.1em;
+  }
+  .route-tail b { color: var(--cn); }
+
+  /* ============ 诗体大字 ============ */
+  .poem {
+    font-family: var(--kai);
+    font-size: 56px;
+    line-height: 2.1;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .poem.small { font-size: 52px; }
+  .poem-note {
+    text-align: center;
+    font-size: 27px;
+    color: var(--ink2);
+    margin-top: 46px;
+    letter-spacing: 0.08em;
+  }
+  .poem-note b { color: var(--cn); font-weight: 600; }
+  .poem-title {
+    font-family: var(--kai);
+    font-size: 44px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 34px;
+    letter-spacing: 0.1em;
+  }
+  .poem-title span {
+    font-size: 26px;
+    color: var(--ink2);
+    font-weight: 400;
+    margin-left: 24px;
+  }
+
+  /* ============ 正音通假 ============ */
+  .py-grid {
+    display: flex;
+    gap: 100px;
+    align-items: flex-start;
+  }
+  .py-col { flex: 1; }
+  .py-col h3 {
+    font-family: var(--kai);
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.2em;
+  }
+  .py-col h3 em { font-style: normal; color: var(--cn); }
+  .py-item {
+    display: flex;
+    align-items: baseline;
+    font-size: 34px;
+    padding: 15px 0;
+    border-bottom: 1px dashed rgba(43, 41, 37, 0.1);
+  }
+  .py-item .hz { font-family: var(--kai); font-weight: 700; width: 220px; }
+  .py-item .py { color: var(--cn); font-size: 28px; width: 280px; }
+  .py-item .mn { color: var(--ink2); font-size: 27px; }
+  .tj-item .hz { width: 150px; }
+  .tj-item .py { width: 190px; font-family: var(--kai); font-size: 32px; }
+
+  /* ============ 任务页（自读） ============ */
+  .task-big {
+    font-family: var(--kai);
+    font-size: 84px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .task-big em { font-style: normal; color: var(--cn); }
+  .task-sub {
+    text-align: center;
+    font-size: 32px;
+    color: var(--ink2);
+    margin-top: 56px;
+    letter-spacing: 0.1em;
+  }
+  .task-sub b { color: var(--ink); }
+
+  /* ============ 快问快答 ============ */
+  .qa { margin-bottom: 44px; }
+  .qa .q {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+  .qa .q .qn {
+    font-family: var(--kai);
+    color: var(--cn);
+    font-size: 30px;
+    flex: none;
+  }
+  .qa .a-line {
+    font-size: 31px;
+    line-height: 1.75;
+    color: var(--ink);
+    padding-left: 58px;
+  }
+  .qa .a-line b {
+    font-family: var(--kai);
+    color: var(--cn);
+    font-weight: 700;
+    font-size: 33px;
+  }
+
+  /* ============ 点击出示（reveal） ============ */
+  .rv { cursor: pointer; }
+  .rv .rv-slot {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1.5px dashed rgba(176, 58, 46, 0.45);
+    color: var(--cn);
+    background: var(--cn-soft);
+    font-size: 25px;
+    padding: 10px 26px;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+    user-select: none;
+  }
+  .rv .rv-slot::before { content: "▸"; font-size: 20px; }
+  .rv .rv-body { display: none; }
+  .rv.on .rv-slot { display: none; }
+  .rv.on .rv-body {
+    display: block;
+    animation: rvIn 0.35s ease both;
+  }
+  @keyframes rvIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .rv-slot-wrap { padding-left: 58px; margin-top: 4px; }
+
+  /* ============ 焦点页 ============ */
+  .focus-core {
+    font-family: var(--kai);
+    font-size: 96px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+  }
+  .focus-core .cm { color: var(--cn); }
+  .focus-ans {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .focus-ans .big-word {
+    display: inline-block;
+    font-family: var(--kai);
+    font-size: 100px;
+    font-weight: 700;
+    color: var(--cn);
+    letter-spacing: 0.45em;
+    text-indent: 0.45em;
+    border-top: 3px solid var(--cn);
+    border-bottom: 3px solid var(--cn);
+    padding: 16px 30px;
+  }
+  .focus-note {
+    text-align: center;
+    font-size: 32px;
+    color: var(--ink2);
+    margin-top: 54px;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+  }
+  .focus-note b { color: var(--ink); }
+
+  .deep-item { margin-bottom: 40px; }
+  .deep-item .dline {
+    font-family: var(--kai);
+    font-size: 54px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .deep-item .dline .dn {
+    font-size: 30px;
+    color: var(--cn);
+    margin-right: 26px;
+    font-weight: 400;
+  }
+  .deep-item .dnote { font-size: 30px; color: var(--ink2); padding-left: 66px; line-height: 1.6; }
+  .deep-item .dnote b { color: var(--ink); }
+
+  /* ============ 主问题页 ============ */
+  .mq-big {
+    font-family: var(--kai);
+    font-size: 80px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 60px;
+  }
+  .mq-big em { font-style: normal; color: var(--cn); }
+  .mq-subs {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 66px;
+  }
+  .mq-subs span::before { content: "· "; color: var(--cn); }
+  .chain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    font-family: var(--kai);
+    font-size: 46px;
+    font-weight: 700;
+  }
+  .chain .c-arr { color: var(--cn); font-size: 34px; }
+  .chain .c-end {
+    color: var(--cn);
+    border: 2px solid var(--cn);
+    padding: 6px 26px;
+    border-radius: 3px;
+  }
+
+  /* ============ 检测页 ============ */
+  .ctest { margin-bottom: 66px; }
+  .ctest .ct-q {
+    font-size: 37px;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .ctest .ct-q .src { color: var(--cn); margin-right: 18px; font-family: var(--kai); }
+  .ctest .ct-blank {
+    font-family: var(--kai);
+    color: var(--ink2);
+    font-size: 32px;
+    letter-spacing: 0.2em;
+    padding-left: 58px;
+  }
+  .ctest .rv .rv-body {
+    font-family: var(--kai);
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--cn);
+    letter-spacing: 0.15em;
+  }
+
+  /* ============ 作业页 ============ */
+  .hw-block { margin-bottom: 60px; }
+  .hw-block h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.15em;
+  }
+  .hw-block h3 span {
+    font-size: 24px;
+    color: var(--paper);
+    background: var(--cn);
+    padding: 4px 16px;
+    border-radius: 3px;
+    margin-right: 20px;
+    font-weight: 400;
+    vertical-align: 4px;
+  }
+  .hw-block p { font-size: 31px; line-height: 1.8; color: var(--ink); }
+  .hw-block p b { color: var(--cn); }
+  .hw-end {
+    margin-top: 30px;
+    border-top: 1px solid var(--line);
+    padding-top: 44px;
+    text-align: center;
+    font-family: var(--kai);
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+  .hw-end em { font-style: normal; color: var(--cn); }
+
+  /* ============ 背诵支架 ============ */
+  .recite .poem { margin-bottom: 10px; }
+  .recite .f, .recite .x, .recite .e { transition: color 0.25s ease, background 0.25s ease; }
+  .msk {
+    color: transparent !important;
+    background: linear-gradient(to top, rgba(176, 58, 46, 0.32) 0 10px, transparent 10px);
+    border-radius: 2px;
+  }
+  .recite[data-lv="1"] .e.mskable {}
+  .recite[data-lv="1"] .e { color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px); }
+  .recite[data-lv="2"] .e, .recite[data-lv="2"] .x {
+    color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px);
+  }
+  .recite[data-lv="3"] .e, .recite[data-lv="3"] .x, .recite[data-lv="3"] .f {
+    color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px);
+  }
+  .lv-btns {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    margin-top: 44px;
+  }
+  .lv-btn {
+    font-family: var(--ui);
+    font-size: 28px;
+    letter-spacing: 0.1em;
+    padding: 14px 40px;
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+  .lv-btn:hover { border-color: var(--cn); color: var(--cn); }
+  .lv-btn.on {
+    background: var(--cn);
+    border-color: var(--cn);
+    color: #FAF6EE;
+  }
+  .recite-tip {
+    text-align: center;
+    font-size: 26px;
+    color: var(--ink2);
+    margin-top: 34px;
+    letter-spacing: 0.08em;
+  }
+  .recite-tip b { color: var(--cn); font-weight: 600; }
+
+  /* ============ 讲义导读 ============ */
+  .handout {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    flex: none;
+  }
+  .handout .hb-tag {
+    flex: none;
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    color: #FAF6EE;
+    background: var(--cn);
+    padding: 6px 14px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .handout .hb-body { font-size: 25px; line-height: 1.7; color: var(--ink2); }
+  .handout .hb-body b { color: var(--ink); font-weight: 600; }
+  .handout .hb-body .hb-c { color: var(--cn); font-weight: 600; }
+
+  /* ============ 附页 · 两种读法 ============ */
+  .duel-title {
+    font-family: var(--kai);
+    font-size: 54px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .duel-title span { font-size: 30px; color: var(--ink2); font-weight: 400; margin-left: 16px; }
+  .duel-sub {
+    text-align: center;
+    font-size: 24px;
+    color: var(--ink2);
+    margin-bottom: 28px;
+    letter-spacing: 0.04em;
+  }
+  .duel-grid { display: flex; gap: 56px; }
+  .duel-col {
+    flex: 1;
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 28px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .duel-h {
+    font-family: var(--kai);
+    font-size: 33px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .duel-h span {
+    font-size: 20px;
+    color: #FAF6EE;
+    background: var(--cn);
+    border-radius: 3px;
+    padding: 3px 12px;
+    margin-left: 14px;
+    vertical-align: 4px;
+    font-family: var(--ui);
+    letter-spacing: 0.1em;
+  }
+  .duel-def {
+    font-size: 22px;
+    color: var(--ink);
+    background: var(--cn-soft);
+    padding: 10px 16px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .duel-def b { color: var(--cn); }
+  .du-ev {
+    display: flex;
+    gap: 14px;
+    font-size: 21.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 11px;
+  }
+  .du-ev span { flex: none; font-family: var(--kai); color: var(--cn); font-weight: 700; }
+  .du-ev b { color: var(--cn); font-weight: 600; }
+  .duel-bottom {
+    margin-top: 24px;
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38);
+    padding-top: 16px;
+    font-size: 22.5px;
+    line-height: 1.7;
+    color: var(--ink2);
+  }
+  .duel-bottom b { color: var(--ink); }
+  .duel-bottom .c { color: var(--cn); font-weight: 600; }
+
+  /* ============ 月夜 弹层 ============ */
+  .moonlnk { color: var(--cn); font-weight: 700; text-decoration: underline dotted; text-underline-offset: 6px; }
+  .du-moon-trigger { cursor: pointer; }
+  .moonlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(32, 27, 22, 0.58);
+    display: none; align-items: center; justify-content: center;
+  }
+  .moonlay.open { display: flex; }
+  .moonlay-card {
+    width: 1000px; max-width: 94vw; max-height: 90vh; overflow-y: auto;
+    background: var(--paper); border-radius: 8px;
+    padding: 40px 60px 32px; position: relative;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.4);
+    font-family: var(--ui);
+  }
+  .moon-close {
+    font-family: var(--ui); cursor: pointer;
+    border: 1.5px solid var(--cn); background: transparent; color: var(--cn);
+    font-size: 18px; letter-spacing: 0.1em; padding: 8px 20px; border-radius: 3px;
+  }
+  .moon-close:hover { background: var(--cn); color: #FAF6EE; }
+  .mc-top { position: absolute; top: 26px; right: 30px; }
+  .mc-bottom { display: block; margin: 26px auto 0; font-size: 20px; padding: 12px 44px; }
+  .moon-kicker { font-size: 15px; letter-spacing: 0.3em; color: var(--cn); margin-bottom: 6px; }
+  .moon-title {
+    font-family: var(--kai); font-size: clamp(40px, 4.5vw, 58px); font-weight: 700;
+    text-align: center; letter-spacing: 0.2em; margin-top: 4px;
+  }
+  .moon-author {
+    text-align: center; font-family: var(--kai);
+    font-size: clamp(18px, 1.8vw, 24px); color: var(--ink2); margin: 6px 0 18px;
+  }
+  .moon-poem {
+    font-family: var(--kai); font-size: clamp(24px, 2.6vw, 36px);
+    line-height: 1.9; text-align: center; letter-spacing: 0.12em; margin-bottom: 22px;
+  }
+  .moon-sec { margin-bottom: 20px; }
+  .moon-sec h3 {
+    font-family: var(--kai); font-size: clamp(20px, 2vw, 26px); color: var(--cn);
+    letter-spacing: 0.25em; border-bottom: 1px solid var(--line);
+    padding-bottom: 8px; margin-bottom: 12px;
+  }
+  .moon-notes { padding-left: 24px; }
+  .moon-notes li, .moon-sec p, .moon-list li {
+    font-size: clamp(15px, 1.5vw, 20px); line-height: 1.75; color: var(--ink);
+  }
+  .moon-list { padding-left: 24px; }
+  .moon-list li { margin-bottom: 6px; }
+  .moon-list li b { color: var(--cn); font-family: var(--kai); }
+  .moon-hl { background: var(--cn-soft); padding: 10px 16px; border-radius: 3px; }
+  .moon-sec p b { color: var(--cn); }
+  .moon-bridge {
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38); margin-top: 8px; padding-top: 14px;
+    text-align: center; font-size: clamp(14px, 1.4vw, 18px); color: var(--ink2);
+  }
+
+  /* ============ 本课补充组件 ============ */
+  .tip-list { display: flex; flex-direction: column; gap: 14px; margin-top: 8px; }
+  .tip { display: flex; gap: 14px; align-items: baseline; font-size: 24px; line-height: 1.6; color: var(--ink); }
+  .tip b.k { flex: none; font-family: var(--kai); color: var(--cn); font-weight: 700; }
+  .pair-grid { display: flex; flex-direction: column; gap: 18px; margin: 20px auto 0; max-width: 1280px; }
+  .pair-row { display: flex; justify-content: center; align-items: baseline; gap: 26px; font-family: var(--kai); font-size: 34px; }
+  .pair-row .p-l { color: var(--ink); } .pair-row .p-r { color: var(--ink); }
+  .pair-row .p-vs { color: var(--cn); font-size: 26px; }
+  .pair-row em { font-style: normal; color: var(--cn); font-weight: 700; }
+  .pair-row .p-tag { font-family: sans-serif; font-size: 19px; color: var(--ink2); border: 1px solid var(--line); border-radius: 3px; padding: 2px 8px; }
+  .dp-list { display: flex; flex-direction: column; gap: 18px; margin-top: 18px; }
+  .dp { border: 1.5px solid var(--line); border-left: 5px solid var(--cn); border-radius: 4px; background: rgba(176,58,46,0.04); padding: 16px 20px; font-size: 24px; line-height: 1.65; }
+  .dp b.t { font-family: var(--kai); color: var(--cn); font-weight: 700; margin-right: 10px; }
+  .ank { font-size: 23px; line-height: 1.6; color: var(--ink); }
+  .qm-line { text-align: center; font-size: 21px; color: var(--ink2); letter-spacing: .05em; margin-top: 6px; }
+
+  
+  /* ============ 后排可见：字号增补（本课件覆盖） ============ */
+  .poem { font-size: 64px; }
+  .poem.small { font-size: 58px; }
+  .poem-title { font-size: 52px; }
+  .poem-note { font-size: 31px; }
+  .recite-tip { font-size: 31px; }
+  .hd { font-size: 26px; }
+  .kicker { font-size: 30px; }
+  .qa .q { font-size: 42px; }
+  .qa .q .qn { font-size: 34px; }
+  .qa .a-line { font-size: 36px; }
+  .qa .a-line b { font-size: 38px; }
+  .rv .rv-slot { font-size: 28px; }
+  .ct-q { font-size: 42px; }
+  .focus-note { font-size: 36px; }
+  .route-tail { font-size: 34px; }
+  .rstep .ds { font-size: 30px; }
+  .rstep .tm { font-size: 26px; }
+  .hw-block h3 { font-size: 38px; }
+  .hw-block p { font-size: 36px; }
+  .cover-kicker { font-size: 32px; }
+  .cover-sub { font-size: 28px; }
+
+  /* ============ 本课专用版式 ============ */
+  /* 长诗五列齐读页 */
+  .poem-grid { display: flex; justify-content: center; gap: 30px; }
+  .pcol { font-family: var(--kai); font-size: 47px; line-height: 1.95; letter-spacing: 0.06em; }
+  /* 正音字卡 */
+  .yin-grid { display: flex; justify-content: center; gap: 56px; }
+  .yin-card { text-align: center; }
+  .yin-card .zi { font-family: var(--kai); font-size: 108px; font-weight: 700; line-height: 1.2; }
+  .yin-card .py { font-size: 30px; color: var(--cn); letter-spacing: 0.08em; margin-top: 4px; font-family: var(--ui); }
+  .yin-card .sm { font-size: 26px; color: var(--ink2); margin-top: 10px; }
+  /* 八景格 */
+  .jg-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 22px 36px; max-width: 1420px; margin: 6px auto 0; }
+  .jg { font-family: var(--kai); font-size: 44px; border: 1.5px solid var(--line); border-radius: 4px; padding: 6px 30px; background: rgba(176,58,46,0.05); }
+  /* 白描大字 */
+  .bm-word { display: inline-block; font-family: var(--kai); font-size: 92px; font-weight: 700; color: var(--cn); letter-spacing: 0.4em; text-indent: 0.4em; border-top: 3px solid var(--cn); border-bottom: 3px solid var(--cn); padding: 10px 0 14px; }
+  /* 长诗背诵页：缩小行距版 */
+  .recite .poem { font-size: 45px; line-height: 1.76; }
+  .recite .lv-btns { margin-top: 26px; }
+  .recite .recite-tip { margin-top: 22px; font-size: 29px; }
+  </style>
+<body>
+<deck-stage>
+
+  <!-- 01 封面 -->
+<section data-screen-label="01 封面">
+    <div class="wrap cover">
+      <div class="cover-kicker">统编版必修上册 · 第二单元</div>
+      <div class="cover-title">归园田居<span style="font-size:54px;color:var(--ink2);font-weight:400;margin-left:26px">（其一）</span></div>
+      <div class="cover-src">陶 渊 明</div>
+      <div class="cover-route">知人<span class="arr">→</span>读通<span class="arr">→</span>走诗<span class="arr">→</span>背会</div>
+      <div class="cover-sub">20 分钟 · 一条主线 · 当堂成诵</div>
+      <div class="seal">归</div>
+    </div>
+  </section>
+
+    <!-- 02 路线 -->
+<section data-screen-label="02 路线">
+    <div class="wrap">
+      <div class="hd"><span>必修上册第二单元｜归园田居（其一）</span><span class="ph">定向</span></div>
+      <div class="body">
+        <div class="route-title">二十分钟，怎么走</div>
+        <div class="route-steps">
+          <div class="rstep"><div class="no">壹</div><div class="nm">知人</div><div class="ds">一个典故<br>记牢「折腰」</div><div class="tm">≈2.5′</div></div>
+          <div class="route-arr">→</div>
+          <div class="rstep"><div class="no">贰</div><div class="nm">读通</div><div class="ds">正音 · 齐读<br>圈出诗眼</div><div class="tm">≈4.5′</div></div>
+          <div class="route-arr">→</div>
+          <div class="rstep"><div class="no">叁</div><div class="nm">走诗</div><div class="ds">「归」字四问<br>一个焦点</div><div class="tm">≈7′</div></div>
+          <div class="route-arr">→</div>
+          <div class="rstep"><div class="no">肆</div><div class="nm">背会</div><div class="ds">降支架背诵<br>检测互批</div><div class="tm">≈6′</div></div>
+        </div>
+        <div class="route-tail">一条主线：<b>一个做了十三年小官的人，为什么把「回家种地」写成人生大事？</b></div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 03 导入·五斗米 -->
+<section data-screen-label="03 导入·五斗米">
+    <div class="wrap">
+      <div class="hd"><span>归园田居（其一）</span><span>知人 · 导入 <b style="color:var(--cn)">≈2.5′</b></span></div>
+      <div class="body">
+        <div class="kicker" style="text-align:center">公元 405 年冬 · 彭泽县 · 在任第 80 余天</div>
+        <div class="mq-big" style="font-size:72px">郡里派人来检查，下属提醒他<b style="color:var(--cn)">穿正装</b>迎接——<br>他为什么<em>当天辞职</em>？</div>
+        <div class="rv-slot-wrap" style="display:flex;justify-content:center"><div class="rv"><div class="rv-slot">学生答后，点击出示</div><div class="rv-body"><div class="a-line" style="font-size:36px;text-align:center;padding-left:0">他烦的不是「当官」这件事，是官场要他<b>低头、装样子、陪笑</b>——<br>「我不能为五斗米折腰向乡里小儿。」</div></div></div></div>
+        <div class="poem-note">他 29 岁出仕，时官时隐十三年；写此诗时 41 岁——诗里的每个字，都攒了十三年。</div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 04 齐读 -->
+<section data-screen-label="04 齐读">
+    <div class="wrap" style="padding:70px 90px 50px">
+      <div class="hd"><span>归园田居（其一）· 五言古体</span><span>诵读 · 自由读一遍 <b style="color:var(--cn)">≈1′</b></span></div>
+      <div class="body">
+        <div class="poem-grid">
+          <div class="pcol">少无适俗韵，<br>性本爱丘山。<br>误落尘网中，<br>一去三十年。</div>
+          <div class="pcol">羁鸟恋旧林，<br>池鱼思故渊。<br>开荒南野际，<br>守拙归园田。</div>
+          <div class="pcol">方宅十余亩，<br>草屋八九间。<br>榆柳荫后檐，<br>桃李罗堂前。</div>
+          <div class="pcol">暧暧远人村，<br>依依墟里烟。<br>狗吠深巷中，<br>鸡鸣桑树颠。</div>
+          <div class="pcol">户庭无尘杂，<br>虚室有余闲。<br>久在樊笼里，<br>复得返自然。</div>
+        </div>
+        <div class="poem-note">自由读一遍——<b>读不顺</b>的地方，圈出来</div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 05 正音 -->
+<section data-screen-label="05 正音">
+    <div class="wrap">
+      <div class="hd"><span>归园田居（其一）</span><span>诵读 · 正音 <b style="color:var(--cn)">≈1.5′</b></span></div>
+      <div class="body">
+        <div class="kicker" style="text-align:center">五个字，标在书上 · 标完齐读一遍</div>
+        <div class="yin-grid">
+          <div class="yin-card"><div class="zi">韵</div><div class="py">yùn</div><div class="sm">性情·气韵</div></div>
+          <div class="yin-card"><div class="zi">暧暧</div><div class="py">ài ài</div><div class="sm">迷蒙隐约</div></div>
+          <div class="yin-card"><div class="zi">墟</div><div class="py">xū</div><div class="sm">墟里＝村落</div></div>
+          <div class="yin-card"><div class="zi">颠</div><div class="py">diān</div><div class="sm">顶端</div></div>
+          <div class="yin-card"><div class="zi">樊</div><div class="py">fán</div><div class="sm">樊笼＝鸟笼</div></div>
+        </div>
+        <div class="poem-note">易漏注音：「榆柳<b>荫</b>（yìn）后檐」——荫是动词，遮蔽<br>节奏：五言二三分拍，「少无／适俗韵」「误落／尘网中」——读来<b>舒缓</b>，这舒缓本身就是他的态度</div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 06 诗眼定位 -->
+<section data-screen-label="06 诗眼定位">
+    <div class="wrap">
+      <div class="hd"><span>归园田居（其一）</span><span>读懂 · 诗眼定位 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="kicker" style="text-align:center">快读圈画 · 两分钟</div>
+        <div class="mq-big">全诗围绕哪个字走？<br><em>「归」之前</em>写什么，<em>「归」之后</em>写什么？</div>
+        <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生圈完，点击出示</div><div class="rv-body"><div class="a-line">诗眼是<b>「归」</b>——归之前：官场（尘网、樊笼）；归之后：田园。</div></div></div></div>
+        <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">追问：分界在哪句？点击出示</div><div class="rv-body"><div class="a-line">分界句：<b>「开荒南野际，守拙归园田」</b>——前八句写<b>为什么归</b>，后十二句写<b>归了怎样</b>。</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 07 归字四问 -->
+<section data-screen-label="07 归字四问">
+    <div class="wrap">
+      <div class="hd"><span>归园田居（其一）</span><span>走诗 · 四问 <b style="color:var(--cn)">≈6′</b></span></div>
+      <div class="body">
+        <div class="focus-core" style="font-size:120px"><span class="cm">归</span></div>
+        <div class="route-steps" style="margin-top:40px">
+          <div class="rstep"><div class="no">第一问 · 4 句</div><div class="nm" style="font-size:50px">从何而归</div><div class="ds">尘网 · 樊笼</div></div>
+          <div class="route-arr">→</div>
+          <div class="rstep"><div class="no">第二问 · 4 句</div><div class="nm" style="font-size:50px">为何而归</div><div class="ds">误 · 守拙</div></div>
+          <div class="route-arr">→</div>
+          <div class="rstep"><div class="no">第三问 · 8 句</div><div class="nm" style="font-size:50px">归向何处</div><div class="ds">田园八景 · 白描</div></div>
+          <div class="route-arr">→</div>
+          <div class="rstep"><div class="no">第四问 · 4 句</div><div class="nm" style="font-size:50px">归去如何</div><div class="ds">无尘杂 · 返自然</div></div>
+        </div>
+        <div class="route-tail" style="margin-top:60px;padding-top:26px">这四个问题，就是全诗的路——<b>也是待会儿背诵的地图。</b></div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 08 从何而归 -->
+<section data-screen-label="08 从何而归">
+    <div class="wrap">
+      <div class="hd"><span>走诗 · 第一问</span><span>从何而归 <b style="color:var(--cn)">≈1′</b></span></div>
+      <div class="body">
+        <div class="qa"><div class="q"><span class="qn">问一</span>他从哪里归？找出诗中的<b style="color:var(--cn)">两个比喻</b>。</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生找完，点击出示</div><div class="rv-body"><div class="a-line">「误落<b>尘网</b>中」「久在<b>樊笼</b>里」——官场。</div></div></div></div>
+        </div>
+        <div class="qa"><div class="q"><span class="qn">追问</span>网和笼子，共同点是什么？为什么不直说「官场」？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生答后，点击出示</div><div class="rv-body"><div class="a-line"><b>不自由</b>——网缠人，笼锁人。在他眼里，官场根本不是人待的地方。</div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 09 为何而归 -->
+<section data-screen-label="09 为何而归">
+    <div class="wrap">
+      <div class="hd"><span>走诗 · 第二问</span><span>为何而归 <b style="color:var(--cn)">≈1′</b></span></div>
+      <div class="body">
+        <div class="qa"><div class="q"><span class="qn">问二</span>「<b style="color:var(--cn)">误</b>落尘网中」——把「误」换成「入」，行不行？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生答后，点击出示</div><div class="rv-body"><div class="a-line">「误」＝<b>走错了、悔了十三年</b>——一个字，全是醒与怨。</div></div></div></div>
+        </div>
+        <div class="qa"><div class="q"><span class="qn">追问</span>「守拙」归园田——他守的是什么？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生答后，点击出示</div><div class="rv-body"><div class="a-line">不学巧伪、不争名利的<b>本真性子</b>——他归的不是一块地，是一种活法。</div></div></div></div>
+        </div>
+        <div class="poem-note">小知识：「一去三十年」史实是十三年——一说「三十」为「十三」之倒文，一说举成数；<b>考试按教材写「三十」</b>。</div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 10 归向何处·白描 -->
+<section data-screen-label="10 归向何处·白描">
+    <div class="wrap">
+      <div class="hd"><span>走诗 · 第三问（本课焦点）</span><span>归向何处 <b style="color:var(--cn)">≈2.5′</b></span></div>
+      <div class="body">
+        <div class="kicker" style="text-align:center">第三问 · 归向何处</div>
+        <div class="mq-big" style="font-size:66px;margin-bottom:36px">「方宅」到「树颠」八句 40 字——<br>塞了<em>几样景物</em>？用了<em>几个形容词</em>？</div>
+        <div class="qm-line" style="font-size:26px">同桌一起数，两分钟</div>
+        <div class="rv-slot-wrap" style="margin-top:24px"><div class="rv"><div class="rv-slot">学生数完，点击出示八景</div><div class="rv-body"><div class="jg-grid">
+          <div class="jg">方宅</div><div class="jg">草屋</div><div class="jg">榆柳</div><div class="jg">桃李</div><div class="jg">远村</div><div class="jg">炊烟</div><div class="jg">狗吠</div><div class="jg">鸡鸣</div>
+        </div><div class="a-line" style="margin-top:18px">40 字，8 样景物，<b>几乎没有形容词</b>。</div></div></div></div>
+        <div class="rv-slot-wrap" style="margin-top:20px"><div class="rv"><div class="rv-slot">追问：写景不堆形容词，叫什么？点击出示</div><div class="rv-body"><div style="text-align:center"><span class="bm-word">白描</span></div><div class="a-line" style="text-align:center;padding-left:0;margin-top:14px">不施彩、不渲染，简笔勾形——他要的就是平淡，<b>怎么写，就是他是什么人</b>。<br>再看：眼前（宅·屋·树）→望出去（村·烟）→听到（狗·鸡）——<b>由近及远，以声衬静</b>。</div></div></div></div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 11 归去如何 -->
+<section data-screen-label="11 归去如何">
+    <div class="wrap">
+      <div class="hd"><span>走诗 · 第四问</span><span>归去如何 <b style="color:var(--cn)">≈1′</b></span></div>
+      <div class="body">
+        <div class="qa"><div class="q"><span class="qn">问三</span>归了之后，哪两个字写出他心里的感觉？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生找完，点击出示</div><div class="rv-body"><div class="a-line">「无<b>尘杂</b>」「有<b>余闲</b>」——心头清净，日子宽绰。</div></div></div></div>
+        </div>
+        <div class="qa"><div class="q"><span class="qn">问四</span>「复得返<b style="color:var(--cn)">自然</b>」的「自然」，只指田园风景吗？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生答后，点击出示</div><div class="rv-body"><div class="a-line">双关——既是回到<b>田园</b>，更是回到<b>自己本来的样子</b>（不必折腰的性子）。<b style="color:var(--cn)">全诗终点，也是考点常客。</b></div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 12 对读·学习提示 -->
+<section data-screen-label="12 对读·学习提示">
+    <div class="wrap">
+      <div class="hd"><span>归园田居（其一）</span><span>对读 · 学习提示 <b style="color:var(--cn)">≈1′</b></span></div>
+      <div class="body">
+        <div class="kicker" style="text-align:center">学习提示拿他和曹操对读——还记得《短歌行》的心事吗？</div>
+        <div class="pair-grid" style="max-width:1420px">
+          <div class="pair-row"><span class="p-l" style="font-weight:700">曹操《短歌行》</span><span class="p-vs">vs</span><span class="p-r" style="font-weight:700">陶渊明《归园田居》</span></div>
+          <div class="pair-row"><span class="p-l"><em>忧</em>——人生苦短·求贤建功</span><span class="p-tag">心事</span><span class="p-r"><em>归</em>——厌离樊笼·守拙归真</span></div>
+          <div class="pair-row"><span class="p-l">四言 · 质朴刚健</span><span class="p-tag">体式</span><span class="p-r">五言 · 平淡舒缓</span></div>
+          <div class="pair-row"><span class="p-l">比兴 · 用典</span><span class="p-tag">笔法</span><span class="p-r">白描 · 简笔勾形</span></div>
+        </div>
+        <div class="route-tail" style="margin-top:56px;padding-top:26px">同一个时代，两种活法——<b>都是认真的活法。</b></div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 13 背诵 -->
+<section data-screen-label="13 背诵">
+    <div class="wrap" style="padding:60px 130px 40px">
+      <div class="hd"><span>归园田居（其一）</span><span>背会 · 降支架 <b style="color:var(--cn)">≈3.5′</b></span></div>
+      <div class="body">
+        <div class="recite" id="recite-gyt" data-lv="0">
+          <div class="poem">
+            <span class="f">少无</span><span class="x">适俗韵，</span><span class="e">性本爱丘山。</span><br>
+            <span class="f">误落</span><span class="x">尘网中，</span><span class="e">一去三十年。</span><br>
+            <span class="f">羁鸟</span><span class="x">恋旧林，</span><span class="e">池鱼思故渊。</span><br>
+            <span class="f">开荒</span><span class="x">南野际，</span><span class="e">守拙归园田。</span><br>
+            <span class="f">方宅</span><span class="x">十余亩，</span><span class="e">草屋八九间。</span><br>
+            <span class="f">榆柳</span><span class="x">荫后檐，</span><span class="e">桃李罗堂前。</span><br>
+            <span class="f">暧暧</span><span class="x">远人村，</span><span class="e">依依墟里烟。</span><br>
+            <span class="f">狗吠</span><span class="x">深巷中，</span><span class="e">鸡鸣桑树颠。</span><br>
+            <span class="f">户庭</span><span class="x">无尘杂，</span><span class="e">虚室有余闲。</span><br>
+            <span class="f">久在</span><span class="x">樊笼里，</span><span class="e">复得返自然。</span>
+          </div>
+          <div class="lv-btns">
+            <button class="lv-btn on" data-lv="0">全显</button>
+            <button class="lv-btn" data-lv="1">遮下句</button>
+            <button class="lv-btn" data-lv="2">留首二字</button>
+            <button class="lv-btn" data-lv="3">全遮</button>
+          </div>
+          <div class="recite-tip">八景顺序乱了，就想<b>「由近及远」</b>：脚下宅屋 → 远处村烟 → 耳中鸡狗</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 14 当堂检测 -->
+<section data-screen-label="14 当堂检测">
+    <div class="wrap">
+      <div class="hd"><span>归园田居（其一）</span><span>当堂检测 <b style="color:var(--cn)">≈2.5′</b></span></div>
+      <div class="body">
+        <div class="kicker">当堂检测 · 写在课本空白处 · 同桌互批</div>
+        <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其一</span>诗人以两个比喻写自己身在官场、心在田园：＿＿＿＿＿＿，＿＿＿＿＿＿。</div><div style="font-size:30px;color:var(--ink2)">羁鸟恋旧林，池鱼思故渊。</div></div></div></div>
+        <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其二</span>紧接「暧暧远人村，依依墟里烟」之后、以声响写出村居生机的两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div><div style="font-size:30px;color:var(--ink2)">狗吠深巷中，鸡鸣桑树颠。</div></div></div></div>
+        <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">口头追问（不作笔头）</div><div class="rv-body"><div class="ct-q"><span class="src">其三</span>他说自己天性热爱山林田园、不肯混世俗——开头哪两句？</div><div style="font-size:30px;color:var(--ink2)">少无适俗韵，性本爱丘山。</div></div></div></div>
+        <div class="poem-note" style="margin-top:10px">错字，订正三遍——盯住<b>「渊」「颠」</b>两个字</div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 15 作业收束 -->
+<section data-screen-label="15 作业收束">
+    <div class="wrap">
+      <div class="hd"><span>归园田居（其一）</span><span>作业 · 收束</span></div>
+      <div class="body">
+        <div class="hw-block">
+          <h3><span>基础 · 全员</span>默写巩固</h3>
+          <p>全诗<b>默写一遍</b>，自批订正；<b>明日课前抽背</b>。</p>
+        </div>
+        <div class="hw-block">
+          <h3><span>选做 · 思考</span>逃避，还是坚守？</h3>
+          <p>有人说他逃避——「天下兴亡，匹夫有责」；有人说他守住的正是自己。<b>你怎么看？</b>写 100 字，单元讨论课用。</p>
+        </div>
+        <div class="hw-end">十三年攒下的悔，换成二十句平平常常的话<br><em>最平常的字，写最不平常的决定。</em></div>
+        <div class="seal" style="position:absolute; right:150px; bottom:100px">归</div>
+      </div>
+    </div>
+  </section>
+
+    <!-- 16 附页·课后自查 -->
+<section data-screen-label="16 附页·课后自查">
+    <div class="wrap" style="padding:60px 130px 50px">
+      <div class="hd"><span>附页｜归园田居（其一）· 课后自查</span><span>默写前过一遍</span></div>
+      <div class="body" style="justify-content:flex-start">
+        <div class="dp-list" style="margin-top:10px">
+          <div class="dp"><b class="t">易错字</b>池鱼思故<b>渊</b>（yuān）· 桑树<b>颠</b>（diān）· <b>暧暧</b>（ài）· <b>墟</b>里（xū）· <b>樊</b>笼（fán）· 榆柳<b>荫</b>（yìn）后檐</div>
+          <div class="dp"><b class="t">白描三看</b>（单元文学短评就写它）①景物选择：8 样日常物，无一奇景；②空间勾勒：由近及远，宅屋→村烟→鸡狗；③心境表现：以声衬静——景越平常，心越安定。</div>
+          <div class="dp"><b class="t">四问自查</b>从何而归＝＿＿·＿＿｜为何而归＝＿＿·＿＿｜归向何处＝＿＿＿＿｜归去如何＝＿＿＿＿<span style="color:var(--ink2)">（合书自测，答案都在板书地图上）</span></div>
+        </div>
+        <div class="poem-note" style="margin-top:36px">检查标准：二十句、一百字，<b>一个字都不能替陶渊明改</b></div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+
+</deck-stage>
+
+<script>
+/* ===== deck-stage web component（幻灯片外壳：缩放/键盘导航/计数/打印） ===== */
+(function() {
+  const STORAGE_KEY_PREFIX = 'deck-stage-slide-';
+
+  class DeckStage extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+      this._currentSlide = 0;
+      this._slides = [];
+      this._storageKey = STORAGE_KEY_PREFIX + (location.pathname || 'default');
+    }
+
+    connectedCallback() {
+      this._width = parseInt(this.getAttribute('width')) || 1920;
+      this._height = parseInt(this.getAttribute('height')) || 1080;
+
+      this._render();
+
+      const init = () => {
+        this._collectSlides();
+        this._setupEventListeners();
+        this._restoreSlide();
+        this._updateDisplay();
+        this._setupPrintStyles();
+      };
+
+      if (this.ownerDocument.readyState === 'loading') {
+        this.ownerDocument.addEventListener('DOMContentLoaded', init, { once: true });
+      } else {
+        requestAnimationFrame(init);
+      }
+    }
+
+    _render() {
+      this.shadowRoot.innerHTML = `
+        <style>
+          :host {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: -apple-system, 'SF Pro Text', 'PingFang SC', sans-serif;
+          }
+
+          :host([noscale]) .stage {
+            transform: none !important;
+            top: 0 !important;
+            left: 0 !important;
+          }
+
+          .stage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: top left;
+            will-change: transform;
+            background: #fff;
+          }
+
+          .slide-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+          }
+
+          ::slotted(section) {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+          }
+
+          ::slotted(section.active) {
+            display: block;
+          }
+
+          .counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-variant-numeric: tabular-nums;
+            z-index: 100;
+            user-select: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+          }
+
+          .counter:hover {
+            opacity: 1;
+          }
+
+          .nav-zone {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 15%;
+            cursor: pointer;
+            z-index: 50;
+          }
+
+          .nav-zone.left { left: 0; }
+          .nav-zone.right { right: 0; }
+
+          .nav-hint {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.2s;
+          }
+
+          .nav-zone.left .nav-hint { left: 20px; }
+          .nav-zone.right .nav-hint { right: 20px; }
+
+          .nav-zone:hover .nav-hint {
+            opacity: 1;
+          }
+
+          @media print {
+            :host {
+              position: static;
+              background: #fff;
+            }
+            .counter, .nav-zone {
+              display: none !important;
+            }
+            .stage {
+              position: static;
+              transform: none !important;
+              page-break-after: always;
+            }
+            ::slotted(section) {
+              display: block !important;
+              position: relative !important;
+              page-break-after: always;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        </style>
+
+        <div class="stage" id="stage" style="width: ${this._width}px; height: ${this._height}px;">
+          <div class="slide-wrapper">
+            <slot></slot>
+          </div>
+        </div>
+
+        <div class="nav-zone left" id="navLeft">
+          <div class="nav-hint">‹</div>
+        </div>
+        <div class="nav-zone right" id="navRight">
+          <div class="nav-hint">›</div>
+        </div>
+
+        <div class="counter" id="counter">1 / 1</div>
+      `;
+    }
+
+    _collectSlides() {
+      this._slides = Array.from(this.querySelectorAll(':scope > section'));
+
+      this._slides.forEach((slide, idx) => {
+        if (!slide.hasAttribute('data-screen-label')) {
+          const num = String(idx + 1).padStart(2, '0');
+          slide.setAttribute('data-screen-label', num);
+        }
+      });
+    }
+
+    _setupEventListeners() {
+      window.addEventListener('resize', () => this._updateScale());
+
+      document.addEventListener('keydown', (e) => {
+        if (e.target.matches('input, textarea, [contenteditable]')) return;
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case ' ':
+          case 'PageDown':
+            e.preventDefault();
+            this.next();
+            break;
+          case 'ArrowLeft':
+          case 'PageUp':
+            e.preventDefault();
+            this.prev();
+            break;
+          case 'Home':
+            e.preventDefault();
+            this.goTo(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            this.goTo(this._slides.length - 1);
+            break;
+        }
+      });
+
+      this.shadowRoot.getElementById('navLeft').addEventListener('click', () => this.prev());
+      this.shadowRoot.getElementById('navRight').addEventListener('click', () => this.next());
+
+      window.addEventListener('hashchange', () => this._handleHash());
+      if (location.hash) {
+        setTimeout(() => this._handleHash(), 0);
+      }
+    }
+
+    _handleHash() {
+      const match = location.hash.match(/^#slide-(\d+)$/);
+      if (match) {
+        const idx = parseInt(match[1]) - 1;
+        if (idx >= 0 && idx < this._slides.length) {
+          this.goTo(idx);
+        }
+      }
+    }
+
+    _restoreSlide() {
+      try {
+        const stored = localStorage.getItem(this._storageKey);
+        if (stored !== null) {
+          const idx = parseInt(stored);
+          if (idx >= 0 && idx < this._slides.length) {
+            this._currentSlide = idx;
+          }
+        }
+      } catch (e) {}
+    }
+
+    _saveSlide() {
+      try {
+        localStorage.setItem(this._storageKey, String(this._currentSlide));
+      } catch (e) {}
+    }
+
+    _updateScale() {
+      if (this.hasAttribute('noscale')) {
+        const stage = this.shadowRoot.getElementById('stage');
+        stage.style.transform = 'none';
+        stage.style.top = '0';
+        stage.style.left = '0';
+        return;
+      }
+
+      const stage = this.shadowRoot.getElementById('stage');
+      if (!stage) return;
+
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+      const scale = Math.min(viewportW / this._width, viewportH / this._height);
+      const scaledW = this._width * scale;
+      const scaledH = this._height * scale;
+      const offsetX = (viewportW - scaledW) / 2;
+      const offsetY = (viewportH - scaledH) / 2;
+
+      stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+      stage.style.top = '0';
+      stage.style.left = '0';
+    }
+
+    _updateDisplay() {
+      this._slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === this._currentSlide);
+      });
+
+      const counter = this.shadowRoot.getElementById('counter');
+      if (counter) {
+        counter.textContent = `${this._currentSlide + 1} / ${this._slides.length}`;
+      }
+
+      this._updateScale();
+
+      try {
+        window.postMessage({
+          slideIndexChanged: this._currentSlide,
+          totalSlides: this._slides.length
+        }, '*');
+      } catch (e) {}
+
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            slideIndexChanged: this._currentSlide,
+            totalSlides: this._slides.length
+          }, '*');
+        }
+      } catch (e) {}
+    }
+
+    _setupPrintStyles() {
+      const printStyle = document.createElement('style');
+      printStyle.textContent = `
+        @media print {
+          @page {
+            size: ${this._width}px ${this._height}px;
+            margin: 0;
+          }
+          body {
+            margin: 0;
+            padding: 0;
+          }
+          deck-stage {
+            position: static !important;
+          }
+          deck-stage > section {
+            display: block !important;
+            position: relative !important;
+            width: ${this._width}px !important;
+            height: ${this._height}px !important;
+            page-break-after: always;
+            overflow: hidden;
+          }
+          deck-stage > section:last-child {
+            page-break-after: auto;
+          }
+        }
+      `;
+      document.head.appendChild(printStyle);
+    }
+
+    next() {
+      if (this._currentSlide < this._slides.length - 1) {
+        this._currentSlide++;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    prev() {
+      if (this._currentSlide > 0) {
+        this._currentSlide--;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    goTo(idx) {
+      if (idx >= 0 && idx < this._slides.length) {
+        this._currentSlide = idx;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    get currentSlide() {
+      return this._currentSlide;
+    }
+
+    get totalSlides() {
+      return this._slides.length;
+    }
+  }
+
+  customElements.define('deck-stage', DeckStage);
+
+  window.DeckStage = DeckStage;
+})();
+</script>
+
+<script>
+/* ===== 教学交互：点击出示（.rv）＋ 背诵降支架（.recite） ===== */
+(function() {
+  // 点击出示：点击虚线框区域切换
+  document.addEventListener('click', function(e) {
+    var rv = e.target.closest('.rv');
+    if (rv) { rv.classList.toggle('on'); }
+  });
+
+  // 背诵降支架：按钮切换层级
+  document.querySelectorAll('.recite').forEach(function(recite) {
+    var btns = recite.querySelectorAll('.lv-btn');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var lv = btn.getAttribute('data-lv');
+        recite.setAttribute('data-lv', lv);
+        btns.forEach(function(b) { b.classList.remove('on'); });
+        btn.classList.add('on');
+      });
+    });
+  });
+
+})();
+</script>
+</body>
+</html>
