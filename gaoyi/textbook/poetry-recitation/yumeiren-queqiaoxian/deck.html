@@ -7,7 +7,6 @@
 <!--
   设计说明（教师用）：
   · 单文件课堂演示页，双击打开即可；键盘 ←/→ 翻页，屏幕左右边缘点击也可翻页。
-  · 从课程入口打开时，按 M 或点击顶部「投屏字号」可放大整页核心内容；浏览器缩放也会保留放大效果。
   · 标有「▸ 点击出示」的虚线框：学生回答后再点击，答案才出现（结论由课堂生成，不预泄）。
   · 背诵页四个按钮：全显 → 遮下句（师生接句）→ 留首二字（看头背尾）→ 全遮。
   · 每页右上角为本环节参考用时（对应教案时间轴，教师控节奏用）。
@@ -42,18 +41,6 @@
   }
   deck-stage > section:not(.active) { display: none !important; }
   deck-stage > section.active { display: block; }
-
-  /* 投屏字号：固定 16:9 画布会抵消浏览器缩放，改为在画布内部放大内容。 */
-  deck-stage > section > .wrap {
-    transition: transform 180ms ease;
-  }
-  body.projection-font deck-stage > section.active > .wrap {
-    transform: scale(1.12);
-    transform-origin: center center;
-  }
-  @media (prefers-reduced-motion: reduce) {
-    deck-stage > section > .wrap { transition: none; }
-  }
 
   /* ============ 通用页面骨架 ============ */
   .wrap {
@@ -702,7 +689,18 @@
   .ank { font-size: 23px; line-height: 1.6; color: var(--ink); }
   .qm-line { text-align: center; font-size: 21px; color: var(--ink2); letter-spacing: .05em; margin-top: 6px; }
 
-  </style>
+  
+  /* 当堂检测·答案大字（互批时全班可见，2026-09-22） */
+  .ans-big {
+    font-family: var(--kai);
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--cn);
+    letter-spacing: 0.15em;
+    margin-top: 6px;
+  }
+
+</style>
 >
 <body>
 <deck-stage>
@@ -994,7 +992,7 @@
     <div class="wrap">
       <div class="hd"><span>古诗词诵读｜两首</span><span>当堂检测 <b style="color:var(--cn)">≈5′</b></span></div>
       <div class="body">
-        <div class="kicker">当堂检测 · 写在课本空白处 · 同桌互批</div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其一</span>《虞美人》中以设问和比喻把抽象的愁具象化的两句：＿＿＿＿＿＿？＿＿＿＿＿＿。</div><div style="font-size:24px;color:var(--ink2)">问君能有几多愁？恰似一江春水向东流。</div></div></div></div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其二</span>《虞美人》中感叹宫殿犹在、人事全非（物是人非）的两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div><div style="font-size:24px;color:var(--ink2)">雕栏玉砌应犹在，只是朱颜改。</div></div></div></div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其三</span>《鹊桥仙》下片起二句：承上片「银汉迢迢暗度」写一夕相会，又为「忍顾鹊桥归路」的离别作垫。这二句是：＿＿＿＿＿＿，＿＿＿＿＿＿。</div><div style="font-size:24px;color:var(--ink2)">柔情似水，佳期如梦。</div><div style="font-size:22px;color:var(--ink2);margin-top:6px">（另问，口头：全词点明「相会之质胜过人间」的两句是什么？——金风玉露一相逢，便胜却人间无数。）</div></div></div></div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其四</span>《鹊桥仙》结尾二句，词人用<b>假设＋反问</b>把全词从惜别中提起，成为千古爱情宣言：＿＿＿＿＿＿，＿＿＿＿＿＿。<span style="color:var(--cn)">（易错：末四字从「日」不从「巾」）</span></div><div style="font-size:24px;color:var(--ink2)">两情若是久长时，又岂在朝朝暮暮。</div></div></div></div>
+        <div class="kicker">当堂检测 · 写在课本空白处 · 同桌互批</div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其一</span>《虞美人》中以设问和比喻把抽象的愁具象化的两句：＿＿＿＿＿＿？＿＿＿＿＿＿。</div><div class="ans-big">问君能有几多愁？恰似一江春水向东流。</div></div></div></div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其二</span>《虞美人》中感叹宫殿犹在、人事全非（物是人非）的两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div><div class="ans-big">雕栏玉砌应犹在，只是朱颜改。</div></div></div></div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其三</span>《鹊桥仙》下片起二句：承上片「银汉迢迢暗度」写一夕相会，又为「忍顾鹊桥归路」的离别作垫。这二句是：＿＿＿＿＿＿，＿＿＿＿＿＿。</div><div class="ans-big">柔情似水，佳期如梦。</div><div style="font-size:26px;color:var(--ink2);margin-top:6px">（另问，口头：全词点明「相会之质胜过人间」的两句是什么？——金风玉露一相逢，便胜却人间无数。）</div></div></div></div><div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div><div class="rv-body"><div class="ct-q"><span class="src">其四</span>《鹊桥仙》结尾二句，词人用<b>假设＋反问</b>把全词从惜别中提起，成为千古爱情宣言：＿＿＿＿＿＿，＿＿＿＿＿＿。<span style="color:var(--cn)">（易错：末四字从「日」不从「巾」）</span></div><div class="ans-big">两情若是久长时，又岂在朝朝暮暮。</div></div></div></div>
         <div class="poem-note" style="margin-top:10px">错字，订正三遍；两首词<b>联背</b>收尾：前桌接《虞美人》下片，后桌接《鹊桥仙》下片</div>
 <div class="handout"><div class="hb-tag">讲义</div><div class="hb-body">核对时，每个错字回<b>讲义译文页</b>找到那个字。</div></div>
       </div>
@@ -1052,7 +1050,6 @@
       this.attachShadow({ mode: 'open' });
       this._currentSlide = 0;
       this._slides = [];
-      this._baseDevicePixelRatio = window.devicePixelRatio || 1;
       this._storageKey = STORAGE_KEY_PREFIX + (location.pathname || 'default');
     }
 
@@ -1233,9 +1230,6 @@
 
     _setupEventListeners() {
       window.addEventListener('resize', () => this._updateScale());
-      if (window.visualViewport) {
-        window.visualViewport.addEventListener('resize', () => this._updateScale());
-      }
 
       document.addEventListener('keydown', (e) => {
         if (e.target.matches('input, textarea, [contenteditable]')) return;
@@ -1314,13 +1308,7 @@
 
       const viewportW = window.innerWidth;
       const viewportH = window.innerHeight;
-      const fitScale = Math.min(viewportW / this._width, viewportH / this._height);
-
-      /* 固定画布默认会随浏览器缩放缩回窗口，视觉上抵消 ⌘+/Ctrl+。
-         这里把浏览器缩放比例乘回画布：放大时以画面中心扩展，允许边缘裁切。 */
-      const currentDevicePixelRatio = window.devicePixelRatio || this._baseDevicePixelRatio;
-      const browserZoom = currentDevicePixelRatio / this._baseDevicePixelRatio;
-      const scale = fitScale * browserZoom;
+      const scale = Math.min(viewportW / this._width, viewportH / this._height);
       const scaledW = this._width * scale;
       const scaledH = this._height * scale;
       const offsetX = (viewportW - scaledW) / 2;
