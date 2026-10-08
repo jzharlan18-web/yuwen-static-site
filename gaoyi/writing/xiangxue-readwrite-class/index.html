@@ -1,0 +1,1621 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>把“转变”写成一段路｜《哦，香雪》课堂文本研读</title>
+<style>
+/* ============================================================
+   设计约束（来自《哦，香雪》课堂文本研读网页设计方案》第7节）
+   浅底深字 · 低装饰 · 高对比 · 正文默认40px（32—56可调）
+   背景安静的暖白；原文不叠照片/动画/山水背景
+   字体只依赖本机 PingFang SC / Microsoft YaHei，不联网下载
+   ============================================================ */
+:root{
+  --fs:40px;            /* 正文 */
+  --qfs:44px;           /* 问题 */
+  --navfs:24px;         /* 导航 */
+  --paper:#FAF8F4;
+  --panel:#FFFFFF;
+  --ink:#1B1A17;
+  --ink2:#46443E;
+  --ink3:#8B877C;
+  --line:#E2DED3;
+  --line2:#CFCABE;
+  --accent:#2C5F8D;     /* 深蓝：划线 / 当前项 */
+  --hl:#F6E29B;         /* 淡黄：高亮 */
+  --warn:#9A5B2E;
+  --rail:272px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  display:flex;flex-direction:column;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:"PingFang SC","Microsoft YaHei","Hiragino Sans GB","Source Han Sans SC",sans-serif;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+/* 编号统一等宽处理，让 A01 / T03 / B02 成为全站视觉签名 */
+.mono{font-family:"SF Mono","Menlo","Consolas","PingFang SC","Microsoft YaHei",monospace;
+  font-variant-numeric:tabular-nums;letter-spacing:.06em}
+
+/* ---------- 顶部 ---------- */
+#hd{
+  height:92px;flex:0 0 92px;display:flex;align-items:center;gap:28px;
+  padding:0 28px;background:var(--panel);border-bottom:1px solid var(--line2);
+}
+#hd .ttl{flex:0 0 auto;min-width:0}
+#hd .ttl h1{font-size:29px;font-weight:600;letter-spacing:.02em;line-height:1.2;white-space:nowrap}
+#hd .ttl p{font-size:16px;color:var(--ink3);margin-top:3px;letter-spacing:.04em;white-space:nowrap}
+#acts{display:flex;gap:8px;margin-left:8px}
+#acts button{
+  font-size:var(--navfs);font-family:inherit;color:var(--ink2);
+  background:transparent;border:1px solid var(--line2);border-radius:2px;
+  padding:9px 16px;cursor:pointer;letter-spacing:.03em;white-space:nowrap;
+}
+#acts button:hover{border-color:var(--ink3);color:var(--ink)}
+#acts button[aria-current="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+#hd .sp{flex:1}
+#hd .tools{display:flex;gap:8px;align-items:center;flex:0 0 auto}
+/* 空间不足时优先压缩顶栏工具与导航，绝不挤压标题 */
+@media (max-width:1460px){
+  #hd{gap:14px;padding:0 16px}
+  #acts{gap:6px}
+  #acts button{font-size:18px;padding:7px 10px;letter-spacing:0}
+  .tbtn{font-size:16px;padding:6px 9px}
+  #hd .ttl h1{font-size:23px}
+}
+@media (max-width:1300px){
+  #hd .ttl h1{font-size:21px}
+  #hd .ttl p{font-size:12px}
+  #acts button{font-size:17px;padding:6px 8px}
+  .tbtn{font-size:15px;padding:5px 8px}
+  #hd{gap:10px;padding:0 12px}
+}
+/* 更窄时把低频工具折到第二行，标题与活动导航始终完整 */
+@media (max-width:1120px){
+  #hd{height:auto;flex:0 0 auto;flex-wrap:wrap;padding:10px 14px;gap:10px}
+  #hd .sp{display:none}
+  #hd .tools{width:100%;justify-content:flex-end}
+}
+.tbtn{
+  font-size:19px;font-family:inherit;color:var(--ink2);background:transparent;
+  border:1px solid var(--line2);border-radius:2px;padding:8px 13px;cursor:pointer;white-space:nowrap;
+}
+.tbtn:hover{border-color:var(--ink3);color:var(--ink)}
+.tbtn[aria-pressed="true"]{background:#EFEADF;border-color:var(--ink3);color:var(--ink)}
+#btnMark{position:relative}
+#markPanel{
+  position:fixed;top:100px;right:20px;width:250px;background:var(--panel);
+  border:1px solid var(--line2);border-radius:2px;padding:12px 13px;z-index:70;
+  box-shadow:0 6px 22px rgba(0,0,0,.09);display:none;
+}
+/* 回看覆盖层打开时，面板移到右下角：让出覆盖层右上角的「返回」按钮，
+   同时仍可对回看中的原文做标记 */
+body.peekOpen #markPanel{top:auto;bottom:110px;right:20px}
+/* 面板打开时正文右侧让出空间，避免大字号正文被压住 */
+body.mkOpen #reader,body.mkOpen #ovlBody{padding-right:286px}
+body.mkOpen.peekOpen #ovlBody{padding-right:286px}
+@media (max-width:1180px){
+  /* 窄屏放不下让位空间，面板改为贴顶横条，正文照常满宽 */
+  body.mkOpen #reader,body.mkOpen #ovlBody{padding-right:44px}
+  #markPanel{width:auto;left:16px;right:16px}
+  body.peekOpen #markPanel{left:16px;right:16px}
+}
+#markPanel.open{display:block}
+#markPanel h4{font-size:15px;color:var(--ink3);font-weight:400;letter-spacing:.06em;margin-bottom:10px}
+#markPanel .row{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}
+#markPanel .row button{
+  font-size:18px;font-family:inherit;background:transparent;border:1px solid var(--line2);
+  border-radius:2px;padding:8px 12px;cursor:pointer;color:var(--ink);
+}
+#markPanel .row button:hover{border-color:var(--ink3);background:#F6F3EC}
+#markPanel .row button.on{background:var(--accent);color:#fff;border-color:var(--accent)}
+#markPanel .hint{font-size:16px;color:var(--ink3);line-height:1.6}
+#markPanel .cnt{font-size:16px;color:var(--ink2);margin-top:8px}
+
+/* ---------- 主体 ---------- */
+#body{display:flex;flex:1;min-height:0}
+#rail{
+  flex:0 0 var(--rail);width:var(--rail);border-right:1px solid var(--line2);
+  background:#F5F2EB;overflow-y:auto;padding:18px 0 40px;transition:flex-basis .18s,width .18s;
+}
+body.focus #rail{flex-basis:0;width:0;padding-left:0;padding-right:0;overflow:hidden;border-right-color:transparent}
+#rail h3{
+  font-size:16px;color:var(--ink3);font-weight:400;letter-spacing:.16em;
+  padding:0 20px 12px;border-bottom:1px solid var(--line);
+}
+/* 时间刻度轨：全站唯一"120%"细节——刻度线＋方形节点，标记当前位置 */
+.stage{
+  display:block;width:100%;text-align:left;background:transparent;border:0;
+  border-left:3px solid transparent;padding:11px 18px 11px 20px;cursor:pointer;
+  font-family:inherit;position:relative;
+}
+.stage:hover{background:#EDE8DD}
+.stage[aria-current="true"]{background:var(--panel);border-left-color:var(--accent)}
+.stage .l1{display:flex;align-items:baseline;gap:10px}
+.stage .sid{font-size:17px;color:var(--ink3);flex:0 0 40px}
+.stage[aria-current="true"] .sid{color:var(--accent)}
+.stage .nm{font-size:22px;color:var(--ink2);letter-spacing:.02em}
+.stage[aria-current="true"] .nm{color:var(--ink);font-weight:600}
+.stage .l2{display:flex;align-items:center;gap:8px;margin-top:5px;padding-left:50px}
+.stage .tm{font-size:15px;color:var(--ink3)}
+.stage .tick{width:7px;height:7px;border:1px solid var(--line2);background:#F5F2EB;flex:0 0 7px}
+.stage[aria-current="true"] .tick{background:var(--accent);border-color:var(--accent)}
+#extra{border-top:1px solid var(--line);margin-top:14px;padding-top:6px}
+#extra summary{
+  font-size:18px;color:var(--ink3);padding:8px 20px;cursor:pointer;letter-spacing:.08em;list-style:none;
+}
+#extra summary::-webkit-details-marker{display:none}
+#extra summary::before{content:"＋";margin-right:8px;font-size:15px}
+#extra[open] summary::before{content:"－"}
+#extra .ex{padding:2px 0 8px}
+.xbtn{
+  display:block;width:100%;text-align:left;background:transparent;border:0;border-left:3px solid transparent;
+  padding:8px 18px 8px 20px;cursor:pointer;font-family:inherit;font-size:19px;color:var(--ink2);
+}
+.xbtn:hover{background:#EDE8DD;border-left-color:var(--line2)}
+
+/* ---------- 阅读区 ---------- */
+#main{flex:1;min-width:0;display:flex;flex-direction:column;position:relative}
+#pane{flex:1;display:flex;flex-direction:column;min-height:0}
+#qbar{padding:20px 44px 0}
+#qmeta{display:flex;align-items:baseline;gap:12px;margin-bottom:8px}
+#qmeta .sid{font-size:17px;color:var(--accent)}
+#qmeta .nm{font-size:19px;color:var(--ink3);letter-spacing:.04em}
+#qmeta .tm{font-size:15px;color:var(--ink3);margin-left:auto}
+#qtext{font-size:var(--qfs);line-height:1.42;color:var(--ink);letter-spacing:.01em;max-width:26em}
+#qbar.min #qtext{display:none}
+#qbar.min{padding-bottom:0}
+#qfold{
+  background:transparent;border:0;color:var(--ink3);font-size:16px;font-family:inherit;
+  cursor:pointer;padding:6px 0;letter-spacing:.06em;
+}
+#qfold:hover{color:var(--ink)}
+
+#cardsWrap{flex:1;min-height:0;overflow-y:auto;padding:18px 44px 24px}
+.card{
+  background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--line2);
+  border-radius:2px;padding:22px 26px;margin-bottom:16px;max-width:1180px;
+}
+.card.acc{border-left-color:var(--accent)}
+.card .lb{font-size:16px;color:var(--ink3);letter-spacing:.1em;margin-bottom:12px}
+.card .lb b{color:var(--warn);font-weight:400}
+.card .bd{font-size:27px;line-height:1.62;color:var(--ink)}
+.card .bd.q{font-size:31px;line-height:1.55}
+.card .sub{font-size:19px;color:var(--ink2);line-height:1.7;margin-top:12px}
+.card .go{margin-top:16px;display:flex;gap:8px;flex-wrap:wrap}
+/* 阅读后揭示写作智慧：沿用现有卡片与按钮，不覆盖原文 */
+.wisdom{border-left-color:var(--accent);background:#F7F5EF}
+.wisdom .bd{font-size:30px;font-weight:600;line-height:1.55}
+.wisdom .sub{font-size:19px}
+body.locked #extra{display:none}
+.sbtn{
+  font-size:19px;font-family:inherit;background:transparent;border:1px solid var(--line2);
+  border-radius:2px;padding:9px 15px;cursor:pointer;color:var(--ink);
+}
+.sbtn:hover{border-color:var(--ink3);background:#F6F3EC}
+.sbtn.pri{background:var(--ink);color:#fff;border-color:var(--ink)}
+.sbtn.pri:hover{background:#000}
+
+/* 文档条：编号＋中性标题＋节选标识 */
+#docbar{
+  flex:0 0 auto;display:flex;align-items:center;gap:12px;
+  padding:8px 44px;border-bottom:1px solid var(--line);background:#F7F5EF;
+}
+#docbar .did{font-size:18px;color:var(--accent)}
+#docbar .dti{font-size:19px;color:var(--ink2);letter-spacing:.04em;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#docbar .chip{
+  font-size:15px;color:var(--warn);border:1px solid #E3CDB2;background:#FBF3E7;
+  border-radius:2px;padding:2px 8px;letter-spacing:.06em;
+}
+#docbar .sp{flex:1}
+#docbar .sbtn{font-size:16px;padding:5px 11px}
+
+#reader{flex:1;min-height:0;overflow:hidden;padding:26px 44px 8px;position:relative}
+.rd{font-size:var(--fs);line-height:1.75;color:var(--ink);letter-spacing:.01em}
+.rd .blk{margin:0 0 .85em;padding:2px 0}
+.rd .blk:last-child{margin-bottom:0}
+.rd .cols{display:grid;grid-template-columns:1fr 1fr;gap:0 46px}
+/* 空间不足时上下排列：不为同时摆下两栏而缩小正文 */
+.rd .cols.stack{grid-template-columns:1fr;gap:0}
+.rd .cols.stack .colhd{margin-top:0}
+.rd .cols.stack .col + .colhd{margin-top:26px}
+.rd .colhd{
+  font-size:17px;color:var(--ink3);letter-spacing:.14em;padding-bottom:8px;margin-bottom:16px;
+  border-bottom:1px solid var(--line);
+}
+/* 标记 */
+.mk{border-radius:1px}
+.mk.hl{background:var(--hl)}
+.mk.ul{border-bottom:3px solid var(--accent);padding-bottom:1px}
+.mk.pick{cursor:pointer;outline:2px dashed var(--warn);outline-offset:1px}
+
+/* 底部工具 + 状态 */
+#bar{
+  flex:0 0 auto;display:flex;align-items:center;gap:10px;padding:9px 44px;
+  border-top:1px solid var(--line);background:var(--panel);
+}
+#bar .grp{display:flex;align-items:center;gap:6px}
+#bar .sp{flex:1}
+#bar .sbtn{padding:7px 13px;font-size:18px}
+#fsv{font-size:18px;color:var(--ink2);min-width:52px;text-align:center}
+#bar .div{width:1px;height:22px;background:var(--line);margin:0 4px}
+/* 状态行 */
+#status{
+  flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:8px 44px;
+  border-top:1px solid var(--line);background:#F2EFE7;font-size:17px;color:var(--ink2);
+}
+#status .sid{color:var(--accent);font-size:17px}
+#status .ti{color:var(--ink3);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#status .sp{flex:1}
+#status .keys{color:var(--ink3);font-size:15px;letter-spacing:.04em}
+
+/* 回看入口行 */
+#peekbar{
+  flex:0 0 auto;display:flex;align-items:center;gap:9px;flex-wrap:wrap;
+  padding:11px 44px 13px;border-top:1px solid var(--line);background:#F7F5EF;
+}
+#peekbar .lb{font-size:16px;color:var(--ink3);letter-spacing:.1em}
+#peekbar .sbtn{font-size:18px;padding:7px 13px}
+#peekbar.locked .sbtn{display:none}
+
+/* 回看覆盖层：占正文区全部宽度，收起主环节导航 */
+#ovl{position:absolute;inset:0;background:var(--paper);z-index:40;display:none;flex-direction:column}
+#ovl.open{display:flex}
+#ovlBar{
+  flex:0 0 auto;display:flex;align-items:center;gap:16px;padding:14px 44px;
+  background:var(--ink);color:#fff;
+}
+#ovlBar .tt{font-size:24px;letter-spacing:.03em}
+#ovlBar .ff{font-size:17px;color:#B9B4A6;letter-spacing:.06em}
+#ovlBar .sp{flex:1}
+#ovlBar button{
+  font-size:19px;font-family:inherit;background:transparent;color:#fff;
+  border:1px solid #6E6A5F;border-radius:2px;padding:8px 15px;cursor:pointer;
+}
+#ovlBar button:hover{background:#3A3833;border-color:#fff}
+#ovlDoc{flex:0 0 auto;display:flex;align-items:center;gap:12px;padding:8px 44px;border-bottom:1px solid var(--line);background:#F7F5EF}
+#ovlBody{flex:1;min-height:0;overflow:hidden;padding:26px 44px 8px;position:relative}
+#ovlFoot{
+  flex:0 0 auto;display:flex;align-items:center;gap:14px;padding:10px 44px;
+  border-top:1px solid var(--line);background:#F2EFE7;font-size:17px;color:var(--ink2);flex-wrap:wrap;
+}
+#ovlFoot .lb{font-size:16px;color:var(--ink3);letter-spacing:.1em}
+#ovlFoot .sbtn{font-size:17px;padding:6px 12px}
+
+/* 说明浮层 */
+#help{
+  position:fixed;inset:0;background:rgba(27,26,23,.42);z-index:80;display:none;
+  align-items:center;justify-content:center;padding:40px;
+}
+#help.open{display:flex}
+#helpBox{
+  background:var(--paper);border:1px solid var(--line2);max-width:900px;width:100%;
+  max-height:86vh;overflow-y:auto;padding:32px 38px 34px;
+}
+#helpBox h2{font-size:25px;font-weight:600;margin-bottom:4px}
+#helpBox .sb{font-size:17px;color:var(--ink3);margin-bottom:22px}
+#helpBox h3{font-size:19px;color:var(--accent);font-weight:400;letter-spacing:.1em;margin:22px 0 10px}
+#helpBox table{border-collapse:collapse;width:100%}
+#helpBox td{padding:9px 12px;border-bottom:1px solid var(--line);font-size:18px;vertical-align:top;line-height:1.6}
+#helpBox td:first-child{width:190px;color:var(--ink);white-space:nowrap}
+#helpBox td:last-child{color:var(--ink2)}
+#helpBox td kbd{
+  font-family:"SF Mono",Menlo,Consolas,monospace;font-size:16px;background:#EDE8DD;
+  border:1px solid var(--line2);border-radius:2px;padding:1px 6px;margin:0 2px;
+}
+#helpBox .close{margin-top:26px}
+
+/* 测量层：与正文同宽同字号同段落样式，用于分屏测算 */
+#measure{
+  position:absolute;left:-99999px;top:0;overflow:hidden;visibility:hidden;
+  line-height:1.75;letter-spacing:.01em;
+}
+#measure .blk{margin:0;padding:2px 0}
+
+/* ---------- 独立检测锁定态 ---------- */
+body.locked #peekbar,body.locked #docbar{display:none}
+body.locked #rail .stage[data-lock="1"]{opacity:.4}
+
+/* ---------- 手机端：备课查看，正常页面滚动 ---------- */
+@media (max-width:860px){
+  body{overflow:auto}
+  #hd{height:auto;flex:0 0 auto;flex-wrap:wrap;padding:14px 16px;gap:12px}
+  #hd .ttl h1{font-size:23px}
+  #acts{width:100%;overflow-x:auto;margin-left:0}
+  #acts button{font-size:18px;padding:7px 12px}
+  #hd .tools{width:100%;flex-wrap:wrap}
+  #body{display:block;height:auto;flex:none}
+  #rail{flex:none;width:100%;border-right:0;border-bottom:1px solid var(--line2);padding:12px 0;max-height:none}
+  body.focus #rail{display:none}
+  .stage .nm{font-size:20px}
+  #pane{display:block}
+  #qbar,#cardsWrap,#reader,#bar,#status,#peekbar,#docbar{padding-left:18px;padding-right:18px}
+  #qtext{font-size:26px}
+  #reader{overflow:visible;height:auto;padding-bottom:18px}
+  #bar,#status{position:sticky;bottom:0;flex-wrap:wrap}
+  #status .keys{display:none}
+  .card .bd{font-size:21px}
+  .rd .cols{grid-template-columns:1fr}
+  .rd{font-size:var(--fs)}
+  #ovl{position:fixed}
+  #ovlBar,#ovlDoc,#ovlBody,#ovlFoot{padding-left:18px;padding-right:18px}
+}
+@media print{#hd,#rail,#bar,#peekbar,#ovl,#help{display:none}#reader{overflow:visible}}
+</style>
+</head>
+<body>
+
+<header id="hd">
+  <div class="ttl">
+    <h1>把“转变”写成一段路</h1>
+    <p>《哦，香雪》·铁凝</p>
+  </div>
+  <nav id="acts"></nav>
+  <div class="sp"></div>
+  <div class="tools">
+    <button class="tbtn" id="btnMark" aria-pressed="false"><span id="mkBtnTxt">标记</span></button>
+    <button class="tbtn" id="btnFocus" aria-pressed="false">专注阅读</button>
+    <button class="tbtn" id="btnHelp">使用说明</button>
+    <button class="tbtn" id="btnNew">新课开始</button>
+  </div>
+</header>
+
+<div id="markPanel">
+  <h4>教师批注</h4>
+  <div class="row">
+    <button data-mk="hl">高亮 H</button>
+    <button data-mk="ul">下划线 U</button>
+  </div>
+  <div class="row">
+    <button data-mk="undo">撤销 Z</button>
+    <button data-mk="cancel">取消单笔 X</button>
+    <button data-mk="clear">清除本段标记</button>
+  </div>
+  <div class="hint" id="mkHint">先在正文里选中一段文字，再点「高亮」或「下划线」。</div>
+  <div class="cnt" id="mkCnt"></div>
+</div>
+
+<div id="body">
+  <nav id="rail">
+    <h3 id="railTitle">活动一 · 读出变化</h3>
+    <div id="stageList"></div>
+    <details id="extra">
+      <summary>备用研读</summary>
+      <div class="ex" id="extraList"></div>
+    </details>
+  </nav>
+
+  <main id="main">
+    <section id="pane">
+      <div id="qbar">
+        <div id="qmeta">
+          <span class="sid mono" id="qSid"></span>
+          <span class="nm" id="qNm"></span>
+          <span class="tm mono" id="qTm"></span>
+        </div>
+        <div id="qtext"></div>
+        <button id="qfold">收起问句</button>
+      </div>
+      <div id="cardsWrap" style="display:none"></div>
+      <div id="docbar" style="display:none">
+        <span class="did mono" id="docId"></span>
+        <span class="dti" id="docTi"></span>
+        <span class="chip" id="docChip" style="display:none">原文节选</span>
+        <span class="sp"></span>
+        <button class="sbtn" id="docFull">看完整段落</button>
+      </div>
+      <div id="reader"><div class="rd" id="rdCur"></div></div>
+      <div id="peekbar"></div>
+      <div id="bar">
+        <div class="grp">
+          <button class="sbtn" id="bPrev">上一屏</button>
+          <button class="sbtn" id="bNext">下一屏</button>
+        </div>
+        <div class="div"></div>
+        <div class="grp">
+          <button class="sbtn" id="bFsDn">字号－</button>
+          <span class="mono" id="fsv">40</span>
+          <button class="sbtn" id="bFsUp">字号＋</button>
+        </div>
+        <div class="sp"></div>
+      </div>
+      <div id="status">
+        <span class="sid mono" id="stSid">—</span>
+        <span class="ti" id="stTi"></span>
+        <span class="sp"></span>
+        <span class="keys" id="stKeys">H 高亮 ｜ U 划线 ｜ Z 撤销 ｜ X 取消单笔 ｜ M 面板</span>
+      </div>
+    </section>
+
+    <section id="ovl">
+      <div id="ovlBar">
+        <span class="tt" id="ovlTt"></span>
+        <span class="ff" id="ovlFf"></span>
+        <span class="sp"></span>
+        <button id="ovlBack">返回</button>
+      </div>
+      <div id="ovlDoc">
+        <span class="did mono" id="ovlId"></span>
+        <span class="dti" id="ovlTi"></span>
+        <span class="chip" id="ovlChip" style="display:none">原文节选</span>
+        <span class="sp"></span>
+        <button class="sbtn" id="ovlFull">看完整段落</button>
+      </div>
+      <div id="ovlBody"><div class="rd" id="ovlRd"></div></div>
+      <div id="ovlFoot">
+        <div class="grp">
+          <button class="sbtn" id="oPrev">上一屏</button>
+          <button class="sbtn" id="oNext">下一屏</button>
+        </div>
+        <div class="div"></div>
+        <span class="mono" id="ovlPos"></span>
+        <span class="sp"></span>
+        <span class="lb">继续回看</span>
+        <span id="ovlMore"></span>
+      </div>
+    </section>
+  </main>
+</div>
+
+<div id="help">
+  <div id="helpBox">
+    <h2>使用说明</h2>
+    <p class="sb">把“转变”写成一段路｜《哦，香雪》课堂文本研读 · 单文件离线版</p>
+    <h3>切换与阅读</h3>
+    <table>
+      <tr><td>切换活动／环节</td><td>顶部三个活动按钮；左侧环节列表（带时间刻度，当前项左侧蓝线＋实心方块）</td></tr>
+      <tr><td>上一屏／下一屏</td><td>底部按钮，或 <kbd>←</kbd> <kbd>→</kbd> <kbd>PageUp</kbd> <kbd>PageDown</kbd> <kbd>空格</kbd>。分屏按句子边界切，不切断句子</td></tr>
+      <tr><td>字号</td><td>底部「字号－／＋」，或 <kbd>-</kbd> <kbd>=</kbd>。范围 32—56px，默认 40px。改字号后标记仍落在原句</td></tr>
+      <tr><td>专注阅读</td><td>底部或顶部「专注阅读」，或 <kbd>F</kbd>。收起左侧与低频工具，给正文让出宽度</td></tr>
+      <tr><td>收起问句</td><td>问题下方「收起问句」／「展开问句」，字大时优先给正文空间</td></tr>
+    </table>
+    <h3>回看与返回（本页关键交互）</h3>
+    <table>
+      <tr><td>打开回看</td><td>正文下方「回看」行，或教师归纳旁的「回到原句」。覆盖层在本页内部打开，不跳外站</td></tr>
+      <tr><td>返回</td><td>覆盖层右上「返回…」按钮，或 <kbd>Esc</kbd>。逐层返回，不回首页</td></tr>
+      <tr><td>连续回看</td><td>回看中可继续打开别的段落，返回时先回上一层，再回原环节</td></tr>
+      <tr><td>状态恢复</td><td>返回后恢复原环节、原分屏、焦点段落、字号、专注状态与归纳显示；教师先前做过的标记全部保留</td></tr>
+      <tr><td>快捷键边界</td><td>回看外的 <kbd>Esc</kbd> 只退出专注阅读，不推进课堂；选中文本时不触发翻屏</td></tr>
+    </table>
+    <h3>标记</h3>
+    <p class="sb">拖选正文后直接按 H 高亮、U 下划线；Z 撤销最近一笔；X 进入取消单笔后点击标记，Esc 退出。无需打开面板。回看中同样有效，独立检测时禁用。清除本段只使用按钮。</p>
+    <table>
+      <tr><td>打开工具</td><td>顶部「标记」，或 <kbd>M</kbd>。面板打开时正文会自动收窄让出右侧空间，不会压住字</td></tr>
+      <tr><td>高亮／下划线</td><td>在正文里<b>按住鼠标拖选</b>一段文字（可跨行），再点「高亮」（淡黄）或「下划线」（深蓝）。默认不预置任何标记</td></tr>
+      <tr><td>撤销／取消单笔</td><td>「撤销」去掉最近一笔；「取消单笔」后面板<b>自动收起</b>（否则挡住正文），顶部按钮变「标记·取消中」，正文里每一笔变成可点状态，点哪笔去哪笔（不改原文），再点顶部「标记」退出</td></tr>
+      <tr><td>清除本段标记</td><td>去掉当前段落的全部标记，原文内容与段落结构不变</td></tr>
+      <tr><td>跨环节</td><td>同一段落在独立圈读、讨论、对读、回看中共用同一份原文与同一批标记；回看覆盖层内也能标记，此时面板移到右下角，不挡「返回」按钮</td></tr>
+      <tr><td>提示</td><td>没选中就点 → 提示先选中；选区与已有标记重叠 → 提示不能重叠。提示约 2 秒后自动恢复</td></tr>
+    </table>
+    <h3>独立检测</h3>
+    <table>
+      <tr><td>C01 进入时</td><td>关闭原文、回看、标记、作文金句与备用研读；学生收起课文、旧作文和活动单，只看新题独立完成。教师切回前两个活动需确认</td></tr>
+    </table>
+    <h3>其他</h3>
+    <table>
+      <tr><td>复制原文</td><td>直接选中正文复制，得到纯文字，不含网页编号与 HTML 转义</td></tr>
+      <tr><td>新课开始</td><td>清空本机保存的标记与阅读位置，从默认未标记状态重新开始（会先确认）</td></tr>
+      <tr><td>离线使用</td><td>本文件为单文件网页，双击可在 Chrome／Edge 打开，断网时切换、回看、返回、标记、字号均可用</td></tr>
+      <tr><td>编号说明</td><td><span class="mono">A01</span> 是环节编号，<span class="mono">T03</span>／<span class="mono">B02</span> 是本网页的段落编号，不冒充教材页码或段落号</td></tr>
+    </table>
+    <button class="sbtn close" id="helpClose">关闭</button>
+  </div>
+</div>
+
+<div id="measure" class="rd"></div>
+
+<script>
+/* ============================================================================
+   唯一文本库（附录A）
+   所有环节、回看、对读共用这一份原文。切换页只改变显示范围与课堂状态，
+   绝不重新抄写或生成不同版本。清理教辅编号与断字空格，标点统一。
+   ========================================================================== */
+const PARAGRAPHS = {
+  B01:{id:'B01',title:'同学的盘问',kind:'选段',text:
+'台儿沟没有学校，香雪每天上学要到十五里以外的公社。尽管不爱说话是她的天性，但和台儿沟的姐妹们总是有话可说的。公社中学可就没那么多姐妹了，虽然女同学不少，但她们的言谈举止，一个眼神，一声轻轻的笑，好像都是为了叫香雪意识到，她是小地方来的，穷地方来的。她们故意一遍又一遍地问她：“你们那儿一天吃几顿饭？”她不明白她们的用意，每次都认真地回答：“两顿。”然后又友好地瞧着她们反问道：“你们呢？”'},
+
+  B02:{id:'B02',title:'铅笔盒的比较',kind:'选段',text:
+'“你上学怎么不带铅笔盒呀？”她们又问。\n\n“那不是吗。”香雪指指桌角。\n\n其实，她们早知道桌角那只小木盒就是香雪的铅笔盒，但她们还是做出吃惊的样子。每到这时，香雪的同桌就把自己那只宽大的泡沫塑料铅笔盒摆弄得嗒嗒乱响。这是一只可以自动合上的铅笔盒，很久以后，香雪才知道它所以能自动合上，是因为铅笔盒里包藏着一块不大不小的吸铁石。香雪的小木盒，尽管那是当木匠的父亲为她考上中学特意制作的，它在台儿沟还是独一无二的呢。可在这儿，和同桌的铅笔盒一比，为什么显得那样笨拙，陈旧？它在一阵嗒嗒声中有几分羞涩地畏缩在桌角上。\n\n香雪的心再也不能平静了，她好像忽然明白了同学们对于她的再三盘问，明白了台儿沟是多么贫穷。她第一次意识到这是不光彩的，因为贫穷，同学们才敢一遍又一遍地盘问她。她盯住同桌那只铅笔盒，猜测它来自遥远的大城市，猜测它的价钱肯定非同寻常。三十个鸡蛋换得来吗？还是四十个、五十个？这时她的心又忽地一沉：怎么想起这些了？娘攒下鸡蛋，不是为了叫她乱打主意啊！可是，为什么那诱人的嗒嗒声老是在耳边响个没完？'},
+
+  B03:{id:'B03',title:'用鸡蛋换铅笔盒',kind:'选段',text:
+'在车上，当她红着脸告诉女学生，想用鸡蛋和她换铅笔盒时，女学生不知怎么的也红了脸。她一定要把铅笔盒送给香雪，还说她住在学校吃食堂，鸡蛋带回去也没法吃。她怕香雪不信，又指了指胸前的校徽，上面果真有“矿冶学院”几个字。香雪却觉着她在哄她，难道除了学校她就没家吗？香雪一面摆弄着铅笔盒，一面想着主意。台儿沟再穷，她也从没白拿过别人的东西。就在火车停顿前发出的几秒钟的震颤里，香雪还是猛然把篮子塞到女学生的座位下面，迅速离开了。'},
+
+  B04:{id:'B04',title:'赶快回去上学的期待',kind:'选段',text:
+'车上，旅客们曾劝她在西山口住一夜再回台儿沟。热情的“北京话”还告诉她，他爱人有个亲戚就住在站上。香雪并没有住，更不打算去找“北京话”的什么亲戚，他的话倒使她感到了委屈，她替凤娇委屈，替台儿沟委屈。她只是一心一意地想：赶快走回去，明天理直气壮地去上学，理直气壮地打开书包，把“它”摆在桌上。车上的人既不了解火车的呼啸曾经怎样叫她像只受惊的小鹿那样不知所措，更不了解山里的女孩子在大山和黑夜面前到底有多大本事。'},
+
+  T01:{id:'T01',title:'初下车',kind:'夜归',text:
+'列车很快就从西山口车站消失了，留给她的又是一片空旷。一阵寒风扑来，吸吮着她单薄的身体。她把滑到肩上的围巾紧裹在头上，缩起身子在铁轨上坐了下来。香雪感受过各种各样的害怕，小时候她怕头发，身上沾着一根头发择不下来，她会急得哭起来；长大了她怕晚上一个人到院子里去，怕毛毛虫，怕被人胳肢（凤娇最爱和她来这一手）。现在她害怕这陌生的西山口，害怕四周黑幽幽的大山，害怕叫人心跳的寂静，当风吹响近处的小树林时，她又害怕小树林发出的窸窸窣窣的声音。三十里，一路走回去，该路过多少大大小小的林子啊！'},
+
+  T02:{id:'T02',title:'月光照亮',kind:'夜归',text:
+'一轮满月升起来了，照亮了寂静的山谷、灰白的小路，照亮了秋日的败草、粗糙的树干，还有一丛丛荆棘、怪石，还有漫山遍野那树的队伍，还有香雪手中那只闪闪发光的小盒子。'},
+
+  T03:{id:'T03',title:'端详铅笔盒，想到明天',kind:'夜归',text:
+'她这才想到把它举起来仔细端详。她想，为什么坐了一路火车，竟没有拿出来好好看看？现在，在皎洁的月光下，她才看清了它是淡绿色的，盒盖上有两朵洁白的马蹄莲。她小心地把它打开，又学着同桌的样子轻轻一拍盒盖，“嗒”的一声，它便合得严严实实。她又打开盒盖，觉得应该立刻装点东西进去。她从兜里摸出一只盛擦脸油的小盒放进去，又合上了盖子。只有这时，她才觉得这铅笔盒真属于她了，真的。她又想到了明天，明天上学时，她多么盼望她们会再三盘问她啊！'},
+
+  T04:{id:'T04',title:'站起、跨步与设想台儿沟',kind:'夜归',text:
+'她站了起来，忽然感到心里很满意，风也柔和了许多。她发现月亮是这样明净。群山被月光笼罩着，像母亲庄严、神圣的胸脯；那秋风吹干的一树树核桃叶，卷起来像一树树金铃铛，她第一次听清它们在夜晚，在风的怂恿下“豁啷啷”地歌唱。她不再害怕了，在枕木上跨着大步，一直朝前走去。大山原来是这样的！月亮原来是这样的！核桃树原来是这样的！香雪走着，就像第一次认出养育她成人的山谷。台儿沟呢？不知怎么的，她加快了脚步。她急着见到它，就像从来没见过它那样觉得新奇。台儿沟一定会是“这样的”：那时台儿沟的姑娘不再央求别人，也用不着回答人家的再三盘问。火车上的漂亮小伙子都会求上门来，火车也会停得久一些，也许三分、四分，也许十分、八分。它会向台儿沟打开所有的门窗，要是再碰上今晚这种情况，谁都能从从容容地下车。'},
+
+  T05:{id:'T05',title:'想到鸡蛋与父母，回忆芝麻糖',kind:'夜归',text:
+'今晚台儿沟发生了什么事？对了，火车拉走了香雪，为什么现在她像闹着玩儿似的去回忆呢？四十个鸡蛋也没有了，娘会怎么说呢？爹不是盼望每天都有人家娶媳妇、聘闺女吗？那时他才有干不完的活儿，他才能光着红铜似的脊梁，不分昼夜地打出那些躺柜、碗橱、板箱，挣回香雪的学费。想到这儿，香雪站住了，月光好像也黯淡下来，脚下的枕木变成一片模糊。回去怎么说？她环视群山，群山沉默着；她又朝着近处的杨树林张望，杨树林窸窸窣窣地响着，并不真心告诉她应该怎么做。是哪儿来的流水声？她寻找着，发现离铁轨几米远的地方，有一道浅浅的小溪。她走下铁轨，在小溪旁边蹲了下来。她想起小时候有一回和凤娇在河边洗衣裳，碰见一个换芝麻糖的老头。凤娇劝香雪拿一件旧汗褂换几块糖吃，还教她对娘说，那件衣裳不小心叫河水给冲走了。香雪很想吃芝麻糖，可她到底没换。她还记得，那老头真心实意等了她半天呢。为什么她会想起这件小事？也许现在应该骗娘吧，因为芝麻糖怎么也不能和铅笔盒的重要性相比。她要告诉娘，这是一个宝盒子，谁用上它，就能一切顺心如意，就能上大学、坐上火车到处跑，就能要什么有什么，就再也不会被人盘问她们每天吃几顿饭了。娘会相信的，因为香雪从来不骗人。'},
+
+  T06:{id:'T06',title:'溪边洗脸，再次赶路',kind:'夜归',text:
+'小溪的歌唱高昂起来了，它欢腾着向前奔跑，撞击着水中的石块，不时溅起一朵小小的浪花。香雪也要赶路了，她捧起溪水洗了把脸，又用沾着水的手抿光被风吹乱的头发。水很凉，但她觉得很精神。她告别了小溪，又回到了长长的铁路上。'},
+
+  T07:{id:'T07',title:'隧道前的想法与行动',kind:'夜归',text:
+'前边又是什么？是隧道，它愣在那里，就像大山的一只黑眼睛。香雪又站住了，但她没有返回去，她想到怀里的铅笔盒，想到同学们惊羡的目光，那些目光好像就在隧道里闪烁。她弯腰拔下一根枯草，将草茎插在小辫里。娘告诉她，这样可以“避邪”。然后她就朝隧道跑去。确切地说，是冲去。'},
+
+  T08:{id:'T08',title:'越走越热',kind:'夜归',text:
+'香雪越走越热了，她解下围巾，把它搭在脖子上。她走出了多少里？不知道。尽管草丛里的“纺织娘”“油葫芦”总在鸣叫着提醒她。'},
+
+  T09:{id:'T09',title:'伙伴前来',kind:'夜归',text:
+'台儿沟在哪儿？她向前望去，她看见迎面有一颗颗黑点在铁轨上蠕动。再近一些她才看清，那是人，是迎着她走过来的人群。第一个是凤娇，凤娇身后是台儿沟的姐妹们。'},
+
+  T10:{id:'T10',title:'回望铁路，举盒奔向伙伴',kind:'夜归',text:
+'香雪想快点跑过去，但脚为什么变得异常沉重？她站在枕木上，回头望着笔直的铁轨，铁轨在月钱的照耀下泛着清淡的光，它冷静地记载着香雪的路程。她忽然觉得心头一紧，不知怎么的就哭了起来，那是欢乐的泪水、满足的泪水。面对严峻而又温厚的大山，她心中升起一种从未有过的骄傲。她用手背抹净眼泪，拿下插在辫子里的那根草茎，然后举起铅笔盒，迎着对面的人群跑去。'},
+
+  T11:{id:'T11',title:'山谷中的呐喊',kind:'夜归',text:
+'山谷里突然爆发了姑娘们欢乐的呐喊。她们叫着香雪的名字，声音是那样奔放，热烈；她们笑着，笑得是那样不加掩饰，无所顾忌。古老的群山终于被感动得战栗了，它发出洪亮低沉的回音，和她们共同欢呼着。'},
+
+  T12:{id:'T12',title:'结尾呼唤',kind:'夜归',text:
+'哦，香雪！香雪！'}
+};
+
+/* 教学拟写／教学概括：与小说原文分别存放，不混入 paragraphs */
+const COMPOSED = {
+  A01_1:{label:'学生作文原句（已核实）',text:'看到这里，我恍然悟了。',cls:'原文'},
+  A01_2:{label:'学生作文原句（已核实）',text:'经过反复练习，我终于能剪出完整好看的福纹了。',cls:'原文'},
+  A01_3:{label:'教学拟写的概述',text:'香雪得到了铅笔盒，便不再害怕，勇敢地走回了台儿沟。',cls:'非小说原句'},
+  A04_1:{label:'教学概括',text:'香雪又担心起来',cls:'非小说原句'},
+  A06_1:{label:'教学概括',text:'勇敢地穿过隧道',cls:'非小说原句'}
+};
+
+/* ---------------------------------------------------------------------------
+   范围定义（第9节）
+   用锚点句定位起止，标记始终基于同一份规范文本计算偏移
+   ------------------------------------------------------------------------- */
+const RANGES = {
+  // 跨步范围：从T04开头，到"一直朝前走去。"结束
+  kuabù:{p:'T04',from:0,to:null,toAnchor:'一直朝前走去。'},
+  // 顾虑范围：从T05开头，到"并不真心告诉她应该怎么做。"结束
+  gulv:{p:'T05',from:0,to:null,toAnchor:'并不真心告诉她应该怎么做。'},
+  // 月色对读右侧：T05从"想到这儿"开始，到同一结束语止
+  yueSeRight:{p:'T05',fromAnchor:'想到这儿',to:null,toAnchor:'并不真心告诉她应该怎么做。'},
+  // A04"继续读这一段"：T05后半段（顾虑范围之后）
+  xuDu:{p:'T05',fromAfter:'并不真心告诉她应该怎么做。',to:null}
+};
+
+function resolveRange(r){
+  const src=PARAGRAPHS[r.p].text; let s=r.from||0, e=(r.to==null)?src.length:r.to;
+  if(r.fromAnchor){const i=src.indexOf(r.fromAnchor); if(i>=0) s=i;}
+  if(r.fromAfter){const i=src.indexOf(r.fromAfter); if(i>=0) s=i+r.fromAfter.length;}
+  if(r.toAnchor){const i=src.indexOf(r.toAnchor); if(i>=0) e=i+r.toAnchor.length;}
+  return {p:r.p,s:Math.max(0,s),e:Math.min(src.length,Math.max(s,e))};
+}
+function rangeText(r){const g=resolveRange(r); return PARAGRAPHS[g.p].text.slice(g.s,g.e);}
+
+/* ---------------------------------------------------------------------------
+   回看目标：中性标题，不在标题中预先断言人物心理
+   ------------------------------------------------------------------------- */
+const LOOK = {
+  T01:{label:'初下车',spec:{p:'T01'}},
+  T02:{label:'月光照亮',spec:{p:'T02'}},
+  T03:{label:'端详铅笔盒',spec:{p:'T03'}},
+  T04:{label:'先前跨步',spec:{p:'T04',from:0,toAnchor:'一直朝前走去。'}},
+  T04b:{label:'台儿沟的设想',spec:{p:'T04',fromAnchor:'台儿沟呢？',to:null}},
+  T05a:{label:'停步之前所想',spec:{p:'T05',from:0,toAnchor:'并不真心告诉她应该怎么做。'}},
+  T05b:{label:'溪边与芝麻糖',spec:{p:'T05',fromAfter:'并不真心告诉她应该怎么做。',to:null}},
+  T05all:{label:'想到鸡蛋与父母',spec:{p:'T05'}},
+  T06:{label:'溪边再次赶路',spec:{p:'T06'}},
+  T07:{label:'隧道前的想法与动作',spec:{p:'T07'}},
+  night:{label:'夜归相关段落',spec:{p:'T02'}},
+  nightB:{label:'夜归相关段落（T02—T04）',spec:{list:['T02','T03','T04']}},
+  xiangbi:{label:'铅笔盒的比较',spec:{p:'B02'}},
+  panwen:{label:'同学的盘问',spec:{p:'B01'}},
+  jidan:{label:'用鸡蛋换铅笔盒',spec:{p:'B03'}},
+  qihuan:{label:'回去上学的期待',spec:{p:'B04'}},
+  yesheng:{label:'溪边再次赶路（T06）',spec:{p:'T06'}},
+  yewang:{label:'回望夜路',spec:{list:['T08','T09','T10','T11','T12']}},
+  moonPair:{label:'月色对读（先前／此刻）',spec:{cols:[
+    {hd:'先前',spec:{p:'T04',from:0,toAnchor:'一直朝前走去。'}},
+    {hd:'此刻',spec:{p:'T05',fromAnchor:'想到这儿',toAnchor:'并不真心告诉她应该怎么做。'}}]}},
+  xiangxue:{label:'香雪',spec:{p:'T05',fromAnchor:'她要告诉娘',to:null}},
+  MORE_ALL:{label:'本课文本库',spec:{list:['B01','B02','B03','B04','T01','T02','T03','T04','T05','T06','T07','T08','T09','T10','T11','T12']}}
+};
+
+/* ---------------------------------------------------------------------------
+   课堂环节（第3—4节）
+   view: 'read' 中央为原文 | 'cards' 中央为卡片（可内嵌原文）
+   blocks: 中央默认显示的文本范围 [{p} | RANGE 键 | {p,from,toAnchor}]
+   cols:   A05 左右对读 [{hd,spec}]
+   look:   本页提供的回看入口 [LOOK 键]
+   ---------------------------------------------------------------------- */
+const STAGES = [
+{id:'A01',act:1,name:'问题起点',time:'0—3分钟',view:'cards',
+ q:'只读这句概述，你还想追问什么？',
+ cards:[
+  {lb:'两处已核实的作文表达',items:['A01_1','A01_2']},
+  {lb:'把变化写成一句断言',items:['A01_3']}
+ ],
+ look:['T01','night'],full:1},
+
+{id:'A02',act:1,name:'独立圈读',time:'3:00—5:20',view:'read',
+ q:'圈一处能解释“跨大步”的原句，思考它与脚步的联系',
+ blocks:[{p:'T02'},{p:'T03'},RANGES.kuabù],
+ look:['T01'],fresh:1},
+
+{id:'A03',act:1,name:'跨步来由',time:'5:20—8:20',view:'read',
+ q:'你圈的文字，怎样帮助我们理解后来的脚步？',
+ wisdom:{text:'别只写“我变了”，要写出是什么使我有了变化。',ask:'哪件事、哪个发现或想法，促成了后来的不同？',criterion:'变化有来由'}, 
+ blocks:[{p:'T02'},{p:'T03'},RANGES.kuabù],
+ look:['T01','panwen','xiangbi','qihuan']},
+
+{id:'A04',act:1,name:'顾虑与停步',time:'8:20—9:40',view:'read',
+ q:'原文比“香雪又担心起来”多告诉我们什么？',
+ wisdom:{text:'别只说“我很纠结”，要写出当时究竟在为哪件事纠结。',ask:'我写出了心里具体牵挂的事，还是只给心情起了名字？',criterion:'变化有来由'}, 
+ pre:[{lb:'教学概括（本页用来对照的句子，非小说原句）',items:['A04_1']}],
+ blocks:[RANGES.gulv],
+ look:['jidan','T05b','T04'],cont:['xuDu']},
+{id:'A05',act:1,name:'月色与心境',time:'9:40—10:30',view:'read',
+ q:'月光为什么“好像”黯淡？联系她当时所想解释',
+ wisdom:{text:'写景，不只写眼前有什么，还可以写它在当时的我眼里是什么样。',ask:'这处景物，能让读者感到我当时的心情吗？',criterion:'关键过程看得见；按需选用'}, 
+ cols:[
+  {hd:'先前',spec:{p:'T04',from:0,toAnchor:'一直朝前走去。'}},
+  {hd:'此刻',spec:{p:'T05',fromAnchor:'想到这儿',toAnchor:'并不真心告诉她应该怎么做。'}}
+ ],
+ look:['T01','T03','T05a']},
+
+{id:'A06',act:1,name:'隧道前的选择',time:'10:30—13:40',view:'read',
+ q:'同样“站住”，这一次面对什么？她怎样使自己继续向前？',
+ wisdom:{text:'别用一句“我勇敢了”跳过过程，要让读者看见我怎样迈出这一步。',ask:'从原先的反应到后来的行动，哪一步需要写出来？这一次向前，能否说成从此什么也不怕？',criterion:'关键过程看得见；变化合乎情境'}, 
+ pre:[{lb:'教学概括（本页用来对照的句子，非小说原句）',items:['A06_1']}],
+ blocks:[{p:'T07'}],
+ look:['T06','T05a','panwen','xiangbi']},
+
+{id:'A07',act:1,name:'归纳与取法',time:'13:40—15:00',view:'summary',
+ q:'这些写法，能帮助你把作文中哪一种没写清的地方写清楚？',
+ gates:[
+  {t:'她想到鸡蛋和父母，为什么站住？',back:'T05a'},
+  {t:'前后月色不同，她此刻怎样感受？',back:'moonPair'},
+  {t:'隧道前的想法与行动怎样连起来？',back:'T07'}
+ ],
+ summary:[
+  {t:'变化有来由：是什么促成了变化？',back:'T05a',note:'读者能指出具体经历、发现或想法'},
+  {t:'关键过程看得见：关键一步怎样发生？',back:'T07',note:'读者能指出前后不同与中间一步'},
+  {t:'变化合乎情境：这样变可信吗？',back:'T07',note:'不夸大改变，也不硬添波折'}
+ ],
+ summaryNote:'这是写自己作文时的三个判断问题，不是必须补齐三类描写。已经写清的可以保留。'}, 
+
+{id:'A08',act:1,name:'旧作预案',time:'15:00—20:00',view:'cards',
+ q:'我的变化还有哪一步没有让读者看见？',
+ cards:[
+  {lb:'旧作回读与预案任务',task:'选一处课前画出的变化句，连着前后文读。读者能否看清变化的来由、关键一步和后来的不同反应？在需要处理的位置做记号，写下一句话：准备补／删／保留什么，为什么。',note:'学生在本人纸质旧作文上操作。点击课文参考后，返回仍是本页任务，不跳到另一个活动。'}
+ ],
+ look:['T05a','moonPair','T07','MORE_ALL']},
+
+/* ------------------------------ 活动二 ------------------------------ */
+{id:'B01',act:2,name:'定点改写',time:'20—28分钟',view:'cards',
+ q:'选一个判断点，只处理旧作的一处变化',
+ cards:[{lb:'本人旧作 · 约80—120字',task:'先选“变化有来由／关键过程看得见／变化合乎情境”中的一个问题。按预案修改旧作的一处变化；可补写、调整、删去或有据保留。旧句与首稿留着，不重写全篇。',note:'本人经历只用确实记得的细节；三种描写不必凑齐。原段已写清，可保留并指出依据；也可选活动单附件一的虚构剪纸材料练习。备用材料可合理虚构，不冒充本人经历。'}],
+ look:['T05a','T07','T04','xiangbi']},
+
+{id:'B02',act:2,name:'同伴验读',time:'28—31分钟',view:'cards',
+ q:'只查作者所选一项：清楚／部分清楚／暂未看出',
+ cards:[{lb:'本环节任务',task:'连同旧作前后文读，只评价作者所选的一项。在活动单勾“清楚／部分清楚／暂未看出”，指出第几句让你看出了什么；仍不清楚的，只提一个有句子位置的疑问。',note:'不替作者决定补哪类描写；已经写清的，疑问栏可不填。'}],
+ look:['T05a','T07']},
+
+{id:'B03',act:2,name:'作者定稿',time:'31—35分钟',view:'cards',
+ q:'在原改稿中真改一处，或说明保留的依据',
+ cards:[{lb:'本环节任务',task:'判断同伴反馈，在活动单上方的改稿中直接修改，保留修改痕迹；若原句已写清，就标出依据并写一句保留理由。末尾勾“修改第几句／保留第几句”。',note:'回到自己选定的判断点，只检查这一处是否写清；不要用“准备补心理描写”代替实际改稿。'}],
+ look:['T05a','T07','T04']},
+
+/* ------------------------------ 活动三 ------------------------------ */
+{id:'C01',act:3,name:'独立检测',time:'35—45分钟（收卷为先）',view:'detect',
+ q:'新情境独立检测',
+ detect:{
+  sit:'小组商量班级展板的安排。“我”画了一下午的草图，被同伴推回桌子中央：“先别照这个做，我们再看一遍。”我攥住笔，原本准备马上反驳。',
+  task:'收起课文、旧作文、活动单及附件，只看本题独立续写约60—100字。让读者看见“我”有来由的一点具体变化；可以改方案，也可以保留方案但换一种交流方式，不要求和好、成功或完全不生气。',
+  tips:['不讨论、不使用AI，不请教师提示具体写法。','交卷前，在自己的续写中圈出最能显示变化的文字。']}, 
+ locked:1},
+
+{id:'C02',act:3,name:'课后衔接',time:'检测收卷后（如有余时）',view:'cards',
+ q:'先完成并收齐检测，再衔接课后任务',
+ cards:[{lb:'课后任务',task:'把今天修改过的那一处誊到作文本上，并在旁边写一句：这次我让读者看见了哪一步。',note:'演示素材由教师提供；尚未放入页面时，此处只显示课后任务，不生成任何学生演示结果。'}],
+ look:[],teacherOnly:1}
+];
+
+/* 教师点击才显示写作智慧；内容不是小说原句，不作为检测提示。 */
+const CRITERIA=[
+  {name:'变化有来由',question:'为什么变？',standard:'遇到、发现或想到什么，使变化有了依据。'},
+  {name:'关键过程看得见',question:'怎样变？',standard:'具体描写让读者看见关键一步，不只知道结果。'},
+  {name:'变化合乎情境',question:'这样变可信吗？',standard:'符合当时处境，不夸大改变，也不硬添波折。'}
+];
+const ACTS=[
+  {id:1,name:'活动一 · 读出变化'},
+  {id:2,name:'活动二 · 修改旧作'},
+  {id:3,name:'活动三 · 独立检测'}
+];
+
+const EXTRA=[
+  {key:'T05b',label:'回忆芝麻糖',sub:'T05 后半段'},
+  {key:'yesheng',label:'溪边再次赶路',sub:'T06'},
+  {key:'yewang',label:'回望夜路',sub:'T08—T12'}
+];
+/* ============================================================================
+   核心：统一「流」架构
+   环节正文、A05 对读、回看覆盖层、备用研读，全部解析成同一种有序 block 列表：
+       {p, s, e, hd?, col?}
+   再由 paginate() 按句子边界切成一屏一块（不混段落），保证
+   「T03｜本段第1/2屏」里的“本段”始终确定。
+
+   标记绑定 {p, s, e}；分屏重算后用段落ID＋字符位置恢复焦点，
+   因此改字号、切环节、分屏、回看返回，标记都落在同一句上。
+   ========================================================================== */
+const $ = s => document.querySelector(s);
+const el = (t,c,h) => { const n=document.createElement(t); if(c)n.className=c; if(h!=null)n.innerHTML=h; return n; };
+const esc = s => s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));
+const FS_MIN=32, FS_MAX=56, FS_STEP=2;
+const LS_KEY='oxs-xiangxue-reader-v2';
+const stageById = id => STAGES.find(s=>s.id===id);
+const cur = () => stageById(S.stage);
+
+/* ------------------------------ 课堂状态 ------------------------------ */
+const S = {
+  act:1, stage:'A01', fs:40, focus:false, qfold:false,
+  mkOpen:false, mkPick:false,
+  screen:{},     // stageId -> 屏序号
+  sumShown:{},   // stageId -> 归纳是否已由教师打开
+  wisdomShown:{}, // stageId -> 作文金句是否已由教师打开
+  rubricShown:false, // 活动二教师按需显示共用量表
+  cont:{},       // stageId -> A04「继续读这一段」是否已展开
+  full:{},       // stageId -> 是否在看完整段落
+  marks:[],      // {p,s,e,type}
+  stack:[],      // 回看返回栈
+  peek:null      // {blocks,label,from,more}
+};
+
+/* 快照／恢复（第5.2节要求的全部状态） */
+const snap = () => JSON.parse(JSON.stringify(
+  {act:S.act,stage:S.stage,fs:S.fs,focus:S.focus,qfold:S.qfold,screen:S.screen,
+   sumShown:S.sumShown,wisdomShown:S.wisdomShown,rubricShown:S.rubricShown,
+   cont:S.cont,full:S.full,marks:S.marks,peek:S.peek,mkOpen:S.mkOpen}));
+function restore(o){
+  Object.assign(S,{act:o.act,stage:o.stage,fs:o.fs,focus:o.focus,qfold:o.qfold,
+    screen:o.screen||{},sumShown:o.sumShown||{},wisdomShown:o.wisdomShown||{},
+    rubricShown:!!o.rubricShown,cont:o.cont||{},full:o.full||{},
+    marks:o.marks||[],peek:o.peek||null,mkOpen:!!o.mkOpen});
+}
+
+/* ------------------------------ 标记 ------------------------------ */
+const plain = m => PARAGRAPHS[m.p].text.slice(m.s,m.e);
+const hits = (p,s,e) => S.marks.filter(m=>m.p===p && m.s<e && m.e>s).sort((a,b)=>a.s-b.s);
+function addMark(p,s,e,type){
+  if(e<=s) return false;
+  if(S.marks.some(m=>m.p===p && m.s<e && m.e>s)) return false;   // 不允许重叠
+  S.marks.push({p,s,e,type}); return true;
+}
+function mkHtml(p,s,e){
+  const ms=hits(p,s,e); if(!ms.length) return esc(PARAGRAPHS[p].text.slice(s,e));
+  let out='',cur=s;
+  ms.forEach(m=>{
+    const a=Math.max(m.s,s), b=Math.min(m.e,e);
+    if(b<=a || b<=cur) return;
+    out+=esc(PARAGRAPHS[p].text.slice(cur,a));
+    out+=`<span class="mk ${m.type}${S.mkPick?' pick':''}" data-p="${p}" data-s="${a}" data-e="${b}">${esc(PARAGRAPHS[p].text.slice(a,b))}</span>`;
+    cur=b;
+  });
+  return out+esc(PARAGRAPHS[p].text.slice(cur,e));
+}
+/**
+ * 渲染一段正文。data-p / data-s 是教师批注的反查锚点：
+ * 选区落在 DOM 上时，靠这两个属性换算回「段落ID＋字符位置」。
+ * 任何正文渲染都必须走这个函数，不要手写 class="blk"。
+ */
+function blkHtml(p,s,e){
+  return `<div class="blk" data-p="${p}" data-s="${s}" data-e="${e}">${mkHtml(p,s,e)}</div>`;
+}
+
+/* ------------------------------ 范围解析 ------------------------------ */
+function norm(x){
+  var out=[], i, j, item, sub, blk;
+  if(!x) return out;
+  if(Array.isArray(x)){
+    for(i=0;i<x.length;i++){ sub=norm(x[i]); for(j=0;j<sub.length;j++) out.push(sub[j]); }
+    return out;
+  }
+  if(x.cols){
+    for(i=0;i<x.cols.length;i++){
+      item=x.cols[i];
+      sub=norm(item.spec);
+      for(j=0;j<sub.length;j++){ sub[j].hd=item.hd; out.push(sub[j]); }
+    }
+    return out;
+  }
+  if(x.blocks) return norm(x.blocks);
+  if(x.list){
+    for(i=0;i<x.list.length;i++) out.push({p:x.list[i], s:0, e:PARAGRAPHS[x.list[i]].text.length});
+    return out;
+  }
+  blk=resolveRange(x);
+  out.push({p:blk.p, s:blk.s, e:blk.e});
+  return out;
+}
+/** 环节 → block 列表 */
+function stageBlocks(st){
+  if(st.view!=='read') return [];
+  let bs = st.cols ? norm({cols:st.cols}) : norm(st.blocks);
+  if(st.cont && S.cont[st.id]) bs=bs.concat(norm(RANGES[S.cont[st.id]]));
+  if(S.full[st.id]){                                  // 看完整段落：同段去重后取全长
+    const seen=new Set(), out=[];
+    bs.forEach(b=>{ if(seen.has(b.p))return; seen.add(b.p);
+      out.push({p:b.p,s:0,e:PARAGRAPHS[b.p].text.length,hd:b.hd}); });
+    return out;
+  }
+  return bs;
+}
+/** 回看目标 → block 列表 + 可继续回看的入口 */
+function lookBlocks(key){
+  const L=LOOK[key]; if(!L) return {blocks:[],label:key,more:[]};
+  const blocks = L.spec.cols ? norm(L.spec)
+             : L.spec.list ? norm(L.spec)
+             : norm({p:L.spec.p,from:L.spec.from,fromAnchor:L.spec.fromAnchor,
+                     fromAfter:L.spec.fromAfter,to:L.spec.to,toAnchor:L.spec.toAnchor});
+  return {blocks, label:L.label, spec:L.spec};
+}
+
+/* ------------------------------ 分屏 ------------------------------ */
+const SENT_END='。！？…；';
+function sentences(txt,s,e){
+  const out=[]; let st=s;
+  for(let i=s;i<e;i++){
+    if(SENT_END.includes(txt[i])){
+      let j=i+1;
+      while(j<e && '”’」』）'.includes(txt[j])) j++;       // 收尾引号跟随本句
+      out.push([st,j]); st=j; i=j-1;
+    }
+  }
+  if(st<e) out.push([st,e]);
+  return out;
+}
+/**
+ * 把 block 列表切成一屏一块。
+ * 离屏测量层 #measure 与正文同宽同字号，逐句累加直到超出可用高度。
+ * 关键：宁可不切，也不切断句子、丢失后半段。
+ * SAFETY：实测高度留 2 行余量，避免最后一行基线溢出被底部工具栏裁掉。
+ */
+const SAFETY=8;
+function colhdHeight(){
+  // 动态实测列头高度，避免硬编码随字号变化而失准
+  const M=$('#measure');
+  M.style.width='400px'; M.style.fontSize=getComputedStyle(document.documentElement).getPropertyValue('--fs')||'40px';
+  M.innerHTML='<div class="colhd">先前</div>';
+  const h=M.scrollHeight; M.innerHTML='';
+  return h||45;
+}
+/** 双栏是否降级为上下排列：每栏可用宽度不足 18em 时不硬撑 */
+function colsShouldStack(width,fs){
+  const colW=(width-46)/2;
+  return colW < fs*18;                 // 每栏放不下 18 个字就不并排
+}
+function paginate(blocks,fs,width,avail,cols){
+  const stack = blocks.some(b=>b.hd) && colsShouldStack(width,fs);
+  const M=$('#measure');
+  // 双栏时列头占用高度，必须从可用高度里扣除，否则正文会被底部工具栏裁掉
+  const nHd=stack?2:1;
+  const H=Math.max(120, (avail - SAFETY - (blocks.some(b=>b.hd)?colhdHeight():0)) / (stack?2:1));
+  M.style.fontSize=fs+'px';
+  M.style.lineHeight='1.75';
+  M.style.padding='0'; M.style.margin='0';
+  const screens=[];
+  const fit=(html,w)=>{ M.style.width=w+'px'; M.innerHTML=html; return M.scrollHeight<=H; };
+  blocks.forEach(b=>{
+    const txt=PARAGRAPHS[b.p].text;
+    const list=sentences(txt,b.s,b.e);
+    const w = (b.hd && !stack) ? Math.floor((width-46)/2) : width;
+    let from=b.s;
+    for(let i=0;i<list.length;i++){
+      if(!fit(`<div class="blk">${mkHtml(b.p,from,list[i][1])}</div>`, w) && from<list[i][0]){
+        const cut=list[i-1]?list[i-1][1]:from;           // 退到上一句末
+        if(cut>from){ screens.push({...b,s:from,e:cut}); from=cut; }
+      }
+    }
+    if(from<b.e) screens.push({...b,s:from,e:b.e});
+  });
+  screens._stack=stack;
+  return screens;
+}
+
+/* ------------------------------ 焦点恢复 ------------------------------ */
+/** 用「段落ID＋字符位置」在新的分屏结果里找回原来那一屏 */
+function locate(screens,anchor){
+  if(!anchor) return 0;
+  let i=screens.findIndex(x=>x.p===anchor.p && x.s<=anchor.s && anchor.s<x.e);
+  if(i>=0) return i;
+  i=screens.findIndex(x=>x.p===anchor.p);
+  if(i>=0) return i;
+  return Math.min(anchor.i||0, Math.max(0,screens.length-1));
+}
+/* ============================================================================
+   渲染与交互
+   ========================================================================== */
+
+/* ------------------------------ 持久化 ------------------------------ */
+function save(){ try{ localStorage.setItem(LS_KEY,JSON.stringify(snap())); }catch(e){} }
+function load(){
+  try{ const raw=localStorage.getItem(LS_KEY); if(!raw) return;
+    const o=JSON.parse(raw);
+    if(o.stage && stageById(o.stage)) restore(o);
+    S.mkOpen=false; S.mkPick=false; // 刷新只恢复作品标记，不恢复临时工具面板
+  }catch(e){}
+}
+
+/* ------------------------------ 顶栏 / 左栏 ------------------------------ */
+function renderActs(){
+  const box=$('#acts'); box.innerHTML='';
+  ACTS.forEach(a=>{
+    const b=el('button',null,a.name);
+    b.setAttribute('aria-current', String(a.id===S.act));
+    b.onclick=()=>{ if(cur().locked && a.id!==3 && !confirm('独立检测尚未收卷。确认退出检测并显示前面课文与提示？')) return;
+      S.act=a.id; const f=STAGES.find(s=>s.act===a.id);
+      S.stage=f.id; S.peek=null; renderAll(); save(); };
+    box.appendChild(b);
+  });
+}
+function renderRail(){
+  $('#railTitle').textContent=ACTS.find(a=>a.id===S.act).name;
+  const box=$('#stageList'); box.innerHTML='';
+  STAGES.filter(s=>s.act===S.act).forEach(st=>{
+    const b=el('button','stage');
+    b.setAttribute('aria-current',String(st.id===S.stage));
+    if(st.locked) b.dataset.lock='1';
+    b.innerHTML=`<span class="l1"><span class="sid mono">${st.id}</span><span class="nm">${st.name}</span></span>
+      <span class="l2"><span class="tick"></span><span class="tm mono">${st.time}</span></span>`;
+    b.onclick=()=>{ if(st.id===S.stage) return;
+      if(cur().locked && st.id!=='C02' && !confirm('独立检测尚未收卷。确认退出检测？')) return;
+      S.stage=st.id; S.peek=null; renderAll(); save(); };
+    box.appendChild(b);
+  });
+  const ex=$('#extraList'); ex.innerHTML='';
+  $('#extra').open=false;
+  $('#extra').style.display=cur().locked?'none':'';
+  if(cur().locked) return;
+  EXTRA.forEach(x=>{
+    const b=el('button','xbtn',`${x.label}<span style="color:var(--ink3);font-size:15px;margin-left:8px">${x.sub}</span>`);
+    b.onclick=()=>openPeek(x.key,x.label,null);
+    ex.appendChild(b);
+  });
+}
+
+/* ------------------------------ 问题区 ------------------------------ */
+function renderQ(){
+  const st=cur();
+  $('#qSid').textContent=st.id; $('#qNm').textContent=st.name; $('#qTm').textContent=st.time;
+  $('#qtext').textContent=st.q;
+  $('#qbar').classList.toggle('min',S.qfold);
+  $('#qfold').textContent=S.qfold?'展开问句':'收起问句';
+  $('#qbar').style.display = st.view==='detect'?'none':'';
+}
+
+/* ------------------------------ 卡片视图（A01/A08/B/C） ------------------------------ */
+function composedCard(k){
+  const c=COMPOSED[k];
+  return `<div class="card"><div class="lb">${c.label}${c.cls==='非小说原句'?'　<b>非小说原句</b>':''}</div>
+    <div class="bd q">${esc(c.text)}</div></div>`;
+}
+function renderCards(){
+  const st=cur(), wrap=$('#cardsWrap');
+  wrap.innerHTML=''; wrap.style.display='block';
+  wrap.style.flex='1'; wrap.style.maxHeight='';
+  wrap.style.paddingTop='18px'; wrap.style.paddingBottom='24px';
+  $('#reader').style.display='none'; $('#docbar').style.display='none';
+  (st.pre||[]).forEach(g=>{
+    wrap.insertAdjacentHTML('beforeend',
+      `<div class="card"><div class="lb">${g.lb}</div>`+g.items.map(composedCard).join('')+`</div>`);
+  });
+  (st.cards||[]).forEach(c=>{
+    const d=el('div','card acc');
+    d.innerHTML=`<div class="lb">${c.lb}</div>`+
+      (c.task?`<div class="bd">${esc(c.task)}</div>`:'')+
+      (c.items?c.items.map(composedCard).join(''):'')+
+      (c.note?`<div class="sub">${esc(c.note)}</div>`:'');
+    wrap.appendChild(d);
+  });
+  if(st.view==='summary') renderSummary(wrap,st);
+  if(st.view==='detect')  renderDetect(wrap,st);
+  if(st.act===2) renderRubric(wrap);
+  renderPeekBar();
+}
+function renderWisdom(wrap,st){
+  if(!st.wisdom) return;
+  if(!S.wisdomShown[st.id]){
+    const box=el('div'); box.style.marginBottom='16px';
+    const b=el('button','sbtn pri','作文金句 · 讨论后显示');
+    b.onclick=()=>{ S.wisdomShown[st.id]=1;
+      renderRead(); save(); };
+    box.className='wisdom-trigger'; box.appendChild(b); wrap.appendChild(box);
+  }else renderWisdomAt(wrap,st);
+}
+function renderWisdomAt(wrap,st){
+  const old=wrap.querySelector('.wisdom-trigger'); if(old) old.remove();
+  const prior=wrap.querySelector('.wisdom'); if(prior) prior.remove();
+  const d=el('div','card wisdom');
+  d.style.padding='12px 20px'; d.style.marginBottom='4px';
+  d.innerHTML=`<div class="lb" style="margin-bottom:5px">作文金句 · 课堂提炼｜${esc(st.wisdom.criterion)}</div>`+
+    `<div class="bd" style="font-size:24px;line-height:1.4">${esc(st.wisdom.text)}</div>`+
+    `<div class="sub" style="font-size:17px;margin-top:5px;line-height:1.4">回到作文，问自己：${esc(st.wisdom.ask)}</div>`;
+  wrap.appendChild(d);
+}
+function renderRubric(wrap){
+  const box=el('div','card');
+  const b=el('button','sbtn',S.rubricShown?'收起共同评价标准':'查看共同评价标准');
+  b.onclick=()=>{ S.rubricShown=!S.rubricShown; renderCards(); save(); };
+  box.appendChild(b);
+  if(S.rubricShown){
+    const d=el('div','sub');
+    d.innerHTML=CRITERIA.map(c=>`<p style="margin-top:10px"><b>${esc(c.name)}——${esc(c.question)}</b> ${esc(c.standard)}</p>`).join('')+
+      '<p style="margin-top:12px">活动二只查作者选定的一项：清楚／部分清楚／暂未看出；证据写在活动单上。活动三完成后，教师仍按这三项评价。</p>';
+    box.appendChild(d);
+  }
+  wrap.appendChild(box);
+}
+
+/* A07：先显示三个中性回看问题，讨论完成后教师主动揭示三个写作判断 */
+function renderSummary(wrap,st){
+  const d=el('div','card acc');
+  d.innerHTML=`<div class="lb">回到依据</div>`+
+    st.gates.map((g,i)=>`<div class="sub" style="margin-top:10px">
+      <span class="mono" style="color:var(--accent);margin-right:10px">${i+1}</span>${esc(g.t)}
+      <button class="sbtn" style="margin-left:14px" data-back="${g.back}">看原句</button></div>`).join('');
+  wrap.appendChild(d);
+  if(!S.sumShown[st.id]){
+    const b=el('button','sbtn pri','显示三个写作判断');
+    b.onclick=()=>{ S.sumShown[st.id]=1; renderCards(); save(); };
+    const box=el('div'); box.style.marginBottom='16px'; box.appendChild(b); wrap.appendChild(box);
+  }else{
+    const c=el('div','card');
+    c.innerHTML=`<div class="lb">三个写作判断（课堂提炼，非小说原句）</div>`+
+      st.summary.map(s=>`<div class="sub" style="margin-top:12px">${esc(s.t)}
+        <button class="sbtn" style="margin-left:14px" data-back="${s.back}">回到原句</button>
+        <span style="color:var(--ink3);font-size:16px;margin-left:10px">${s.note}</span></div>`).join('')+
+      `<div class="sub" style="margin-top:18px;color:var(--ink3)">${esc(st.summaryNote)}</div>`;
+    wrap.appendChild(c);
+  }
+  wrap.querySelectorAll('[data-back]').forEach(btn=>{
+    btn.onclick=()=>openPeek(btn.dataset.back,LOOK[btn.dataset.back]?LOOK[btn.dataset.back].label:'原句',S.stage);
+  });
+}
+
+/* C01：隐藏回看、原文、标记、金句与备用研读；访问入口也做函数守卫 */
+function renderDetect(wrap,st){
+  const d=st.detect;
+  wrap.innerHTML=`<div class="card acc"><div class="lb">新情境</div><div class="bd q">${esc(d.sit)}</div></div>
+    <div class="card"><div class="lb">续写要求</div><div class="bd">${esc(d.task)}</div>
+    <div class="sub">${d.tips.map(esc).join('<br>')}</div></div>`;
+}
+
+/* ------------------------------ 正文 / 分屏 ------------------------------ */
+function readerBox(){ return $('#reader'); }
+function measureGeom(){
+  const r=readerBox(), cs=getComputedStyle(r);
+  const w=Math.max(320, r.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight));
+  const h=Math.max(160, r.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom));
+  return {w,h};
+}
+function renderRead(){
+  const st=cur();
+  $('#cardsWrap').innerHTML='';
+  $('#cardsWrap').style.display='none';
+  $('#reader').style.display='flex';
+  const blocks=stageBlocks(st);
+  if(!blocks.length){ $('#reader').style.display='none'; renderPeekBar(); return; }
+
+  if(st.wisdom){
+    const wrap=$('#cardsWrap'); wrap.style.display='block';
+    wrap.style.flex='0 0 auto'; wrap.style.minHeight='0';
+    wrap.style.maxHeight=S.wisdomShown[st.id]?'230px':'70px';
+    wrap.style.paddingTop='8px'; wrap.style.paddingBottom='8px';
+    renderWisdom(wrap,st);
+  }
+  const {w,h}=measureGeom();
+  const screens=paginate(blocks,S.fs,w,h);
+  if(!screens.length){ $('#reader').style.display='none'; renderPeekBar(); return; }
+
+  const prev=S.screen[st.id+'@'+listKey(st)];
+  let idx=prev?locate(screens,prev.i!==undefined?{p:prev.p,s:prev.s,i:prev.i}:null):0;
+  idx=Math.max(0,Math.min(idx,screens.length-1));
+  paintScreen(screens,idx,st);
+  renderPeekBar();
+}
+function listKey(st){ return (S.full[st.id]?'F':'')+(st.cont&&S.cont[st.id]?'C':''); }
+
+function paintScreen(screens,idx,st){
+  const sc=screens[idx];
+  S.screen[st.id+'@'+listKey(st)]={p:sc.p,s:sc.s,i:idx};
+  const rd=$('#rdCur');
+  if(sc.hd){                                    // A05 对读
+    const stack=!!screens._stack;
+    if(stack){
+      // 空间不足：上下排列，一次只显示一段
+      rd.innerHTML=`<div class="cols stack"><div class="colhd">${sc.hd}</div>${blkHtml(sc.p,sc.s,sc.e)}</div>`;
+    }else{
+      const l=screens.filter(x=>x.hd==='先前'), r=screens.filter(x=>x.hd==='此刻');
+      const L=l[Math.min(lIdx(idx,screens,'先前'),l.length-1)], R=r[Math.min(rIdx(idx,screens,'此刻'),r.length-1)];
+      rd.innerHTML=`<div class="cols">
+        <div><div class="colhd">先前</div>${blkHtml(L.p,L.s,L.e)}</div>
+        <div><div class="colhd">此刻</div>${blkHtml(R.p,R.s,R.e)}</div></div>`;
+    }
+  }else{
+    rd.innerHTML=blkHtml(sc.p,sc.s,sc.e);
+  }
+  // 文档条
+  const P=PARAGRAPHS[sc.p], full=S.full[st.id];
+  $('#docbar').style.display='flex';
+  $('#docId').textContent=sc.p;
+  $('#docTi').textContent=P.title;
+  const isExcerpt=(sc.s>0||sc.e<P.text.length);
+  $('#docChip').style.display=isExcerpt?'inline-block':'none';
+  $('#docFull').textContent=full?'看节选':'看完整段落';
+  $('#docFull').onclick=()=>{ S.full[st.id]=!S.full[st.id]; delete S.screen[st.id+'@'+listKey(st)]; renderAll(); save(); };
+  updateStatus(screens,idx,sc);
+  wireMarks();
+}
+const lIdx=(i,ss,h)=>ss.slice(0,i+1).filter(x=>x.hd===h).length-1;
+const rIdx=(i,ss,h)=>{ const a=ss.slice(i).filter(x=>x.hd===h).length-1; return a<0?0:a; };
+
+function updateStatus(screens,idx,sc){
+  delete $('#stTi').dataset.normalText; $('#stTi').style.color='';
+  const same=screens.filter(x=>x.p===sc.p);
+  const n=same.findIndex(x=>x.s===sc.s);
+  $('#stSid').textContent=sc.p;
+  $('#stTi').textContent=PARAGRAPHS[sc.p].title;
+  if(sc.hd){
+    $('#stSid').textContent=sc.hd;
+    $('#stTi').textContent=PARAGRAPHS[sc.p].title+'　本段第'+(n+1)+'/'+same.length+'屏';
+  }else{
+    $('#stTi').textContent=PARAGRAPHS[sc.p].title+'　本段第'+(n+1)+'/'+same.length+'屏';
+  }
+  $('#bPrev').disabled=idx<=0;
+  $('#bNext').disabled=idx>=screens.length-1;
+  $('#bPrev').style.opacity = (idx<=0 ? 0.4 : 1); $('#bNext').style.opacity = (idx>=screens.length-1 ? 0.4 : 1);
+  $('#bar').dataset.i=idx; $('#bar').dataset.n=screens.length;
+}
+
+/* ------------------------------ 回看入口行 ------------------------------ */
+function renderPeekBar(){
+  const st=cur(), bar=$('#peekbar');
+  bar.innerHTML='';
+  if(st.locked){ bar.classList.add('locked');
+    bar.innerHTML='<span class="lb">独立检测：回看与标记已关闭</span>'; return; }
+  bar.classList.remove('locked');
+  const keys=st.look||[];
+  if(!keys.length){ bar.innerHTML=`<span class="lb">${st.teacherOnly?'课后衔接：材料由教师提供':'本环节无课文回看入口'}</span>`; return; }
+  bar.insertAdjacentHTML('beforeend','<span class="lb">回看</span>');
+  keys.forEach(k=>{
+    const b=el('button','sbtn',LOOK[k].label);
+    b.onclick=()=>openPeek(k,LOOK[k].label,st.id);
+    bar.appendChild(b);
+  });
+  if(st.cont && !S.cont[st.id]){
+    const b=el('button','sbtn','继续读这一段（T05 后半段）');
+    b.onclick=()=>{ S.cont[st.id]=st.cont[0]; delete S.screen[st.id+'@'+listKey(st)]; renderAll(); save(); };
+    bar.appendChild(b);
+  }
+}
+
+/* ------------------------------ 回看覆盖层（第5节） ------------------------------ */
+function openPeek(key,label,from){
+  if(cur().locked) return;
+  S.mkOpen=false; syncMk();
+  S.stack.push({...snap(), stack:S.stack.slice()});
+  const {blocks}=lookBlocks(key);
+  S.peek={key,label,from,blocks};
+  renderPeek();
+}
+function openPeekSpec(blocks,label,from){          // 连续回看：A03→B01→B02
+  if(cur().locked) return;
+  S.mkOpen=false; syncMk();
+  S.stack.push({...snap(), stack:S.stack.slice()});
+  S.peek={key:null,label,from,blocks};
+  renderPeek();
+}
+function renderPeek(){
+  const o=S.peek;
+  $('#ovl').classList.add('open');
+  document.body.classList.add('peekOpen');     // 面板移到右下角，让出「返回」按钮
+  const backTo=S.stack.length? (S.stack[S.stack.length-1].peek? S.stack[S.stack.length-1].peek.label : stageById(S.stack[S.stack.length-1].stage).name) : '返回';
+  $('#ovlTt').textContent='回看：'+o.label;
+  $('#ovlFf').textContent='来自：'+(o.from?stageById(o.from).name:'备用研读');
+  $('#ovlBack').textContent='返回“'+backTo+'”';
+  $('#ovlBack').onclick=closePeek;
+
+  const {w,h}=(()=>{const r=$('#ovlBody'),cs=getComputedStyle(r);
+    return {w:Math.max(320,r.clientWidth-parseFloat(cs.paddingLeft)-parseFloat(cs.paddingRight)),
+            h:Math.max(160,r.clientHeight-parseFloat(cs.paddingTop)-parseFloat(cs.paddingBottom))};})();
+  const screens=paginate(o.blocks,S.fs,w,h);
+  const key='peek:'+(o.key||o.label);
+  let idx=S.screen[key]||0;
+  idx=Math.max(0,Math.min(idx,screens.length-1));
+  const sc=screens[idx];
+  S.screen[key]=idx;
+  const rd=$('#ovlRd');
+  if(sc.hd){
+    if(screens._stack){
+      rd.innerHTML=`<div class="cols stack"><div class="colhd">${sc.hd}</div>${blkHtml(sc.p,sc.s,sc.e)}</div>`;
+    }else{
+      const l=screens.filter(x=>x.hd==='先前'), r=screens.filter(x=>x.hd==='此刻');
+      const L=l[Math.min(lIdx(idx,screens,'先前'),l.length-1)], R=r[Math.min(rIdx(idx,screens,'此刻'),r.length-1)];
+      rd.innerHTML=`<div class="cols">
+        <div><div class="colhd">先前</div>${blkHtml(L.p,L.s,L.e)}</div>
+        <div><div class="colhd">此刻</div>${blkHtml(R.p,R.s,R.e)}</div></div>`;
+    }
+  }else{
+    rd.innerHTML=blkHtml(sc.p,sc.s,sc.e);
+  }
+  const P=PARAGRAPHS[sc.p];
+  $('#ovlId').textContent=sc.p; $('#ovlTi').textContent=P.title;
+  const ex=(sc.s>0||sc.e<P.text.length);
+  $('#ovlChip').style.display=ex?'inline-block':'none';
+  $('#ovlFull').textContent='看完整段落';
+  $('#ovlFull').onclick=()=>{ o.blocks=o.blocks.map(b=>b.p===sc.p?{p:b.p,s:0,e:P.text.length}:b); renderPeek(); };
+
+  const same=screens.filter(x=>x.p===sc.p), n=same.findIndex(x=>x.s===sc.s);
+  $('#ovlPos').textContent=`${sc.p}｜本段第${n+1}/${same.length}屏`;
+  $('#oPrev').onclick=()=>peekTurn(-1);
+  $('#oNext').onclick=()=>peekTurn(1);
+  $('#oPrev').disabled=idx<=0; $('#oNext').disabled=idx>=screens.length-1;
+  $('#oPrev').style.opacity = (idx<=0 ? 0.4 : 1); $('#oNext').style.opacity = (idx>=screens.length-1 ? 0.4 : 1);
+
+  // 继续回看：本段相关的其他入口，支持连续回看
+  const more=moreFor(sc.p);
+  $('#ovlMore').innerHTML='';
+  more.forEach(k=>{
+    const b=el('button','sbtn',LOOK[k].label);
+    b.onclick=()=>{ const {blocks}=lookBlocks(k); openPeekSpec(blocks,LOOK[k].label,null); };
+    $('#ovlMore').appendChild(b);
+  });
+  wireMarks();
+  save();
+}
+function moreFor(p){
+  if(p.startsWith('T')){
+    if(p==='T04') return ['T01','T03','T05a'];
+    if(p==='T05') return ['T04','T06','T07'];
+    if(p==='T07') return ['T06','T05b','T04'];
+    return ['T01','T03','T04','T05a','T07'];
+  }
+  return ['T03','T04','T05a'];
+}
+function peekTurn(d){
+  const o=S.peek; if(!o) return;
+  const key='peek:'+(o.key||o.label);
+  const i=S.screen[key]||0, nx=i+d;
+  if(nx<0) return;
+  S.screen[key]=nx; renderPeek(); save();
+}
+function closePeek(){
+  const had=S.stack.length>0;
+  if(!had){ S.peek=null; S.stack=[]; $('#ovl').classList.remove('open');
+    document.body.classList.remove('peekOpen'); renderAll(); return; }
+  const prev=S.stack.pop();
+  restore(prev);
+  if(prev.peek && prev.stack.length){ S.peek=prev.peek; S.stack=prev.stack; renderPeek(); }
+  else { S.peek=null; $('#ovl').classList.remove('open');
+    document.body.classList.remove('peekOpen'); renderAll(true); }
+  save();
+}
+/* ============================================================================
+   标记、快捷键、总渲染
+   ========================================================================== */
+
+/* ---------------------- 选区 → 段落ID＋起止位置 ---------------------- */
+/**
+ * 教师在正文选中文字后，浏览器会在点击工具按钮时清空选区（失焦）。
+ * 因此在 selectionchange 时把选区解析结果缓存下来，doMark 优先用缓存。
+ * 缓存带签名（当前渲染内容的版本号），翻屏/切环节后自动失效。
+ */
+let _selCache=null, _selSig='';
+/**
+ * 缓存签名：只包含「决定正文 DOM 位置」的状态。
+ * 不能包含 marks.length —— 加一笔标记会重排 DOM，但教师的新选区
+ * 仍然有效（教师本来就是要在已标记的句子上再选一段）。
+ */
+function contentSig(){
+  const anchor = S.screen[cur().id+'@'+listKey(cur())];
+  return [S.stage, S.peek?(S.peek.key||S.peek.label):'', anchor?anchor.p:'', anchor?anchor.s:'', S.fs].join('|');
+}
+function selectionRange(){
+  const sel=window.getSelection();
+  if(!sel||sel.isCollapsed||!sel.rangeCount) return null;
+  const r=sel.getRangeAt(0);
+  const host=r.commonAncestorContainer.nodeType===1?r.commonAncestorContainer:r.commonAncestorContainer.parentElement;
+  const blk=host&&host.closest?host.closest('.blk'):null;
+  if(!blk) return null;
+  const p=blk.dataset.p, base=+(blk.dataset.s===undefined?0:blk.dataset.s);
+  if(!p) return null;
+  // 在 blk 内累计到目标文本节点为止的字符数
+  const walker=document.createTreeWalker(blk,NodeFilter.SHOW_TEXT,null);
+  let n, acc=0, s=null, e=null;
+  while(n=walker.nextNode()){
+    const len=n.nodeValue.length;
+    if(n===r.startContainer) s=base+acc+r.startOffset;
+    if(n===r.endContainer)   e=base+acc+r.endOffset;
+    acc+=len;
+  }
+  if(s===null||e===null||e<=s) return null;
+  // 夹到本段范围内，防止选区越界
+  const maxE=+(blk.dataset.e===undefined?(base+acc):blk.dataset.e);
+  return {p, s:Math.max(base,s), e:Math.min(maxE,e)};
+}
+/** 供 doMark 使用：优先取缓存（选区已因失焦消失时） */
+function currentSelection(){
+  const live=selectionRange();
+  if(live){ _selCache=live; _selSig=contentSig(); return live; }
+  if(_selCache && _selSig===contentSig()) return _selCache;
+  return null;
+}
+function wireMarks(){
+  if(cur()&&cur().locked) return;
+  document.querySelectorAll('#rdCur .mk, #ovlRd .mk').forEach(sp=>{
+    sp.onclick=()=>{ if(!S.mkPick) return;
+      const p=sp.dataset.p,s=+sp.dataset.s,e=+sp.dataset.e;
+      S.marks=S.marks.filter(m=>!(m.p===p&&m.s===s&&m.e===e));
+      S.mkPick=false; syncMk(); save(); refreshMarks();
+    };
+  });
+}
+function refreshMarks(){
+  if(S.peek) renderPeek();
+  else if(cur().view==='read') renderRead();
+  else renderCards();
+}
+function syncMk(){
+  const panel=$('#markPanel');
+  const open = S.mkOpen && !S.mkPick;              // 取消单笔时收起面板，让出正文
+  panel.classList.toggle('open',open);
+  document.body.classList.toggle('mkOpen',open);   // 正文右侧让出空间
+  $('#btnMark').setAttribute('aria-pressed',String(open));
+  panel.querySelectorAll('[data-mk]').forEach(b=>{
+    b.classList.toggle('on',(b.dataset.mk==='cancel'&&S.mkPick));
+  });
+  if(open && cur() && cur().view==='read') requestAnimationFrame(()=>{ if(document.body.classList.contains('mkOpen')) renderRead(); });
+  if(open && S.peek) requestAnimationFrame(()=>{ if(document.body.classList.contains('mkOpen')) renderPeek(); });
+  $('#mkHint').textContent = S.mkPick
+    ? '取消单笔：点正文中的任一笔标记即可去掉，原文不变。点「标记」可取消本模式。'
+    : '先在正文里选中一段文字，再点「高亮」或「下划线」。';
+  $('#mkBtnTxt') && ($('#mkBtnTxt').textContent = S.mkPick?'标记·取消中':'标记');
+  $('#mkCnt').textContent = S.marks.length? `本次共 ${S.marks.length} 笔标记（跨环节共用）` : '尚无标记';
+}
+function doMark(kind){
+  if(cur()&&cur().locked) return;
+  S.mkOpen=false; // 快捷键与按钮均用完即收，保留已有标记
+  if(kind==='undo'){ S.marks.pop(); syncMk(); save(); refreshMarks(); return; }
+  if(kind==='cancel'){ S.mkPick=!S.mkPick; syncMk(); refreshMarks(); return; }
+  if(kind==='clear'){
+    const sc=currentPara(); if(!sc) return;          // sc 是段落ID字符串
+    const n0=S.marks.length;
+    S.marks=S.marks.filter(m=>m.p!==sc);             // 按段落ID过滤
+    syncMk(); save(); refreshMarks();
+    flashHint(n0? `已清除 ${sc} 的 ${n0} 笔标记，原文未改动。` : `${sc} 本来没有标记。`);
+    return;
+  }
+  const r=currentSelection();                 // 用缓存兜底，防止点按钮时选区已被清空
+  if(!r){ syncMk(); flashHint('请先在正文里选中一段文字，再点「高亮」或「下划线」。'); save(); return; }
+  if(addMark(r.p,r.s,r.e,kind)){
+    window.getSelection().removeAllRanges(); _selCache=null; _selSig='';
+    syncMk(); save(); refreshMarks(); return;
+  }
+  syncMk();                                   // 先刷新面板计数
+  save();
+  flashHint('这段文字上已有标记，不能重叠。');  // 再提示，避免被 syncMk 覆盖
+}
+/** 无声提示：把提示语闪一下，不打断课堂 */
+let _hintTimer=null;
+function flashHint(msg){
+  const n=$('#mkHint'), status=$('#stTi');
+  if(!n) return;
+  n.textContent=msg; n.style.color='var(--warn)';
+  if(status){
+    if(!status.dataset.normalText) status.dataset.normalText=status.textContent;
+    status.textContent=msg; status.style.color='var(--warn)';
+  }
+  const stage=S.stage, peek=S.peek;
+  clearTimeout(_hintTimer);
+  _hintTimer=setTimeout(()=>{
+    syncMk(); n.style.color='';
+    if(status){
+      if(S.stage===stage && S.peek===peek) status.textContent=status.dataset.normalText||status.textContent;
+      status.style.color=''; delete status.dataset.normalText;
+    }
+  },2200);
+}
+function currentPara(){
+  if(S.peek&&S.peek.blocks.length){
+    const sc=$('#ovlId').textContent; return sc&&PARAGRAPHS[sc]?sc:null;
+  }
+  const sc=$('#stSid').textContent;
+  return sc&&PARAGRAPHS[sc]?sc:null;
+}
+
+/* ---------------------- 翻屏 / 字号 ---------------------- */
+function turn(d){
+  if(S.peek){ peekTurn(d); return; }
+  if(cur().view!=='read') return;
+  const bar=$('#bar'), i=+bar.dataset.i||0, n=+bar.dataset.n||1;
+  const next=Math.max(0,Math.min(i+d,n-1));
+  if(next===i) return;
+  const st=cur(), {w,h}=measureGeom();
+  const blocks=stageBlocks(st);
+  const isCols=blocks.some(b=>b.hd);
+  const screens=paginate(blocks,S.fs,w,h);
+  paintScreen(screens,next,st); save();
+}
+function setFs(v){
+  S.fs=Math.max(FS_MIN,Math.min(FS_MAX,v));
+  document.documentElement.style.setProperty('--fs',S.fs+'px');
+  $('#fsv').textContent=S.fs;
+  if(cur().view==='read'){ const st=cur(), k=st.id+'@'+listKey(st);
+    const old=S.screen[k]; delete S.screen[k]; renderRead(); }
+  if(S.peek) renderPeek();
+  save();
+}
+function setFocus(on){
+  S.focus=on;
+  document.body.classList.toggle('focus',on);
+  $('#btnFocus').setAttribute('aria-pressed',String(on));
+  requestAnimationFrame(()=>{ if(cur().view==='read') renderRead(); if(S.peek) renderPeek(); });
+}
+
+/* ---------------------- 总渲染 ---------------------- */
+/** @param keepPeek 恢复课堂状态时为 true：保留回看覆盖层（由 closePeek 决定去留） */
+function renderAll(keepPeek){
+  S.mkOpen=false; // 切换环节或活动后不携带工具面板
+  // 统一防线：切换环节/活动一律关闭回看覆盖层并清空返回栈。
+  // C01 独立检测尤其依赖这条——只置 S.peek=null 不会移除 DOM 的 .open class，
+  // 覆盖层会残留显示，构成泄题。
+  if(!keepPeek && $('#ovl').classList.contains('open')){
+    $('#ovl').classList.remove('open'); document.body.classList.remove('peekOpen');
+    S.peek=null; S.stack=[];
+  }
+  if(cur().locked){ S.peek=null; S.stack=[]; }
+  renderActs(); renderRail(); renderQ();
+  const st=cur();
+  if(st.view==='read') renderRead();
+  else if(st.view==='detect'){ $('#reader').style.display='none'; $('#docbar').style.display='none'; renderCards(); }
+  else renderCards();
+  document.body.classList.toggle('locked',!!st.locked);
+  $('#btnMark').style.display=st.locked?'none':'';
+  if(st.locked){ $('#extra').style.display='none'; $('#extra').open=false; }
+  // 独立检测：连原文位置指示与翻屏/字号控件一并收起，
+  // 避免学生从底栏看出「刚才读过哪一段」
+  $('#status').style.display=st.locked?'none':'flex';
+  $('#bar').style.display=st.locked?'none':'flex';
+  $('#peekbar').style.display=st.locked?'none':'flex';
+  if(st.locked && S.mkOpen){ S.mkOpen=false; }
+  syncMk(); save();
+}
+
+/* ---------------------- 事件 ---------------------- */
+function typing(e){
+  const t=e.target;
+  return t && (t.tagName==='INPUT'||t.tagName==='TEXTAREA'||t.isContentEditable);
+}
+function hasSelection(){ const s=window.getSelection(); return !!(s&&!s.isCollapsed&&s.toString().length); }
+
+function bind(){
+  $('#bPrev').onclick=()=>turn(-1);
+  $('#bNext').onclick=()=>turn(1);
+  $('#bFsDn').onclick=()=>setFs(S.fs-FS_STEP);
+  $('#bFsUp').onclick=()=>setFs(S.fs+FS_STEP);
+  $('#qfold').onclick=()=>{ S.qfold=!S.qfold; renderQ(); save(); };
+  $('#btnFocus').onclick=()=>setFocus(!S.focus);
+  $('#btnMark').onclick=()=>{
+    if(S.mkPick){ S.mkPick=false; syncMk(); refreshMarks(); return; }   // 取消模式：点按钮退出
+    S.mkOpen=!S.mkOpen; syncMk();
+  };
+  $('#btnHelp').onclick=()=>$('#help').classList.add('open');
+  $('#helpClose').onclick=()=>$('#help').classList.remove('open');
+  $('#help').onclick=e=>{ if(e.target.id==='help') $('#help').classList.remove('open'); };
+  $('#btnNew').onclick=()=>{
+    if(!confirm('新课开始：清空本机保存的标记与阅读位置，从默认未标记的状态重新开始？')) return;
+    try{ localStorage.removeItem(LS_KEY); }catch(e){}
+    S.marks=[]; S.screen={}; S.sumShown={}; S.wisdomShown={}; S.rubricShown=false;
+    S.cont={}; S.full={}; S.stack=[]; S.peek=null;
+    S.stage='A01'; S.act=1; S.fs=40; S.qfold=false; S.mkOpen=false; S.mkPick=false;
+    document.documentElement.style.setProperty('--fs','40px'); $('#fsv').textContent='40';
+    $('#ovl').classList.remove('open');
+    document.body.classList.remove('peekOpen');
+    setFocus(false); renderAll();
+  };
+  // 批注按钮：mousedown 阻止默认，避免浏览器在按下瞬间清空正文选区
+  $('#markPanel').querySelectorAll('[data-mk]').forEach(b=>{
+    b.addEventListener('mousedown',e=>e.preventDefault());
+    b.onclick=()=>doMark(b.dataset.mk);
+  });
+  // 记录选区：任何 selectionchange 都更新缓存，供点按钮时取用
+  document.addEventListener('selectionchange',()=>{
+    const live=selectionRange();
+    if(live){ _selCache=live; _selSig=contentSig(); }
+  });
+
+  document.addEventListener('keydown',e=>{
+    if(typing(e)) return;
+    const k=e.key;
+    // 标注键先于选区保护和回看导航处理；不占用浏览器组合快捷键。
+    if(!e.ctrlKey && !e.metaKey && !e.altKey && !e.repeat && ['h','u','z','x'].includes(k.toLowerCase())){
+      if(cur().locked) return;
+      e.preventDefault();
+      const key=k.toLowerCase();
+      S.mkOpen=false;
+      if(key==='h'||key==='u'){
+        const live=selectionRange();
+        if(!live){ _selCache=null; syncMk(); flashHint('请先在正文中选中文字，再按 H 高亮或 U 下划线'); save(); return; }
+        doMark(key==='h'?'hl':'ul');
+      }else if(key==='z') doMark('undo');
+      else doMark('cancel');
+      return;
+    }
+    if(k==='Escape'){
+      if(S.mkPick){ S.mkPick=false; syncMk(); refreshMarks(); e.preventDefault(); return; }
+      if($('#help').classList.contains('open')){ $('#help').classList.remove('open'); return; }
+      if(S.peek){ closePeek(); e.preventDefault(); return; }
+      if(S.focus){ setFocus(false); e.preventDefault(); return; }
+      if(S.mkOpen){ S.mkOpen=false; syncMk(); e.preventDefault(); }
+      return;                                   // 回看外的 Esc 不推进课堂
+    }
+    if(hasSelection() && !['Escape'].includes(k)) return;   // 选中文本时不触发翻屏
+    if(S.peek){
+      if(k==='ArrowRight'||k==='PageDown'){ turn(1); e.preventDefault(); }
+      if(k==='ArrowLeft' ||k==='PageUp'){ turn(-1); e.preventDefault(); }
+      return;
+    }
+    switch(k){
+      case 'ArrowRight': case 'PageDown': case ' ': case 'Spacebar':
+        turn(1); e.preventDefault(); break;
+      case 'ArrowLeft': case 'PageUp':
+        turn(-1); e.preventDefault(); break;
+      case '+': case '=': setFs(S.fs+FS_STEP); e.preventDefault(); break;
+      case '-': case '_': setFs(S.fs-FS_STEP); e.preventDefault(); break;
+      case 'f': case 'F': setFocus(!S.focus); break;
+      case 'm': case 'M': if(!(cur()&&cur().locked)){
+        if(S.mkPick){ S.mkPick=false; syncMk(); refreshMarks(); }
+        else { S.mkOpen=!S.mkOpen; syncMk(); }
+      } break;
+      case '1': if(cur().locked && !confirm('独立检测尚未收卷。确认退出检测？')) break;
+        S.act=1; S.stage='A01'; S.peek=null; renderAll(); break;
+      case '2': if(cur().locked && !confirm('独立检测尚未收卷。确认退出检测？')) break;
+        S.act=2; S.stage='B01'; S.peek=null; renderAll(); break;
+      case '3': S.act=3; S.stage='C01'; S.peek=null; renderAll(); break;
+    }
+  });
+
+  let rt=null;
+  window.addEventListener('resize',()=>{ clearTimeout(rt);
+    rt=setTimeout(()=>{ if(cur().view==='read') renderRead(); if(S.peek) renderPeek(); },160); });
+
+  // 全屏：浏览器原生全屏；失败时专注阅读仍可用
+  $('#hd').addEventListener('dblclick',e=>{
+    if(e.target.closest('button')) return;
+    if(!document.fullscreenElement) document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();
+    else document.exitFullscreen&&document.exitFullscreen();
+  });
+}
+
+/* ---------------------- 启动 ---------------------- */
+(function init(){
+  load();
+  document.documentElement.style.setProperty('--fs',S.fs+'px');
+  $('#fsv').textContent=S.fs;
+  document.body.classList.toggle('focus',S.focus);
+  $('#btnFocus').setAttribute('aria-pressed',String(S.focus));
+  bind();
+  if(!stageById(S.stage)) S.stage='A01';
+  renderAll();
+  window.__S=S; window.__renderAll=renderAll;
+})();
+</script>
+</body>
+</html>
