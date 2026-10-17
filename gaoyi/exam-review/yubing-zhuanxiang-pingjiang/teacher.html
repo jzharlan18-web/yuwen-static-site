@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>语病评讲·教师讲义 — 一类一类抓，抓一个带一串</title>
+<style>
+  :root{
+    --paper:#FAF7F1; --ink:#26221C; --ink-soft:#5A5348; --ink-faint:#8A8175;
+    --cinnabar:#A4352B; --cinnabar-soft:#F3E4E0; --dai:#2E4A6B; --dai-soft:#E4EAF1;
+    --line:#DDD5C6; --card:#FFFFFF; --gold:#8C6D3F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:"Songti SC","Noto Serif SC","STSong",serif;line-height:1.75;font-size:16px;}
+  .page{max-width:860px;margin:0 auto;padding:48px 28px 80px;}
+  /* ---------- 头部 ---------- */
+  header{text-align:center;padding:36px 0 30px;border-bottom:2px solid var(--ink);position:relative;}
+  header::after{content:"";display:block;width:64px;height:4px;background:var(--cinnabar);margin:18px auto 0;}
+  .kicker{font-size:13px;letter-spacing:.5em;color:var(--ink-faint);font-family:"Kaiti SC","STKaiti",serif;}
+  h1{font-size:34px;letter-spacing:.12em;margin:14px 0 10px;font-weight:700;}
+  .subtitle{font-size:16px;color:var(--ink-soft);font-family:"Kaiti SC","STKaiti",serif;}
+  .meta{margin-top:16px;font-size:13px;color:var(--ink-faint);letter-spacing:.1em;}
+  .meta span{margin:0 10px;}
+  /* ---------- 章节 ---------- */
+  section{margin-top:52px;}
+  .sec-head{text-align:center;margin-bottom:26px;}
+  .sec-no{display:inline-block;font-family:"Kaiti SC","STKaiti",serif;font-size:15px;color:var(--cinnabar);border:1px solid var(--cinnabar);border-radius:50%;width:34px;height:34px;line-height:32px;text-align:center;}
+  .sec-title{font-size:23px;letter-spacing:.14em;margin:12px 0 4px;font-weight:700;}
+  .sec-desc{font-size:14px;color:var(--ink-soft);}
+  h3{font-size:18px;margin:26px 0 12px;padding-left:12px;border-left:4px solid var(--cinnabar);letter-spacing:.06em;}
+  /* ---------- 卡片 ---------- */
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px 24px;margin:16px 0;box-shadow:0 1px 3px rgba(38,34,28,.05);}
+  .note{background:var(--dai-soft);border-left:4px solid var(--dai);border-radius:6px;padding:14px 18px;font-size:14px;margin:14px 0;color:#2A3B52;}
+  .warn{background:#FBF3E2;border-left:4px solid var(--gold);border-radius:6px;padding:14px 18px;font-size:14px;margin:14px 0;color:#6B5326;}
+  /* ---------- 表格 ---------- */
+  table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px;background:var(--card);}
+  th{background:var(--ink);color:#F5F1E8;padding:9px 10px;text-align:left;font-weight:600;letter-spacing:.05em;white-space:nowrap;}
+  td{border:1px solid var(--line);padding:8px 10px;vertical-align:top;}
+  tr:nth-child(even) td{background:#FBF9F4;}
+  .t-center td{text-align:center;}
+  /* ---------- 题组卡 ---------- */
+  .group{border:1px solid var(--line);border-radius:12px;margin:22px 0;overflow:hidden;background:var(--card);}
+  .group-head{padding:16px 22px;border-bottom:1px solid var(--line);display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;}
+  .group-head .g-no{font-family:"Kaiti SC","STKaiti",serif;font-size:26px;color:var(--cinnabar);font-weight:700;}
+  .group-head .g-name{font-size:19px;font-weight:700;letter-spacing:.08em;}
+  .group-head .g-count{margin-left:auto;font-size:13px;color:var(--ink-faint);white-space:nowrap;}
+  .group-body{padding:18px 22px;}
+  .signal{background:var(--cinnabar-soft);border-radius:8px;padding:12px 16px;font-size:14.5px;margin-bottom:14px;}
+  .signal b{color:var(--cinnabar);}
+  .qline{font-size:14.5px;margin:8px 0;padding-left:14px;border-left:2px solid var(--line);}
+  .qline .qno{font-family:Georgia,serif;color:var(--dai);font-weight:700;margin-right:6px;}
+  .fix{color:var(--cinnabar);}
+  .teach{margin-top:12px;font-size:14px;background:#F6F3EB;border-radius:8px;padding:12px 16px;}
+  .teach b{color:var(--dai);}
+  .tag{display:inline-block;font-size:12px;background:var(--dai-soft);color:var(--dai);border-radius:4px;padding:1px 8px;margin-right:6px;letter-spacing:.05em;}
+  /* ---------- 流程 ---------- */
+  .flow td:first-child{white-space:nowrap;font-family:Georgia,serif;color:var(--cinnabar);font-weight:700;text-align:center;width:76px;}
+  /* ---------- 迁移题 ---------- */
+  .drill{border:1px dashed var(--gold);border-radius:10px;padding:16px 20px;margin:14px 0;background:#FFFDF7;font-size:14.5px;}
+  .drill .d-title{font-weight:700;color:var(--gold);letter-spacing:.1em;font-size:14px;margin-bottom:6px;}
+  .answer{margin-top:10px;padding:10px 14px;background:var(--cinnabar-soft);border-radius:6px;font-size:14px;}
+  details{margin:10px 0;}
+  summary{cursor:pointer;font-size:14px;color:var(--dai);font-weight:600;letter-spacing:.05em;padding:6px 0;}
+  summary:hover{color:var(--cinnabar);}
+  details[open] summary{color:var(--cinnabar);}
+  .toolbar{display:flex;justify-content:flex-end;margin-top:14px;}
+  .btn{border:1px solid var(--dai);color:var(--dai);background:var(--card);border-radius:6px;padding:6px 16px;font-size:13px;font-family:inherit;cursor:pointer;letter-spacing:.05em;}
+  .btn:hover{background:var(--dai-soft);}
+  footer{margin-top:64px;text-align:center;font-size:12.5px;color:var(--ink-faint);border-top:1px solid var(--line);padding-top:20px;letter-spacing:.1em;}
+  @media print{
+    body{background:#fff;} .page{padding:10px;} .group,.card{box-shadow:none;break-inside:avoid;}
+    .toolbar{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="kicker">高 一 语 文 · 假 期 作 业 讲 评</div>
+  <h1>病句评讲：一类一类抓，抓一个带一串</h1>
+  <div class="subtitle">——从 18 道题里提炼 5 个检查动作，迁移到任何一道语病题</div>
+  <div class="meta"><span>题量：18 题</span><span>错点：34 处</span><span>课时：1 课时（45 分钟）</span><span>课型：规律归纳 + 当堂迁移</span></div>
+</header>
+
+<!-- ============ 壹 学情把脉 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">壹</div>
+    <div class="sec-title">学情把脉：错点分布</div>
+    <div class="sec-desc">先看数据，再定教法 —— 学生的错不是散点，是扎堆</div>
+  </div>
+
+  <table class="t-center">
+    <tr><th>病句类型</th><th>错点数</th><th>题号分布</th><th>占比</th></tr>
+    <tr><td>A 主语残缺 / 暗换</td><td>9</td><td>1⑥、3③、4③、7①⑥、9②、11④⑤、17④</td><td>26%</td></tr>
+    <tr><td>B 搭配不当 / 缺中心</td><td>9</td><td>5①③、8③⑦、10②、12⑤、14②、16①⑤、（二）20⑥</td><td>26%</td></tr>
+    <tr><td>C 关联词与逻辑</td><td>7</td><td>1②、3①、6③、10⑥、15④、17⑤、（二）20②</td><td>21%</td></tr>
+    <tr><td>D 语序不当</td><td>5</td><td>2①、6②、9④、12③、15②</td><td>15%</td></tr>
+    <tr><td>E 赘余 · 指代 · 歧义 · 成语</td><td>4</td><td>4⑥、13②⑥、14①</td><td>12%</td></tr>
+  </table>
+
+  <div class="note">
+    <b>卷面版本说明（重要）：</b>本卷由多套高三模拟题改编拼合而成（临沂一检、辽宁名校联盟、浙江精诚联盟、济南二模等），部分序号在不同版本中已被修正——如题 2③（原题“因为”→已作“与其”）、题 11④（原题“不只”→已作“即使”）、题 13⑥（原题句首无“与”→已作“与其”）、题 17⑤（原题“避免不久坐”→已作“避免久坐”）。<b>讲评时以学生手上卷面为准</b>；下表按标准题源答案呈现，被修正处已注明，可作为“原错点复盘”讲给学生听。
+  </div>
+
+  <div class="card">
+    <b>教学主线：</b>不逐题讲 18 题（学生已做过，逐题讲浪费且零散），而是把 34 个错点归成 5 个<b>检查动作</b>，每组“一道精讲 + 一串快练”，最后用课外新题验收迁移。<b>学生带走的不是 18 个答案，是 5 个一看到就能启动的检查开关。</b>
+  </div>
+</section>
+
+<!-- ============ 贰 五组讲法 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">贰</div>
+    <div class="sec-title">教学主线：五组讲法</div>
+    <div class="sec-desc">每组一个“识别信号”，信号一出现，立刻启动对应检查</div>
+  </div>
+
+  <!-- A组 -->
+  <div class="group">
+    <div class="group-head">
+      <span class="g-no">A</span><span class="g-name">主语失踪案</span>
+      <span class="g-count">9 个错点 · 约 8 分钟</span>
+    </div>
+    <div class="group-body">
+      <div class="signal"><b>识别信号：</b>①句首出现“通过 / 对于 / 在……中 / 由于”——介词短语不能作主语，真正的主语常被吞掉；②一连几个分句，主语悄悄换了人；③问动词“谁干的”，答不上来。</div>
+      <div class="qline"><span class="qno">精讲·题7</span>①“在金融风控中，<b>通过它</b>能跳出传统算法的局部陷阱”——“通过”一出，“谁跳出陷阱”不见了。<span class="fix">改：删“通过”，让“它（量子智能）”作主语。</span>⑥“有望让 AI 摆脱‘电老虎’，<b>实现</b>绿色高效的智能进化”——“实现进化”的应是 AI，不是量子计算，主语暗换。<span class="fix">改：让 AI 实现绿色高效的智能进化。</span></div>
+      <div class="qline"><span class="qno">精讲·题11</span>④“但即使技艺精湛”，⑤“仍难免出现失误”——两句都问不出主语：<b>谁</b>技艺精湛？<b>什么</b>出现失误？前句主语还是“明代蛋形窑”（一座窑，不会“技艺精湛”）。<span class="fix">合改：但即使古人技艺精湛，也仍难免出现失误。</span>（原题另两版：②缺“的优势”、④“不只”应作“即使”。）</div>
+      <div class="qline"><span class="qno">快练</span>题 3③“<b>对于</b>这种情绪迎合，是精密计算后的回应”（删“对于”）｜题 4③“如此循环往复，流转不息”（补主语“人类社会”）｜题 9②“从象形演化出来的线条章法和形体结构……”（补“其/它”）｜题 17④“空调温度宜控制在 26°C 左右，避免久坐在出风口”（④⑤主语断裂，④改为“老年人吹空调，温度宜控制在 26°C 左右”）｜题 1⑥“它能把春天‘逗引’进来，春意在屋内荡漾”（暗换主语，“让春意在屋内荡漾”）</div>
+      <div class="teach"><b>讲法提示：</b>让全班用手势投票——“这句的主语是谁？”答不出或答案不唯一的，就是主语残缺。这个动作可以贯穿整节课反复用。</div>
+    </div>
+  </div>
+
+  <!-- B组 -->
+  <div class="group">
+    <div class="group-head">
+      <span class="g-no">B</span><span class="g-name">拉郎配</span>
+      <span class="g-count">9 个错点 · 约 8 分钟</span>
+    </div>
+    <div class="group-body">
+      <div class="signal"><b>识别信号：</b>①动词后面拖着一个抽象名词（完成局面、注入创意、围绕题材、失掉人生）——拽得动吗？②出现并列宾语/并列主语——拆开逐一配对；③长宾语后面找中心语（“缺少……校正、转移话题与自我约束”，缺“的能力”）。</div>
+      <div class="qline"><span class="qno">精讲·题5</span>①“歇后语这种独特的<b>结构方式</b>，不仅能造成……效果”——歇后语是语言形式，不是“结构方式”，主宾不配。<span class="fix">改：歇后语这种独特的语言形式。</span>③“还能<b>给人以深思</b>和启迪”——“深思”不能“给予”，能“发人深思”。<span class="fix">改：还能发人深思，给人启迪。</span>一题两病，同一类型，正好对照讲。</div>
+      <div class="qline"><span class="qno">精讲·题16</span>⑤“缺少真人在说话时根据对方反应不断校正、转移话题与自我约束”——“缺少”后面拖了长长一串，<b>中心语不见了</b>。<span class="fix">改：句末补“的能力”。</span>①“AI 语音的<b>回应</b>……先整体<b>生成文本</b>”——“回应”是产品，产品不能生产文本。（此处课堂可讨论，标准改法：AI 语音回应时，往往在极短时间内先整体生成文本。）</div>
+      <div class="qline"><span class="qno">快练</span>题 10②“完成了……局面”（→实现了……局面）｜题 14②“围绕……题材的作品”（→以……为题材的作品）｜题 8③“注入新的创意以及勇气”（创意不能注入，→更要有新的创意与勇气）｜题 8⑦“失掉了……一半的人生”（人生不能“失掉”，→虚掷半生光阴）｜题（二）20⑥“形成互补式的双向学习”（缺中心，→双向学习关系）</div>
+      <div class="teach"><b>讲法提示：</b>教“造句类比法”——把可疑搭配换成最日常的句子试一遍。“完成局面”像不像“完成天气”？像，就是病。此法可解一半以上的搭配题。</div>
+    </div>
+  </div>
+
+  <!-- C组 -->
+  <div class="group">
+    <div class="group-head">
+      <span class="g-no">C</span><span class="g-name">关系户</span>
+      <span class="g-count">7 个错点 · 约 8 分钟</span>
+    </div>
+    <div class="group-body">
+      <div class="signal"><b>识别信号：</b>①关联词出现——先查“成套吗”（不光…而是…？），再查“位置对吗”（主语不同，关联词放主语前）；②“因此 / 所以 / 于是”出现——因果真的成立吗；③句子意思好像说反了——按事理再读一遍。</div>
+      <div class="qline"><span class="qno">精讲·题10</span>⑥“屏幕就<b>不光</b>是给人看的，<b>而是</b>看得见、听得懂、会思考的智能体”——“不光”配“而是”，成套搭配错。<span class="fix">改：不光……还是（而且 / 更是）……。</span></div>
+      <div class="qline"><span class="qno">精讲·题15</span>④“AI <b>不会淘汰不好的演员</b>，只会逼出‘真演技’”——意思说反了：被淘汰的正是“不好的演员”，逼出真演技的是好演员。<span class="fix">改：AI 淘汰不了真正的好演员，只会逼出“真演技”。</span></div>
+      <div class="qline"><span class="qno">快练</span>题 3①“因此，这种‘理解’并非真正的共情”（上文无因果，是转折——删“因此”或改“然而”）｜题 6③“春联之类虽然……但……”（前后分句主语不同，“虽然”提前）｜题 1②“门虽然<b>直接</b>通向外界……<b>才能</b>完全拥抱春天”（“直接”与“才能”打架，删“直接”）｜题（二）20②“因此父母不再强调‘权威’”（①“家庭在变化”推不出②“父母不强调权威”，强加因果，删“因此”）｜题 17⑤“避免<b>不久</b>坐在出风口”（否定失当，意思反了，删“不”）</div>
+      <div class="teach"><b>讲法提示：</b>把“因此”类病句编成一句口诀——“见‘因此’问因果，见关联查成套，见否定数圈圈（否定词个数）”。</div>
+    </div>
+  </div>
+
+  <!-- D组 -->
+  <div class="group">
+    <div class="group-head">
+      <span class="g-no">D</span><span class="g-name">排队病</span>
+      <span class="g-count">5 个错点 · 约 8 分钟</span>
+    </div>
+    <div class="group-body">
+      <div class="signal"><b>识别信号：</b>①多项定语排队——口诀“属数动形名”（领属→数量→动词→形容词→名词），<b>带“的”的往前靠</b>；②并列项看大小先后——范围<b>由大到小</b>，“乃至 / 甚至”<b>由小到大</b>；③比喻句——本体喻体别坐反位置。</div>
+      <div class="qline"><span class="qno">精讲·题6</span>②“专为<b>某事、某人、某地</b>而作”——并列三项由小到大，别扭。<span class="fix">改：某地、某人、某事（由大到小）。</span></div>
+      <div class="qline"><span class="qno">精讲·题12</span>③“<b>成体系的</b>像中文灯谜这种谜语游戏却很少见”——“成体系的”隔在比喻性定语和中心语中间。<span class="fix">改：像中文灯谜这种成体系的谜语游戏（定语贴近中心语）。</span></div>
+      <div class="qline"><span class="qno">快练</span>题 2①“我们该<b>找回怎样</b>诗意的感知？”（“怎样”修饰动词——我们该怎样找回诗意的感知？）｜题 15②“整个文艺领域<b>乃至</b>演员行业”（乃至由小到大——演员行业乃至整个文艺领域）｜题 9④“每一幅精美的<b>图画</b>都宛如一幅<b>书法作品</b>”（说反了——每一幅书法作品都宛如一幅精美的图画）</div>
+      <div class="teach"><b>讲法提示：</b>“属数动形名”只讲不背不好使，让学生用题 6② 现场拆：某地（领属/范围）→某人→某事，拆完就懂“由大到小”。</div>
+    </div>
+  </div>
+
+  <!-- E组 -->
+  <div class="group">
+    <div class="group-head">
+      <span class="g-no">E</span><span class="g-name">微病房</span>
+      <span class="g-count">4 个错点 · 约 5 分钟</span>
+    </div>
+    <div class="group-body">
+      <div class="signal"><b>识别信号：</b>①“并非是 / 堪称 / 悬殊很大”类——两个词意思打架，留一个；②“其 / 这 / 他”——回指对象是否唯一明确；③“的”字短语能切几刀——能切两刀就有歧义；④成语——别望文生义，想它本来用在哪。</div>
+      <div class="qline"><span class="qno">精讲·题13</span>②“而<b>并非是</b>造作的文词”——“非”已含“不是”，再加“是”，赘余。<span class="fix">改：而并非造作的文词。</span>⑥“<b>其</b>相对粗鄙的村妇身份完全吻合”（原题句首无“与”）——缺介词。<span class="fix">改：句首加“与”：与其相对粗鄙的村妇身份完全吻合。</span></div>
+      <div class="qline"><span class="qno">精讲·题14</span>①“在<b>故宫博物院藏漆器</b>中”——能切两刀：故宫博物院／藏漆器？故宫／博物院藏漆器？<span class="fix">改：故宫博物院收藏的漆器中。</span></div>
+      <div class="qline"><span class="qno">快练</span>题 4⑥“绝不会停下不走，‘<b>坐以待毙</b>’”——坐以待毙指面对危难消极等死，用在这里大词小用。（改：停步不前）｜题 12⑤“天然且广阔的空间”（改编版设点，可作“并列定语逐一核”的拓展讨论）</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 叁 逐题答案 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">叁</div>
+    <div class="sec-title">逐题答案速查表</div>
+    <div class="sec-desc">已按题源核对；★ 为该题主要讲点</div>
+  </div>
+
+  <table>
+    <tr><th style="width:38px">题</th><th style="width:52px">错点</th><th>病因</th><th>修改</th></tr>
+    <tr><td>1</td><td>★②</td><td>“直接”与③“才能”语义矛盾</td><td>②删“直接”：门虽然通向外界……</td></tr>
+    <tr><td></td><td>⑥</td><td>暗换主语（前为“窗子”）</td><td>⑥改为“让春意在屋内荡漾”</td></tr>
+    <tr><td>2</td><td>★①</td><td>语序不当（“怎样”应修饰动词）</td><td>我们该怎样找回诗意的感知？（原题第二处：③“因为”→“与其”，本卷③已修正）</td></tr>
+    <tr><td>3</td><td>①</td><td>强加因果（上文无因果，实为转折）</td><td>删“因此”（或改“然而”）</td></tr>
+    <tr><td></td><td>★③</td><td>介词“对于”吞掉主语</td><td>删“对于”：这种情绪迎合是精密计算后的回应</td></tr>
+    <tr><td>4</td><td>③</td><td>缺主语</td><td>人类社会如此循环往复，流转不息</td></tr>
+    <tr><td></td><td>★⑥</td><td>成语望文生义、大词小用</td><td>“坐以待毙”→“停步不前”</td></tr>
+    <tr><td>5</td><td>★①</td><td>主宾搭配不当（歇后语≠结构方式）</td><td>歇后语这种独特的语言形式</td></tr>
+    <tr><td></td><td>★③</td><td>动宾搭配不当（“深思”不可“给予”）</td><td>还能发人深思，给人启迪</td></tr>
+    <tr><td>6</td><td>②</td><td>并列语序不当（应由大到小）</td><td>专为某地、某人、某事而作</td></tr>
+    <tr><td></td><td>③</td><td>关联词位置不当（分句主语不同）</td><td>虽然春联之类有“通用联语”，但……</td></tr>
+    <tr><td>7</td><td>★①</td><td>介词“通过”吞掉主语</td><td>删“通过”：在金融风控中，它能跳出……</td></tr>
+    <tr><td></td><td>★⑥</td><td>暗换主语（“实现进化”的应是 AI）</td><td>让 AI 实现绿色高效的智能进化</td></tr>
+    <tr><td>8</td><td>③</td><td>动宾搭配不当（创意不能“注入”）</td><td>更要有新的创意以及勇气（或：更要为目标注入……）</td></tr>
+    <tr><td></td><td>⑦</td><td>动宾搭配不当（“人生”不能“失掉”）</td><td>就像错过了青春，便会虚掷半生的光阴</td></tr>
+    <tr><td>9</td><td>②</td><td>另起话头、缺主语</td><td>其从象形演化出来的线条章法和形体结构……</td></tr>
+    <tr><td></td><td>★④</td><td>主客颠倒</td><td>每一幅书法作品都宛如一幅精美的图画</td></tr>
+    <tr><td>10</td><td>②</td><td>动宾搭配不当（完成≠局面）</td><td>实现了出货量全球登顶的局面</td></tr>
+    <tr><td></td><td>★⑥</td><td>关联词搭配不当</td><td>不光……还是（而且 / 更是）……</td></tr>
+    <tr><td>11</td><td>★④</td><td>缺主语（“技艺精湛”者是谁）</td><td>但即使古人技艺精湛……（原题：②补“的优势”、④“不只”→“即使”，本卷已修正）</td></tr>
+    <tr><td></td><td>★⑤</td><td>缺主语 / 缺“也”呼应</td><td>……也仍难免出现失误</td></tr>
+    <tr><td>12</td><td>★③</td><td>语序不当（定语未贴近中心语）</td><td>而像中文灯谜这种成体系的谜语游戏却很少见</td></tr>
+    <tr><td></td><td>⑤</td><td>改编版设点（并列结构对称性）</td><td>可作课堂拓展：中文构词方式、汉字语音与字形特征……得天独厚的广阔空间</td></tr>
+    <tr><td>13</td><td>★②</td><td>成分赘余（“非”＝不是，再加“是”）</td><td>而并非造作的文词（或：而并不是……）</td></tr>
+    <tr><td></td><td>⑥</td><td>缺介词“与”（本卷⑥已有“与”，为原题错点）</td><td>句首加“与”：与其相对粗鄙的村妇身份完全吻合</td></tr>
+    <tr><td>14</td><td>★①</td><td>歧义（“故宫博物院藏漆器”可两切）</td><td>在故宫博物院收藏的漆器中</td></tr>
+    <tr><td></td><td>②</td><td>动宾搭配不当（围绕≠题材）</td><td>以“岁寒三友”为题材的作品</td></tr>
+    <tr><td>15</td><td>②</td><td>递进语序不当（乃至应由小到大）</td><td>演员行业乃至整个文艺领域</td></tr>
+    <tr><td></td><td>★④</td><td>不合逻辑（事理说反）</td><td>AI 淘汰不了真正的好演员，只会逼出“真演技”</td></tr>
+    <tr><td>16</td><td>①</td><td>主谓搭配不当（“回应”不能“生成文本”）</td><td>AI 语音回应时，往往在极短时间内先整体生成文本（课堂可讨论）</td></tr>
+    <tr><td></td><td>★⑤</td><td>缺宾语中心语</td><td>句末补“的能力”</td></tr>
+    <tr><td>17</td><td>★④</td><td>主语残缺 / 暗换（④⑤主语断裂）</td><td>老年人吹空调，温度宜控制在 26°C 左右……</td></tr>
+    <tr><td></td><td>⑤</td><td>否定失当（本卷已修正为“避免久坐”）</td><td>原题“避免不久坐在出风口”→“避免久坐在出风口”</td></tr>
+    <tr><td>（二）20</td><td>★②</td><td>强加因果</td><td>删“因此”（或改“于是 / 与此同时”）</td></tr>
+    <tr><td></td><td>⑥</td><td>缺宾语中心语</td><td>由此形成互补式的双向学习关系</td></tr>
+  </table>
+</section>
+
+<!-- ============ 肆 课堂流程 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">肆</div>
+    <div class="sec-title">45 分钟课堂流程</div>
+    <div class="sec-desc">分组推进，快练题为学生已做题，只对答案+说理由，不重讲</div>
+  </div>
+
+  <table class="flow">
+    <tr><th>时间</th><th>环节</th><th>内容与操作</th></tr>
+    <tr><td>0–3′</td><td>导入</td><td>投影错点分布表：18 题 34 处错，只归 5 类。宣布主线——今天不逐题讲答案，学 5 个检查开关。</td></tr>
+    <tr><td>3–11′</td><td>A 组</td><td>精讲 7、11；快练 3③、4③、9②、17④、1⑥。每快练一题只问一句“主语是谁”，答不出即闭环。</td></tr>
+    <tr><td>11–19′</td><td>B 组</td><td>精讲 5、16；快练 10②、14②、8③⑦、（二）20⑥。用“造句类比法”现场演示“完成局面”。</td></tr>
+    <tr><td>19–27′</td><td>C 组</td><td>精讲 10⑥、15④；快练 3①、6③、1②、（二）20②、17⑤。重点演示“关联词成套 + 否定数圈圈”。</td></tr>
+    <tr><td>27–35′</td><td>D 组</td><td>精讲 6②、12③；快练 2①、15②、9④。板书“属数动形名”，用题 6② 当堂拆解。</td></tr>
+    <tr><td>35–40′</td><td>E 组</td><td>精讲 13、14①；快练 4⑥、12⑤（拓展）。节奏最快，点到即止。</td></tr>
+    <tr><td>40–45′</td><td>迁移验收</td><td>发当堂挑战 3 题（见下），限时 4 分钟独立做，指名说得病因即可，不必全改。</td></tr>
+  </table>
+
+  <div class="warn"><b>讲评提醒（学生常见四种错）：</b>①改过头——把“完成局面”改成整句重写，违背“多就少改”；②改变原意——修改不是造句，先问“作者本来想说什么”；③一病两判——把一句话里的重复啰嗦同时判成“赘余+结构混乱”，只记最直接的一个；④只看半边——并列短语只核了前一半。改完必须整句回读。</div>
+</section>
+
+<!-- ============ 伍 迁移训练 ============ -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">伍</div>
+    <div class="sec-title">当堂迁移：三道新题</div>
+    <div class="sec-desc">不看原卷，只用今天的 5 个开关 —— 迁移到位，课才算讲通</div>
+  </div>
+  <div class="toolbar"><button class="btn" id="btnAll" onclick="toggleAll()">全部展开 / 收起答案</button></div>
+
+  <div class="drill">
+    <div class="d-title">挑战 1 · A 组信号</div>
+    通过一学期“每日一写”的持续练笔，使同学们的写作底气在不知不觉中厚实起来。
+    <details><summary>查看病因与改法</summary><div class="answer">介词吞主语（“通过……使……”）。改法：删“通过”——“一学期‘每日一写’的持续练笔，使同学们……”；或删“使”——“通过一学期……练笔，同学们的写作底气……”。</div></details>
+  </div>
+
+  <div class="drill">
+    <div class="d-title">挑战 2 · C 组信号</div>
+    衡量一部作品能否成为经典，不仅取决于当下的销量与热度，更在于它是否经得起时间的检验。
+    <details><summary>查看病因与改法</summary><div class="answer">“能否”两面与“取决于……销量热度”一面不对应（一面对两面）。改法二选一：①给前一半补成两面——“不仅取决于当下的销量与热度<b>能否持久</b>，更在于它是否经得起时间的检验”；②顺着后半句的两面重写——“衡量一部作品能否成为经典，一时的销量与热度不足为凭，更在于它是否经得起时间的检验”。</div></details>
+  </div>
+
+  <div class="drill">
+    <div class="d-title">挑战 3 · C 组信号（关联词位置）</div>
+    这位老匠人不仅带出了几十名学徒，他们制作的器具还多次在博览会上获得好评。
+    <details><summary>查看病因与改法</summary><div class="answer">分句主语不同（他／器具），“不仅”应放主语前。改法：“不仅这位老匠人带出了几十名学徒，他们制作的器具还多次在博览会上获得好评。”</div></details>
+  </div>
+
+  <div class="card">
+    <b>若还有 5 分钟机动：</b>让学生用今天 5 个开关，回头扫描本卷“语言运用（一）”第 19 题（空调句）与“（二）”第 20 题（后喻时代句）——他们刚做过的原题正好闭环；再点一句：卷上字形题（如“瓶颈 / 纯正 / 融入 / 新纪元”类错别字）可安排 3 分钟快对，不必占课堂主干。
+  </div>
+</section>
+
+<footer>
+  高一语文 · 假期作业语病专项讲评 · 教师讲义（含答案）<br>
+  学生版学案另册印发 · 修改原则：保原意 · 少改动 · 改后回读
+</footer>
+
+</div>
+<script>
+function toggleAll(){
+  var ds=document.querySelectorAll('details');
+  var anyClosed=false;
+  ds.forEach(function(d){ if(!d.open) anyClosed=true; });
+  ds.forEach(function(d){ d.open=anyClosed; });
+}
+/* 打印前自动展开全部答案，打印后还原原状态 */
+var __printState=[];
+window.addEventListener('beforeprint',function(){
+  __printState=[];
+  document.querySelectorAll('details').forEach(function(d){ __printState.push(d.open); d.open=true; });
+});
+window.addEventListener('afterprint',function(){
+  document.querySelectorAll('details').forEach(function(d,i){ d.open=__printState[i]; });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>病句评讲学案 — 病句侦探五查卡</title>
+<style>
+  :root{
+    --paper:#FAF7F1; --ink:#26221C; --ink-soft:#5A5348; --ink-faint:#8A8175;
+    --cinnabar:#A4352B; --cinnabar-soft:#F3E4E0; --dai:#2E4A6B; --dai-soft:#E4EAF1;
+    --line:#DDD5C6; --card:#FFFFFF; --gold:#8C6D3F;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--paper);color:var(--ink);font-family:"Songti SC","Noto Serif SC","STSong",serif;line-height:1.8;font-size:15.5px;}
+  .page{max-width:820px;margin:0 auto;padding:40px 26px 72px;}
+  header{text-align:center;padding:30px 0 24px;border-bottom:2px solid var(--ink);}
+  header::after{content:"";display:block;width:56px;height:4px;background:var(--cinnabar);margin:16px auto 0;}
+  .kicker{font-size:12px;letter-spacing:.45em;color:var(--ink-faint);font-family:"Kaiti SC","STKaiti",serif;}
+  h1{font-size:30px;letter-spacing:.12em;margin:12px 0 8px;}
+  .subtitle{font-size:15px;color:var(--ink-soft);font-family:"Kaiti SC","STKaiti",serif;}
+  .meta{margin-top:14px;font-size:12.5px;color:var(--ink-faint);letter-spacing:.08em;}
+  section{margin-top:44px;}
+  .sec-head{text-align:center;margin-bottom:22px;}
+  .sec-no{display:inline-block;font-family:"Kaiti SC","STKaiti",serif;font-size:14px;color:var(--cinnabar);border:1px solid var(--cinnabar);border-radius:50%;width:32px;height:32px;line-height:30px;text-align:center;}
+  .sec-title{font-size:21px;letter-spacing:.12em;margin:10px 0 4px;font-weight:700;}
+  .sec-desc{font-size:13.5px;color:var(--ink-soft);}
+  /* 五查卡 */
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px;}
+  .check{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--cinnabar);border-radius:8px;padding:16px 18px;}
+  .check .c-no{font-family:"Kaiti SC","STKaiti",serif;font-size:22px;color:var(--cinnabar);font-weight:700;}
+  .check .c-name{font-size:16px;font-weight:700;letter-spacing:.08em;margin:2px 0 6px;}
+  .check .c-signal{font-size:13.5px;color:var(--ink-soft);}
+  .check .c-act{font-size:13.5px;margin-top:8px;color:var(--dai);font-weight:600;}
+  /* 题目卡 */
+  .q{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:18px 20px;margin:14px 0;}
+  .q-head{display:flex;align-items:baseline;gap:10px;margin-bottom:8px;flex-wrap:wrap;}
+  .q-no{font-family:Georgia,serif;font-size:17px;font-weight:700;color:var(--dai);}
+  .q-tag{font-size:12px;background:var(--cinnabar-soft);color:var(--cinnabar);border-radius:4px;padding:1px 8px;letter-spacing:.05em;}
+  .q-text{font-size:14.5px;background:#F6F3EB;border-radius:6px;padding:12px 14px;margin:8px 0;}
+  .q-text .seq{color:var(--cinnabar);font-weight:700;}
+  .blank{font-size:13px;color:var(--ink-faint);margin:6px 0;}
+  .write{border:none;border-bottom:1px dashed var(--ink-faint);background:transparent;font-family:inherit;font-size:14px;width:100%;padding:4px 2px;color:var(--ink);}
+  .write:focus{outline:none;border-bottom-color:var(--cinnabar);}
+  .lines{margin-top:10px;}
+  .lines .write{margin-top:14px;}
+  .others{font-size:13.5px;color:var(--ink-soft);margin-top:10px;padding:10px 14px;background:var(--dai-soft);border-radius:6px;}
+  .others b{color:var(--dai);}
+  /* 挑战题 */
+  .drill{border:1px dashed var(--gold);border-radius:10px;padding:16px 20px;margin:14px 0;background:#FFFDF7;font-size:14.5px;}
+  .drill .d-title{font-weight:700;color:var(--gold);letter-spacing:.08em;font-size:13.5px;margin-bottom:6px;}
+  .answer{margin-top:10px;padding:10px 14px;background:var(--dai-soft);border-radius:6px;font-size:13.5px;line-height:1.9;}
+  .answer b{color:var(--cinnabar);}
+  details{margin:10px 0;}
+  summary{cursor:pointer;font-size:13px;color:var(--dai);font-weight:600;letter-spacing:.05em;padding:5px 0;}
+  summary:hover{color:var(--cinnabar);}
+  details[open] summary{color:var(--cinnabar);}
+  .toolbar{display:flex;justify-content:flex-end;margin-top:4px;}
+  .btn{border:1px solid var(--dai);color:var(--dai);background:var(--card);border-radius:6px;padding:5px 14px;font-size:12.5px;font-family:inherit;cursor:pointer;letter-spacing:.05em;}
+  .btn:hover{background:var(--dai-soft);}
+  /* 口诀 */
+  .chant{background:var(--ink);color:#F5F1E8;border-radius:10px;padding:22px 26px;margin-top:18px;font-family:"Kaiti SC","STKaiti",serif;font-size:16px;line-height:2.1;letter-spacing:.06em;}
+  .chant b{color:#E8B4A0;}
+  footer{margin-top:56px;text-align:center;font-size:12px;color:var(--ink-faint);border-top:1px solid var(--line);padding-top:18px;letter-spacing:.1em;}
+  @media print{
+    body{background:#fff;} .page{padding:8px;} .q,.check,.drill{break-inside:avoid;box-shadow:none;}
+    /* 打印＝发学生：收起状态的答案不会打印，答案入口行也一并隐藏 */
+    .toolbar{display:none;} .drill summary{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="kicker">高 一 语 文 · 假 期 作 业 讲 评</div>
+  <h1>病句侦探五查卡</h1>
+  <div class="subtitle">——一类一类抓，抓一个带一串</div>
+  <div class="meta">班级：____________　姓名：____________　日期：____________</div>
+</header>
+
+<!-- 壹 五查卡 -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">壹</div>
+    <div class="sec-title">课前装备：五个检查开关</div>
+    <div class="sec-desc">做任何语病题，按顺序过这五关，比“读着顺不顺”可靠得多</div>
+  </div>
+
+  <div class="checks">
+    <div class="check">
+      <div class="c-no">壹</div>
+      <div class="c-name">查主语</div>
+      <div class="c-signal">句首有“通过 / 对于 / 在……中 / 由于”；一串分句主语悄悄换人；问“谁干的”答不上来。</div>
+      <div class="c-act">→ 删介词，或补主语</div>
+    </div>
+    <div class="check">
+      <div class="c-no">贰</div>
+      <div class="c-name">查搭配</div>
+      <div class="c-signal">动词后面拖着抽象名词（完成局面、注入创意、围绕题材、失掉人生）；并列宾语拆开逐一核；长宾语后面找中心语。</div>
+      <div class="c-act">→ 换动词，或补中心语</div>
+    </div>
+    <div class="check">
+      <div class="c-no">叁</div>
+      <div class="c-name">查关系</div>
+      <div class="c-signal">关联词成套吗（不光…而是…？）、位置对吗（主语不同放主语前）；“因此”真的因果吗；句子意思说反了吗。</div>
+      <div class="c-act">→ 成套关联词；按事理校准</div>
+    </div>
+    <div class="check">
+      <div class="c-no">肆</div>
+      <div class="c-name">查排队</div>
+      <div class="c-signal">多项定语：属数动形名，带“的”往前靠；并列项由大到小；“乃至 / 甚至”由小到大；比喻句本体喻体别坐反。</div>
+      <div class="c-act">→ 调顺序，归其位</div>
+    </div>
+    <div class="check">
+      <div class="c-no">伍</div>
+      <div class="c-name">查细节</div>
+      <div class="c-signal">“并非是”类词义打架；“其 / 这”回指是否唯一；“的”字短语能切几刀；成语别望文生义。</div>
+      <div class="c-act">→ 删赘余、明指代、慎成语</div>
+    </div>
+  </div>
+</section>
+
+<!-- 贰 分组再练 -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">贰</div>
+    <div class="sec-title">分组再练：当堂复盘</div>
+    <div class="sec-desc">先独立写，再听评讲——写不出不慌，红笔补在改错栏</div>
+  </div>
+
+  <!-- A组 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 7</span><span class="q-tag">查主语</span></div>
+    <div class="q-text">①在金融风控中，通过它能跳出传统算法的局部陷阱，②精准预测市场波动，③构建更稳健的风险模型。④更重要的是，量子计算在理论上具备可逆计算的低能耗优势，⑤有望让 AI 摆脱“电老虎”，<span class="seq">⑥</span>实现绿色高效的智能进化。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 11</span><span class="q-tag">查主语</span></div>
+    <div class="q-text">①古人靠“观火焰颜色”“用火照检测”把控火候，②明代蛋形窑更以“容积大、热效高”著称，③一窑便可烧上万件瓷器。<span class="seq">④</span>但即使技艺精湛，<span class="seq">⑤</span>仍难免出现失误：釉料涂抹过厚易出现流釉，干燥不均会导致器形翘曲……</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+    <div class="others"><b>本组其余题（回原卷标注）：</b>题 3③、题 4③、题 9②、题 17④、题 1⑥</div>
+  </div>
+
+  <!-- B组 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 5</span><span class="q-tag">查搭配</span></div>
+    <div class="q-text">①歇后语这种独特的结构方式，②不仅能造成一种强烈的喜剧性效果，③还能给人以深思和启迪。④在讲话或写文章时恰当地运用歇后语，⑤有助于克服语言死板干巴、枯燥无味的毛病，⑥增强语言的生动性和感染力。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 16</span><span class="q-tag">查搭配</span></div>
+    <div class="q-text">①AI 语音的回应往往在极短时间内先整体生成文本，②再按既定顺序线性合成输出。③但是它一开口，④内容基本已定，<span class="seq">⑤</span>缺少真人在说话时根据对方反应不断校正、转移话题与自我约束。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+    <div class="others"><b>本组其余题（回原卷标注）：</b>题 10②、题 14②、题 8③⑦、（二）20⑥</div>
+  </div>
+
+  <!-- C组 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 10</span><span class="q-tag">查关系</span></div>
+    <div class="q-text">①中国依托庞大的市场规模，首先将屏幕做到了“白菜价”，②完成了出货量全球登顶的局面。③但真正的竞赛刚刚开始，④当显示技术从“信息输出端”进化为“环境交互端”时，⑤屏幕就不光是给人看的，<span class="seq">⑥</span>而是看得见、听得懂、会思考的智能体。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 15</span><span class="q-tag">查关系</span></div>
+    <div class="q-text">①如今，面对 AI 的飞速发展，②整个文艺领域乃至演员行业更需要坚守人在创作中的主体地位，③追求更具人文温度的表达、更有生命质感的演绎。<span class="seq">④</span>AI 不会淘汰不好的演员，⑤只会逼出“真演技”。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+    <div class="others"><b>本组其余题（回原卷标注）：</b>题 3①、题 6③、题 1②、（二）20②、题 17⑤</div>
+  </div>
+
+  <!-- D组 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 6</span><span class="q-tag">查排队</span></div>
+    <div class="q-text">对联要切合场合、人物身份以及应用情境，①具有强烈的针对性。②真正优秀的对联应是专为某事、某人、某地而作。③春联之类虽然有“通用联语”，④但通用范围也非常有限；⑤那些针对性不强、略可通用的对联，⑥根本谈不上绝妙好联。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 12</span><span class="q-tag">查排队</span></div>
+    <div class="q-text">①世界各个国家与民族都有谜语或类似的歌谣，②匈牙利甚至设有专门陈列 12 万条世界谜语的谜语博物馆，<span class="seq">③</span>而成体系的像中文灯谜这种谜语游戏却很少见。④这是因为灯谜拥有坚实的语言内核。⑤中文构词、汉字语音与字形特征，为其创作提供了天然且广阔的空间。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+    <div class="others"><b>本组其余题（回原卷标注）：</b>题 2①、题 15②、题 9④</div>
+  </div>
+
+  <!-- E组 -->
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 13</span><span class="q-tag">查细节</span></div>
+    <div class="q-text">①这段话中的“老刘”“老母猪”都来自生活，<span class="seq">②</span>而并非是造作的文词，③也不是那种半白半文、半中半西的二手三手的“文学语言”。④再一个是高度个性化的人物语言，各有己腔，各有己调。⑤刘姥姥以“牛”“猪”设喻，<span class="seq">⑥</span>其相对粗鄙的村妇身份完全吻合。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+  </div>
+
+  <div class="q">
+    <div class="q-head"><span class="q-no">题 14</span><span class="q-tag">查细节</span></div>
+    <div class="q-text">中国是漆器的故乡，古代文人喜爱漆器制品，兰亭雅集“流觞曲水，列坐其次”中的“觞”就是两晋时代的漆器耳杯。<span class="seq">①</span>在故宫博物院藏漆器中，<span class="seq">②</span>有不少围绕“岁寒三友”题材的作品，③工艺精美，④造型雅致，⑤实属艺术珍品。</div>
+    <div class="blank">表述不当的序号：______　病因：______________________________</div>
+    <div class="blank">修改：________________________________________________________________</div>
+    <div class="lines"><div class="blank">我的笔记（讲评后补）：</div><input class="write" type="text"><input class="write" type="text"></div>
+    <div class="others"><b>本组其余题（回原卷标注）：</b>题 4⑥、题 12⑤</div>
+  </div>
+</section>
+
+<!-- 叁 当堂挑战 -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">叁</div>
+    <div class="sec-title">当堂挑战：只用五查卡</div>
+    <div class="sec-desc">不看原卷、不问同学 —— 写出序号、病因、改法三样</div>
+  </div>
+  <div class="toolbar"><button class="btn" onclick="toggleAll()">全部展开 / 收起答案</button></div>
+
+  <div class="drill">
+    <div class="d-title">挑战 1</div>
+    通过一学期“每日一写”的持续练笔，使同学们的写作底气在不知不觉中厚实起来。
+    <div class="lines"><div class="blank">病因：______________________________　改法：________________________________________</div></div>
+    <details><summary>查看病因与改法</summary><div class="answer"><b>病因（第壹卡·查主语）：</b>主语残缺——“通过……”和“使……”两个介词结构把主语吞掉了，问“谁的底气厚实了”答不上来。<br><b>改法：</b>删“通过”——“一学期‘每日一写’的持续练笔，使同学们的写作底气在不知不觉中厚实起来”；或删“使”——“通过一学期‘每日一写’的持续练笔，同学们的写作底气在不知不觉中厚实起来”。</div></details>
+  </div>
+
+  <div class="drill">
+    <div class="d-title">挑战 2</div>
+    衡量一部作品能否成为经典，不仅取决于当下的销量与热度，更在于它是否经得起时间的检验。
+    <div class="lines"><div class="blank">病因：______________________________　改法：________________________________________</div></div>
+    <details><summary>查看病因与改法</summary><div class="answer"><b>病因（第叁卡·查关系）：</b>一面对两面——“能否”是两头，“取决于……销量与热度”只搭了一头。<br><b>改法（二选一）：</b>①给前一半也补成两面——“不仅取决于当下的销量与热度<b>能否持久</b>，更在于它是否经得起时间的检验”；②顺着后半句重写——“衡量一部作品能否成为经典，一时的销量与热度不足为凭，更在于它是否经得起时间的检验”。</div></details>
+  </div>
+
+  <div class="drill">
+    <div class="d-title">挑战 3</div>
+    这位老匠人不仅带出了几十名学徒，他们制作的器具还多次在博览会上获得好评。
+    <div class="lines"><div class="blank">病因：______________________________　改法：________________________________________</div></div>
+    <details><summary>查看病因与改法</summary><div class="answer"><b>病因（第壹卡·查主语＋第叁卡·查关系）：</b>分句主语悄悄换人——前句说“老匠人”，后句主语变成了“器具”，“不仅”的位置也跟着错了。<br><b>改法：</b>主语不同，关联词放到主语前面——“不仅这位老匠人带出了几十名学徒，他们制作的器具还多次在博览会上获得好评”。</div></details>
+  </div>
+</section>
+
+<!-- 肆 口诀 -->
+<section>
+  <div class="sec-head">
+    <div class="sec-no">肆</div>
+    <div class="sec-title">带得走的口诀</div>
+    <div class="sec-desc">贴在文具盒里，做题前默一遍</div>
+  </div>
+  <div class="chant">
+    句首见介词，先问<b>主语</b>是谁；<br>
+    动词拖抽象，逐一<b>配对</b>不嫌累；<br>
+    关联词成套，位置看<b>主语</b>是谁；<br>
+    “因此”问因果，否定数<b>圈圈</b>；<br>
+    多重定语排排队：<b>属数动形名</b>，“乃至”由小到大往里追；<br>
+    “并非是”“坐以待毙”，<b>微病房</b>里抠字眼；<br>
+    改完务必<b>回读</b>一遍：保原意、少改动、通顺再收尾。
+  </div>
+</section>
+
+<footer>
+  病句评讲学案 · 与教师讲义配套使用 · 修改三原则：保原意 · 少改动 · 改后回读
+</footer>
+
+</div>
+<script>
+function toggleAll(){
+  var ds=document.querySelectorAll('details');
+  var anyClosed=false;
+  ds.forEach(function(d){ if(!d.open) anyClosed=true; });
+  ds.forEach(function(d){ d.open=anyClosed; });
+}
+</script>
+</body>
+</html>
