@@ -246,6 +246,10 @@ const lessonContext={
  session:launchParams.get('session')||'',
  createNew:launchParams.get('new')==='1'
 };
+/* 被课件页面以浮层（iframe）方式唤起时：Esc /「返回课件」改为通知父页面收起，
+   而不是新开窗口或关闭自身。独立窗口访问时行为保持原样。 */
+const EMBEDDED=(function(){try{return window.parent!==window;}catch(e){return false;}})();
+function notifyHostClose(){ try{ parent.postMessage({type:'wb-close'},'*'); }catch(e){} }
 
 /* ---------- SVG 图标 ---------- */
 const ICON={
@@ -1157,6 +1161,7 @@ function updateLessonContextUi(){
  document.title=title+'｜课堂白板';
 }
 function returnToLesson(){
+ if(EMBEDDED){ notifyHostClose(); return; }
  if(window.opener&&!window.opener.closed){
   try{ window.opener.focus(); }catch(e){}
   try{ window.close(); }catch(e){}
@@ -1439,8 +1444,11 @@ window.addEventListener('keydown',e=>{
   if(e.key==='Escape'){e.preventDefault();editor.blur();}
   return;
  }
+ if(EMBEDDED&&e.key==='Escape'){e.preventDefault();notifyHostClose();return;}
  const meta=e.ctrlKey||e.metaKey;
  const k=e.key.toLowerCase();
+ /* 嵌入课件浮层时，B 键与课件页保持一致：再按一次收起白板（B 在本白板内未被占用） */
+ if(EMBEDDED&&!meta&&k==='b'){e.preventDefault();notifyHostClose();return;}
  if(meta&&k==='z'){e.preventDefault();if(e.shiftKey)redo();else undo();return;}
  if(meta&&k==='y'){e.preventDefault();redo();return;}
  if(meta&&k==='c'){if(selectedId){e.preventDefault();copySelected();}return;}
