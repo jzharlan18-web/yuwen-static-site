@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<!--
+  页面：第五次记叙文训练《总有一阵风吹向你》审题与偏题转变 · 课堂讲评网页
+  来源：教师课堂审题指导（四环链条 / 审题五问 / 七类偏题转变手术 / 两个删除测试 / 自查表），
+        题意口径与《〈总有一阵风吹向你〉记叙文专项批阅要求》V1.0（教师 2026-10-23 确认）一致。
+  声明：本页为讲评教学页，非学情诊断页；无班级统计数据，故不设覆盖率条形图、不写任何统计数字。
+        仅新增导航性标签（如“症状诊断 / 转变处方 / 课堂用法”），正文内容未作改动。
+  交互：M 切换投屏/阅读字号（持久化）；E 遮盖/揭示转变处方（每次打开复位，点击区块单独揭示）。
+-->
+<html lang="zh-CN" data-mode="reader">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>《总有一阵风吹向你》审题与偏题转变 · 课堂讲评</title>
+<style>
+:root{
+  --base: 17px;  --measure: 1050px;
+  --paper:#fbfaf7; --paper-2:#f4f1ea; --card:#ffffff;
+  --ink:#1b2430;  --ink-2:#454c5c; --ink-3:#6d7883;
+  --blue:#163a5f; --blue-2:#2b5580; --blue-soft:#e9eff5; --blue-line:#c5cdd5;
+  --gold:#b59153; --gold-soft:#f2eee5; --gold-line:#ddcdb0;
+  --rule:#e3ddd2; --radius:2px;
+  --font-display:'STKaiti','Kaiti SC','KaiTi',serif;
+  --font-serif:'Songti SC','STSong','SimSun',serif;
+  --font-sans:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;
+  --font-num:Georgia,'Times New Roman',serif;
+}
+html[data-mode="stage"]{ --base:20.5px; --measure:1240px; }
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-sans); font-size:var(--base); line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:var(--measure); margin:0 auto; padding:0 1.4rem;}
+
+/* ========== 刊头 ========== */
+.masthead{border-top:4px solid var(--blue); border-bottom:1px solid var(--blue);
+  background:linear-gradient(180deg,#fff, var(--paper-2)); padding:2.6rem 0 2.2rem; position:relative;}
+.masthead::after{content:""; position:absolute; left:0; right:0; bottom:4px; height:1px solid var(--blue);}
+.kicker{font-family:var(--font-sans); color:var(--gold); letter-spacing:.32em;
+  font-size:.82em; font-weight:600; margin-bottom:.9rem;}
+h1.title{font-family:var(--font-display); font-weight:700; color:var(--blue);
+  font-size:2.5em; line-height:1.25; margin:0 0 .6rem; letter-spacing:.02em;}
+.subtitle{font-family:var(--font-serif); color:var(--ink-2); font-size:1.08em; margin:0 0 1.4rem; max-width:42em;}
+.meta-badges{display:flex; flex-wrap:wrap; gap:.6rem;}
+.badge{font-size:.76em; color:var(--blue); background:var(--blue-soft);
+  border:1px solid var(--blue-line); border-radius:var(--radius); padding:.28em .85em; letter-spacing:.05em;}
+.badge b{font-family:var(--font-num); color:var(--gold); font-weight:700; margin-right:.25em;}
+
+/* ========== 吸顶导航 ========== */
+.topbar{position:sticky; top:0; z-index:50; background:rgba(251,250,247,.96);
+  border-bottom:1px solid var(--rule); backdrop-filter:blur(6px);}
+.topbar-inner{max-width:var(--measure); margin:0 auto; padding:.55rem 1.4rem;
+  display:flex; align-items:center; gap:.5rem;}
+.brand{font-family:var(--font-display); color:var(--blue); font-weight:700; font-size:.95em;
+  white-space:nowrap; margin-right:.4rem;}
+.nav-chips{display:flex; gap:.4rem; flex:1; flex-wrap:wrap;}
+.chip{display:inline-block; font-size:.82em; text-decoration:none; color:var(--ink-2);
+  border:1px solid var(--rule); border-radius:999px; padding:.3em .95em; background:#fff; transition:all .15s;}
+.chip:hover{border-color:var(--gold); color:var(--blue);}
+.chip.active{background:var(--blue); border-color:var(--blue); color:#fff;}
+.chip .sm{display:none;}
+.tools{display:flex; gap:.4rem; margin-left:auto;}
+.tbtn{font-family:var(--font-sans); font-size:.8em; cursor:pointer; border-radius:var(--radius);
+  border:1px solid var(--gold-line); background:var(--gold-soft); color:var(--blue);
+  padding:.4em .9em; white-space:nowrap; line-height:1.3;}
+.tbtn:hover{background:var(--gold); color:#fff; border-color:var(--gold);}
+.tbtn.on{background:var(--blue); border-color:var(--blue); color:#fff;}
+.progress{position:absolute; left:0; top:0; height:3px; width:0; background:var(--gold); z-index:2;}
+
+/* ========== 章节 ========== */
+section{padding:2.6rem 0 1.2rem;}
+.sec-head{display:flex; align-items:baseline; gap:1rem; margin-bottom:1.3rem;
+  border-bottom:2px solid var(--blue); padding-bottom:.6rem;}
+.sec-no{font-family:var(--font-num); font-size:1.1em; color:var(--gold); font-weight:700; letter-spacing:.1em;}
+.sec-title{font-family:var(--font-display); font-size:1.75em; color:var(--blue); font-weight:700; margin:0;}
+.lead{border-left:3px solid var(--gold); padding:.2rem 0 .2rem 1.1rem; color:var(--ink-2);
+  font-family:var(--font-serif); font-size:1.05em; margin:0 0 1.6rem; background:linear-gradient(90deg,var(--gold-soft),transparent 70%);}
+
+/* ========== 链条 ========== */
+.chain{display:flex; align-items:stretch; gap:0; margin:1.4rem 0; flex-wrap:wrap;}
+.chain-node{flex:1; min-width:13rem; background:var(--card); border:1px solid var(--blue-line);
+  border-radius:var(--radius); padding:1rem 1.1rem; position:relative; margin-right:1.6rem; margin-bottom:.8rem;}
+.chain-node:last-child{margin-right:0;}
+.chain-node::after{content:"➜"; position:absolute; right:-1.35rem; top:50%; transform:translateY(-50%);
+  color:var(--gold); font-size:1.25em; font-weight:700;}
+.chain-node:last-child::after{display:none;}
+.cn-tag{font-size:.72em; color:var(--gold); font-weight:700; letter-spacing:.18em; display:block; margin-bottom:.35rem;}
+.cn-name{font-family:var(--font-display); color:var(--blue); font-size:1.18em; font-weight:700; display:block; margin-bottom:.3rem;}
+.cn-desc{font-size:.85em; color:var(--ink-2); margin:0;}
+.chain-foot{margin-top:.4rem;}
+.always{display:inline-block; background:var(--blue); color:#fff; font-family:var(--font-display);
+  font-size:1.02em; padding:.45em 1.2em; border-radius:var(--radius);}
+.always small{font-family:var(--font-sans); font-size:.72em; opacity:.85; margin-left:.6em; letter-spacing:.05em;}
+.contradiction{display:flex; gap:1rem; margin:1.6rem 0 0; flex-wrap:wrap;}
+.ct-half{flex:1; min-width:16rem; border-radius:var(--radius); padding:1.1rem 1.3rem;}
+.ct-a{background:var(--paper-2); border:1px solid var(--rule);}
+.ct-b{background:var(--blue); color:#fff; border:1px solid var(--blue);}
+.ct-half h4{margin:0 0 .4rem; font-family:var(--font-display); font-size:1.12em;}
+.ct-half p{margin:0; font-size:.92em;}
+.ct-a h4{color:var(--ink-3);} .ct-b h4{color:var(--gold-soft);}
+.ct-x{align-self:center; color:var(--gold); font-size:1.5em; font-weight:700;}
+.keypoint{font-family:var(--font-serif); color:var(--ink); background:var(--gold-soft);
+  border:1px solid var(--gold-line); border-radius:var(--radius); padding:.9rem 1.2rem; margin:1.3rem 0 0;}
+.keypoint b{color:var(--blue);}
+
+/* ========== 五问 ========== */
+.q-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:1rem;}
+.q-card{background:var(--card); border:1px solid var(--rule); border-top:3px solid var(--gold);
+  border-radius:var(--radius); padding:1.1rem 1.3rem; position:relative;}
+.q-card.wide{grid-column:1 / -1;}
+.q-no{font-family:var(--font-num); font-size:1.5em; color:var(--gold); font-weight:700; line-height:1;}
+.q-card h4{font-family:var(--font-display); color:var(--blue); font-size:1.12em; margin:.45rem 0 .4rem;}
+.q-card p{margin:0; font-size:.92em; color:var(--ink-2);}
+.q-tier{position:absolute; top:1rem; right:1.1rem; font-size:.7em; padding:.25em .7em; border-radius:999px;
+  letter-spacing:.08em; font-weight:600;}
+.tier-rescue{background:var(--blue-soft); color:var(--blue); border:1px solid var(--blue-line);}
+.tier-top{background:var(--gold-soft); color:#8a6b33; border:1px solid var(--gold-line);}
+.tier-all{background:var(--paper-2); color:var(--ink-3); border:1px solid var(--rule);}
+
+.dual-panel{display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-top:1.6rem;}
+.dp{border-radius:var(--radius); padding:1.15rem 1.3rem;}
+.dp-loose{background:var(--gold-soft); border:1px solid var(--gold-line);}
+.dp-limit{background:var(--blue-soft); border:1px solid var(--blue-line);}
+.dp h4{margin:0 0 .6rem; font-family:var(--font-display); font-size:1.12em;}
+.dp-loose h4{color:#8a6b33;} .dp-limit h4{color:var(--blue);}
+.dp ul{margin:0; padding-left:1.2rem;} .dp li{font-size:.9em; margin-bottom:.5em; color:var(--ink-2);}
+.dp-limit li b{color:var(--blue);}
+.cap{font-size:.78em; font-weight:700; background:var(--blue); color:#fff; border-radius:var(--radius);
+  padding:.05em .5em; margin-left:.4em; white-space:nowrap;}
+
+/* ========== 主目标面板 ========== */
+.goal-panel{background:var(--blue); color:#fff; border-radius:var(--radius);
+  padding:2.2rem 2rem; margin:1.8rem 0;}
+.goal-eyebrow{color:var(--gold); letter-spacing:.3em; font-size:.78em; font-weight:600; margin-bottom:.8rem;}
+.goal-main{font-family:var(--font-display); font-size:1.9em; line-height:1.5; margin:0 0 1.2rem; font-weight:700;}
+.goal-main u{text-decoration:none; border-bottom:2px solid var(--gold); padding-bottom:.05em;}
+.swap-row{display:grid; grid-template-columns:repeat(3,1fr); gap:.9rem; margin-bottom:1.3rem;}
+.swap{border:1px solid rgba(255,255,255,.35); border-radius:var(--radius); padding:.9rem 1rem; background:rgba(255,255,255,.06);}
+.swap .ar{color:var(--gold); font-size:1.3em; font-weight:700; display:block; text-align:center; margin:.25rem 0;}
+.swap .from,.swap .to{display:block; font-size:.95em; text-align:center;}
+.swap .from{color:rgba(255,255,255,.72);} .swap .to{color:#fff; font-weight:700;}
+.goal-note{font-family:var(--font-serif); font-size:.98em; color:rgba(255,255,255,.88);
+  border-top:1px solid rgba(255,255,255,.25); padding-top:1rem; margin:0;}
+.goal-note b{color:var(--gold-soft);}
+.process-line{display:flex; align-items:center; gap:.6rem; flex-wrap:wrap; margin-top:1rem;}
+.pl-node{background:rgba(255,255,255,.1); border:1px solid rgba(255,255,255,.3); border-radius:var(--radius);
+  padding:.45em 1.1em; font-family:var(--font-display); font-size:1.02em;}
+.pl-arrow{color:var(--gold); font-weight:700;}
+
+/* ========== 偏题卡片 ========== */
+.diag-card{background:var(--card); border:1px solid var(--rule); border-radius:var(--radius);
+  margin:1.2rem 0; overflow:hidden; box-shadow:0 1px 0 rgba(27,36,48,.04);}
+.diag-head{display:flex; align-items:center; gap:.8rem; flex-wrap:wrap;
+  padding:.85rem 1.2rem; background:var(--blue); color:#fff;}
+.diag-no{font-family:var(--font-num); font-size:.82em; letter-spacing:.15em; color:var(--gold-soft);}
+.diag-name{font-family:var(--font-display); font-size:1.22em; font-weight:700;}
+.diag-tag{margin-left:auto; font-size:.72em; background:rgba(255,255,255,.14);
+  border:1px solid rgba(255,255,255,.35); border-radius:999px; padding:.2em .8em; letter-spacing:.05em;}
+.diag-tag.hot{background:var(--gold); border-color:var(--gold); color:#fff; font-weight:700;}
+.diag-body{display:grid; grid-template-columns:1fr 1fr;}
+.diag-col{padding:1.1rem 1.3rem;}
+.diag-col.diag-left{border-right:1px dashed var(--rule);}
+.col-label{display:inline-block; font-size:.74em; font-weight:700; letter-spacing:.18em;
+  border-radius:var(--radius); padding:.18em .7em; margin-bottom:.7rem;}
+.col-label.sym{background:var(--blue-soft); color:var(--blue);}
+.col-label.rxlab{background:var(--gold-soft); color:#8a6b33;}
+.diag-col p{margin:.5rem 0; font-size:.93em;}
+.diag-col ul{margin:.4rem 0; padding-left:1.15rem;} .diag-col li{font-size:.92em; margin-bottom:.4rem;}
+.demo{border-radius:var(--radius); padding:.85rem 1.05rem; margin:.7rem 0; font-size:.9em; line-height:1.7;}
+.demo-bad{background:var(--paper-2); border:1px dashed var(--blue-line); color:var(--ink-2);}
+.demo-good{background:var(--gold-soft); border:1px solid var(--gold-line);}
+.demo .dm-label{display:block; font-size:.74em; font-weight:700; letter-spacing:.15em; margin-bottom:.35rem;}
+.demo-bad .dm-label{color:var(--ink-3);} .demo-good .dm-label{color:#8a6b33;}
+.demo em{font-style:normal; color:var(--blue); font-weight:600;}
+.rx-note{font-size:.85em; color:var(--ink-2); border-top:1px dotted var(--gold-line); padding-top:.55rem; margin-top:.6rem;}
+.rx-note b{color:#8a6b33;}
+
+/* 遮盖机制：filter 不改布局高度 */
+.rx{position:relative; transition:filter .18s;}
+body.ev-masked .rx{filter:blur(7px); cursor:pointer; user-select:none;}
+body.ev-masked .rx.revealed{filter:none; cursor:default; user-select:auto;}
+.rx-curtain{display:none; position:absolute; inset:0; z-index:5; align-items:center; justify-content:center;
+  background:rgba(242,238,229,.55); border:1px dashed var(--gold); border-radius:var(--radius);
+  color:var(--blue); font-size:.92em; font-weight:600; letter-spacing:.15em; pointer-events:none;}
+body.ev-masked .rx-curtain{display:flex;}
+body.ev-masked .rx.revealed .rx-curtain{display:none;}
+body.ev-masked .rx:focus{outline:2px solid var(--gold); outline-offset:2px;}
+
+/* ========== 工具区 ========== */
+.tools-grid{display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin:1.2rem 0;}
+.tool-card{background:var(--card); border:1px solid var(--rule); border-top:3px solid var(--blue);
+  border-radius:var(--radius); padding:1.2rem 1.4rem;}
+.tool-card h4{font-family:var(--font-display); color:var(--blue); font-size:1.15em; margin:0 0 .5rem;}
+.tool-card .op{font-family:var(--font-num); color:var(--gold); font-weight:700; font-size:.85em; letter-spacing:.1em;}
+.tool-card p{font-size:.93em; margin:.5rem 0;}
+.tool-card .verdict{font-size:.88em; background:var(--blue-soft); border-radius:var(--radius); padding:.6rem .9rem; margin-top:.6rem;}
+.tool-card .verdict b{color:var(--blue);}
+
+.check-table{width:100%; border-collapse:collapse; background:var(--card); border:1px solid var(--rule);
+  border-radius:var(--radius); overflow:hidden; margin:1.2rem 0; font-size:.92em;}
+.check-table th{background:var(--blue); color:#fff; font-family:var(--font-sans); font-weight:600;
+  text-align:left; padding:.7rem 1rem; font-size:.86em; letter-spacing:.05em;}
+.check-table td{padding:.7rem 1rem; border-top:1px solid var(--rule); vertical-align:top; line-height:1.6;}
+.check-table tr td:first-child{color:var(--blue); font-weight:600; white-space:nowrap; width:18%;}
+.check-table tr td:nth-child(2){color:var(--ink-3); width:36%;}
+.check-table tr td:nth-child(3){color:var(--ink); width:46%;}
+.check-table tr:nth-child(even) td{background:#fdfcf9;}
+.check-table .na{color:var(--gold); font-weight:700;}
+
+/* ========== 三步流程（课堂用法） ========== */
+.steps{margin:1.4rem 0;}
+.step-flag{display:inline-block; font-family:var(--font-display); font-size:1.05em; color:var(--blue);
+  border-bottom:2px solid var(--gold); padding-bottom:.15em; margin:1.3rem 0 .8rem; font-weight:700;}
+.step-flag small{font-family:var(--font-sans); font-size:.72em; color:var(--ink-3); margin-left:.7em; font-weight:400;}
+.compare{display:grid; grid-template-columns:1fr 1fr; gap:1rem;}
+.cmp{border-radius:var(--radius); padding:1rem 1.2rem; font-size:.93em;}
+.cmp-a{background:var(--paper-2); border:1px dashed var(--blue-line);}
+.cmp-b{background:var(--card); border:1px solid var(--rule); border-top:3px solid var(--gold);}
+.cmp h5{margin:0 0 .5rem; font-size:.95em;}
+.cmp-a h5{color:var(--ink-3);} .cmp-b h5{color:var(--blue); font-family:var(--font-display); font-size:1.05em;}
+.chips{margin-top:.6rem;}
+.chips span{display:inline-block; font-size:.76em; background:var(--gold-soft); color:#8a6b33;
+  border:1px solid var(--gold-line); border-radius:999px; padding:.15em .7em; margin:.2rem .3rem .2rem 0;}
+
+/* ========== 卷末 ========== */
+.colophon{border-top:1px solid var(--gold); margin-top:2.6rem; padding:2.2rem 0 3rem; text-align:center;}
+.colophon .echo{font-family:var(--font-display); font-size:1.6em; color:var(--blue); line-height:1.6;
+  margin:0 0 .8rem; font-weight:700;}
+.colophon .echo-sub{font-family:var(--font-serif); color:var(--ink-2); font-size:1em; margin:0 0 1.6rem;}
+.colophon .sign{font-size:.82em; color:var(--ink-3); letter-spacing:.1em;}
+.colophon .keys{margin-top:1.1rem; font-size:.78em; color:var(--ink-3);}
+kbd{font-family:var(--font-num); border:1px solid var(--blue-line); border-bottom-width:2px;
+  border-radius:3px; background:#fff; padding:.05em .45em; color:var(--blue); font-size:.95em;}
+
+/* ========== 响应式 ========== */
+@media (max-width:900px){
+  .diag-body,.dual-panel,.tools-grid,.compare{grid-template-columns:1fr;}
+  .diag-col.diag-left{border-right:none; border-bottom:1px dashed var(--rule);}
+  .swap-row{grid-template-columns:1fr;}
+  .q-grid{grid-template-columns:1fr;}
+}
+@media (max-width:660px){
+  .chip .lg{display:none;} .chip .sm{display:inline;}
+  .check-table{font-size:.82em;} .check-table tr td:first-child{white-space:normal;}
+  .topbar-inner{flex-wrap:wrap; row-gap:.45rem; justify-content:center;}
+  .nav-chips{flex:0 0 100%; justify-content:center; order:1;}
+  .chip{padding:.32em .9em;}
+  .tools{flex:0 0 100%; justify-content:center; margin-left:0; order:2;}
+  .tbtn{flex:1; max-width:11rem;}
+}
+@media (max-width:560px){
+  .brand{display:none;} .topbar-inner{justify-content:center;}
+  .nav-chips{justify-content:center;}
+  h1.title{font-size:1.9em;}
+}
+/* 打印：展开全部处方，隐藏工具条 */
+@media print{
+  .topbar,.tools,.progress,.rx-curtain,.colophon .keys{display:none !important;}
+  body.ev-masked .rx,.rx{filter:none !important;}
+  body{background:#fff;}
+  section{padding:1.2rem 0 .4rem;}
+  .sec-head{break-after:avoid; margin-bottom:.8rem;}
+  .lead,.step-flag{break-after:avoid;}
+  .diag-card,.check-table,.tool-card,.swap,.pl-node,.q-card,.dp,.ct-half,.chain-node,.tool-card{break-inside:avoid;}
+  /* 主目标面板压进同一页 */
+  #sec-goal{break-inside:avoid;}
+  .goal-panel{padding:1.3rem 1.4rem; margin:1rem 0;}
+  .goal-main{font-size:1.45em; margin:0 0 .85rem;}
+  .goal-eyebrow{margin-bottom:.5rem;}
+  .swap-row{gap:.6rem; margin-bottom:.85rem;}
+  .swap{padding:.55rem .8rem;}
+  .process-line{margin-top:.7rem;}
+  .pl-node{padding:.32em .85em;}
+  .diag-card{margin:.9rem 0;}
+  .diag-col{padding:.85rem 1.05rem;}
+}
+</style>
+</head>
+<body>
+
+<!-- 刊头 -->
+<header class="masthead">
+  <div class="wrap">
+    <div class="kicker">第五次记叙文训练 · 审题与偏题升格</div>
+    <h1 class="title">《总有一阵风吹向你》<br>审题与偏题转变</h1>
+    <p class="subtitle">偏题不必推倒重来——人、事、素材几乎都能留，要换的是三种关系：风与事件的关系、我与风的关系、感受与思考的关系。</p>
+    <div class="meta-badges">
+      <span class="badge"><b>1</b>条四环题意链</span>
+      <span class="badge"><b>5</b>问动笔自检</span>
+      <span class="badge"><b>7</b>类偏题会诊</span>
+      <span class="badge"><b>2</b>个删除测试</span>
+      <span class="badge"><b>6</b>行切题自查表</span>
+    </div>
+  </div>
+</header>
+
+<!-- 吸顶导航 -->
+<div class="topbar">
+  <div class="progress" id="progress"></div>
+  <div class="topbar-inner">
+    <span class="brand">风·审题课</span>
+    <nav class="nav-chips" id="navChips">
+      <a class="chip" href="#sec-chain"><span class="lg">一 · 审题链条</span><span class="sm">链</span></a>
+      <a class="chip" href="#sec-five"><span class="lg">二 · 审题五问</span><span class="sm">问</span></a>
+      <a class="chip" href="#sec-goal"><span class="lg">三 · 转变总纲</span><span class="sm">纲</span></a>
+      <a class="chip" href="#sec-diag"><span class="lg">四 · 偏题会诊</span><span class="sm">诊</span></a>
+      <a class="chip" href="#sec-tools"><span class="lg">五 · 课堂操练</span><span class="sm">练</span></a>
+    </nav>
+    <div class="tools">
+      <button class="tbtn" id="btnMode" title="快捷键 M">投屏字号</button>
+      <button class="tbtn" id="btnMask" title="快捷键 E">遮盖处方</button>
+    </div>
+  </div>
+</div>
+
+<!-- 一、审题链条 -->
+<section id="sec-chain">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">01</span><h2 class="sec-title">审题先审“链”：不是写风，是写“我和风的关系”</h2></div>
+    <p class="lead">材料核心句“它吹动你的心绪，也吹开你的思考”，加上“总有”“吹向你”，题意是一条四环链条——这也是阅卷逐项检查的顺序。</p>
+
+    <div class="chain">
+      <div class="chain-node">
+        <span class="cn-tag">触发物 · 外因</span>
+        <span class="cn-name">风</span>
+        <p class="cn-desc">一阵具体可感的风：自然风或象征风（问候、目送、回忆、考验……），必须有具体载体与降临场景，不能只是标题里的一个词。</p>
+      </div>
+      <div class="chain-node">
+        <span class="cn-tag">受感 · 非旁观</span>
+        <span class="cn-name">吹向“我”</span>
+        <p class="cn-desc">风由外而内吹到“我”身上、心上，“我”是被击中、被唤醒的那个人，不是站在旁边解说的人。</p>
+      </div>
+      <div class="chain-node">
+        <span class="cn-tag">双重过程</span>
+        <span class="cn-name">吹动心绪 ＋ 吹开思考</span>
+        <p class="cn-desc">先有情感心绪的真实波动，再有认识思考的生成打开。只感动、不思考，题意只完成一半。</p>
+      </div>
+      <div class="chain-node">
+        <span class="cn-tag">成长落点</span>
+        <span class="cn-name">“我”的回应</span>
+        <p class="cn-desc">风吹过之后，我如何理解、选择、行动。一个行动、一次传承、一种态度转变即可，回应标定精神成长的方向。</p>
+      </div>
+    </div>
+
+    <div class="chain-foot">
+      <span class="always">“总有”<small>由“我”这一阵风，照见人人都会遇到的风；结尾由我及人，轻轻一照即可。</small></span>
+    </div>
+
+    <div class="contradiction">
+      <div class="ct-half ct-a">
+        <h4>风，不可控</h4>
+        <p>外在的、偶然的、不由安排——风从哪里来、何时吹来，“我”做不了主。</p>
+      </div>
+      <div class="ct-x">✕</div>
+      <div class="ct-half ct-b">
+        <h4>回应，可控</h4>
+        <p>风吹来之后怎样感受、思考、回应，是内在的、主动的、可选择的——这才是文章主体与得分点。</p>
+      </div>
+    </div>
+    <p class="keypoint">写“风从哪里来”只值一两段，写“<b>我如何接住这阵风</b>”才值全文。迎风而立、随风而逝、逆风而行，回应方式标定了精神成长的方向。</p>
+  </div>
+</section>
+
+<!-- 二、审题五问 -->
+<section id="sec-five">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">02</span><h2 class="sec-title">动笔前“审题五问”：逐条写在草稿纸顶端</h2></div>
+    <p class="lead">第 1、2 问答不出，文章在“偏离”区；第 3、4 问答不出，就停在“基本符合”的 7—8 分。五问全立得住，才进得了一等。</p>
+
+    <div class="q-grid">
+      <div class="q-card">
+        <span class="q-tier tier-rescue">决定能否救回切题</span>
+        <span class="q-no">Q1</span>
+        <h4>我的风具体是什么？</h4>
+        <p>它在哪一刻、什么地方、什么情境下吹到我？能说出它的样子、声音、气味、温度，或谁在场、说了什么、做了什么吗？答不出，就是“空泛之风”。</p>
+      </div>
+      <div class="q-card">
+        <span class="q-tier tier-rescue">决定能否救回切题</span>
+        <span class="q-no">Q2</span>
+        <h4>风前我是什么状态？风中那一刻，心怎样松动？</h4>
+        <p>写不出“之前的状态”和“被击中的那一刻”，就没有受感过程。感动要有动作、停顿、感官变化作依托，不能只宣告“我很感动”。</p>
+      </div>
+      <div class="q-card">
+        <span class="q-tier tier-top">决定 7—8 分能否冲进 9—10 分</span>
+        <span class="q-no">Q3</span>
+        <h4>这阵风让我明白了什么以前不明白的？</h4>
+        <p>必须是个人化的发现，从这一件事里长出来；“要感恩、要珍惜、要坚强”这类公共结论，谁都能写，不算吹开思考。</p>
+      </div>
+      <div class="q-card">
+        <span class="q-tier tier-top">决定 7—8 分能否冲进 9—10 分</span>
+        <span class="q-no">Q4</span>
+        <h4>风过之后，我哪里不一样了？我做了什么？</h4>
+        <p>回应可显可隐，但要能看出这阵风在我身上留下了什么：迎风、逆风、把善意传出去、把记忆接过来。风吹过就过了，题意就没有落点。</p>
+      </div>
+      <div class="q-card wide">
+        <span class="q-tier tier-all">上等文的容量</span>
+        <span class="q-no">Q5</span>
+        <h4>这阵风凭什么“总”会吹向人？</h4>
+        <p>既写这阵风为何独特地属于“我”，也暗含它为何属于每个人。不要求明写“每个人”，但结尾要有以一见众的容量，由“我”及人，自然一照。</p>
+      </div>
+    </div>
+
+    <div class="dual-panel">
+      <div class="dp dp-loose">
+        <h4>审题松绑三条：风的范围是开放的</h4>
+        <ul>
+          <li><b>风不预设为温柔。</b>批评、失利、失去这类“逆风”同样成立，且最能写出“风不可控但回应可控”的深度。</li>
+          <li><b>不强求真的自然风。</b>一句问候、一次目送、一个瞬间，只要具备“不期而至、由外而内、瞬间吹动”的风性，就是风。</li>
+          <li><b>不强求顿悟、翻转、宏大升华。</b>渐进的、克制的、回味式的改变同样成立，不要求泪水与家国结尾。</li>
+        </ul>
+      </div>
+      <div class="dp dp-limit">
+        <h4>审题底线三条：考试硬封顶</h4>
+        <ul>
+          <li>通篇泛泛而谈、不涉及具体内容及表现<span class="cap">≤ 40 分</span></li>
+          <li>误解“风”为消极宿命，且价值导向偏差、缺少正能量<span class="cap">≤ 30 分</span></li>
+          <li>本题只收记叙文；通篇议论文、记叙议论“四不像”<span class="cap">≤ 30 分</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 三、转变总纲（主目标面板） -->
+<section id="sec-goal">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">03</span><h2 class="sec-title">转变总纲：偏题不换素材，换三种关系</h2></div>
+    <div class="goal-panel">
+      <div class="goal-eyebrow">本节唯一主目标</div>
+      <p class="goal-main">偏题稿几乎不用推倒重来。<br>素材留下，把<u>背景</u>换成<u>触发</u>，把<u>旁观</u>换成<u>受感</u>，把<u>感叹</u>换成<u>回应</u>。</p>
+      <div class="swap-row">
+        <div class="swap"><span class="from">背景板</span><span class="ar">➜</span><span class="to">触发事件</span></div>
+        <div class="swap"><span class="from">旁观解说</span><span class="ar">➜</span><span class="to">正面受感</span></div>
+        <div class="swap"><span class="from">情绪感叹</span><span class="ar">➜</span><span class="to">主动回应</span></div>
+      </div>
+      <p class="goal-note">无论从哪一类偏题救回来，落到文章内部，都是把“我”的转变写成一个三段过程——别用一句话宣布“我被吹醒了”，要让读者看见风怎样一步步吹开“我”：</p>
+      <div class="process-line">
+        <span class="pl-node">风前的我：钝感 · 旧认识</span>
+        <span class="pl-arrow">➜</span>
+        <span class="pl-node">风中的松动：那个具体瞬间</span>
+        <span class="pl-arrow">➜</span>
+        <span class="pl-node">风后的我：新认识带出一个新行动</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 四、七类偏题会诊 -->
+<section id="sec-diag">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">04</span><h2 class="sec-title">七类偏题会诊：看症状，做手术</h2></div>
+    <p class="lead">课堂用法：先只出示左栏“症状诊断”与偏题例文，让学生判断“病在哪、怎么救”；按 <kbd>E</kbd> 或点击右栏，再揭示“转变处方”。</p>
+
+    <!-- 卡1 标签型 -->
+    <div class="diag-card">
+      <div class="diag-head"><span class="diag-no">偏题 01</span><span class="diag-name">标签型：风是贴上去的标签</span><span class="diag-tag hot">最高发 · 直跌 A 项 3—5 分</span></div>
+      <div class="diag-body">
+        <div class="diag-col diag-left">
+          <span class="col-label sym">症状诊断</span>
+          <p>开头结尾点一下“风”，主体写的是母爱、友谊、苦练、坚强，事件与风是“贴上去”的关系。</p>
+          <div class="demo demo-bad">
+            <span class="dm-label">偏题例文</span>
+            妈妈每天给我送伞，风雨无阻。母爱像一阵温暖的风，伴我成长，我要学会感恩。
+          </div>
+          <p>要害：十年如一日的日常是“气候”，不是“一阵风”。风必须有偶然性、降临感和击中你的那个瞬间。</p>
+        </div>
+        <div class="diag-col diag-right rx">
+          <div class="rx-curtain">转变处方 · 点击揭示</div>
+          <span class="col-label rxlab">转变处方 · 换触发关系</span>
+          <ul>
+            <li><b>① 从概述里切出一个“没预料到”的瞬间</b>，不写日复一日。</li>
+            <li><b>② 让风成为改变“我”的那个事件本身</b>，而不是氛围装饰。</li>
+            <li><b>③ 写出旧认识被吹动的过程</b>：风前怎么看这个人，风后怎么重新看。</li>
+          </ul>
+          <div class="demo demo-good">
+            <span class="dm-label">切题写法</span>
+            和妈妈冷战一周，放学后我故意最后一个走。推教学楼门，风灌进来，雨雾里她撑着伞站在树底下，伞被风吹翻了半边，她没顾上扶，正踮脚往楼门口找我——风把她额前的头发全吹起来，我第一次看见她鬓角的白发。<em>那一刻“风”不是天气，是我一直拒绝看见、却照样吹到我身上的东西。</em>
+          </div>
+          <p class="rx-note"><b>检测尺 · 删风测试：</b>删掉所有“风”字与写景，故事若原样成立＝风是贴的；改到“删掉那个风的瞬间，故事就塌了”，触发关系才算立住。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡2 纯写景型 -->
+    <div class="diag-card">
+      <div class="diag-head"><span class="diag-no">偏题 02</span><span class="diag-name">纯写景型：为写景而写景</span><span class="diag-tag">误区① · 心绪与思考缺席</span></div>
+      <div class="diag-body">
+        <div class="diag-col diag-left">
+          <span class="col-label sym">症状诊断</span>
+          <p>通篇描写风与景物，心绪止于“好舒服”“真美”，没有象征意味，没有思考与成长，风只是风景。</p>
+        </div>
+        <div class="diag-col diag-right rx">
+          <div class="rx-curtain">转变处方 · 点击揭示</div>
+          <span class="col-label rxlab">转变处方 · 以景引我</span>
+          <ul>
+            <li><b>补风前处境：</b>写景之前，先立一个心事中的“我”（考砸、麻木、想放弃）。</li>
+            <li><b>补物我呼应：</b>让风中之物恰好映照“我”的处境，景与情相互看见。</li>
+            <li><b>补风后决定：</b>风过之后，“我”做一个与此前不同的动作。</li>
+          </ul>
+          <div class="demo demo-good">
+            <span class="dm-label">示意</span>
+            秋风卷着落叶（景）→“我刚被踢出竞赛班，觉得自己也是片落叶”（处境）→ 看落叶被风卷起又落下、却仍在飘（物我呼应）→ 回去把竞赛书重新摊开（风后决定）。景从“装饰”变成“引信”。
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡3 旁观型 -->
+    <div class="diag-card">
+      <div class="diag-head"><span class="diag-no">偏题 03</span><span class="diag-name">旁观型：只写他人的风</span><span class="diag-tag">“我”是解说员 · A 项 3—5 分</span></div>
+      <div class="diag-body">
+        <div class="diag-col diag-left">
+          <span class="col-label sym">症状诊断</span>
+          <p>主要写爷爷、陌生人、历史人物如何被风吹动、如何像风，“我”始终是旁观者、解说者，缺少风“吹向我”的经历。</p>
+          <div class="demo demo-bad">
+            <span class="dm-label">偏题结构</span>
+            爷爷一生勤劳（罗列事迹）→ 他像一阵风 → 我要学习他。
+          </div>
+        </div>
+        <div class="diag-col diag-right rx">
+          <div class="rx-curtain">转变处方 · 点击揭示</div>
+          <span class="col-label rxlab">转变处方 · 由人及己</span>
+          <p>人物素材保留，补够篇幅的“正面受感戏”：我在现场，风通过他的一个动作、一句话、一个背影，<b>穿过他吹到我脸上</b>，吹动我的愧疚或警醒，再落到我此后的改变。</p>
+          <div class="demo demo-good">
+            <span class="dm-label">切题写法</span>
+            我嫌爷爷来校送东西丢人，让他把袋子放门卫。某天大风，我从教学楼窗里看见他蹲在墙角，用身体护着给我带的饭盒，白发和塑料袋一起被风掀着，还在跟门卫赔笑。<em>风在窗外吹他，也吹穿了我。</em>（回应：下次我走出去接他。）
+          </div>
+          <p class="rx-note"><b>分寸：</b>先写风如何吹在他人身上可以起笔，但必须有充分篇幅写风“吹向我”；只在结尾表态、主体全是他人，仍判旁观。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡4 只感动不思考型 -->
+    <div class="diag-card">
+      <div class="diag-head"><span class="diag-no">偏题 04</span><span class="diag-name">只感动不思考型：情绪止步</span><span class="diag-tag">误区② · 卡在 7—8 分</span></div>
+      <div class="diag-body">
+        <div class="diag-col diag-left">
+          <span class="col-label sym">症状诊断</span>
+          <p>被风吹动的情绪成立，但结尾收在“真温暖”“要感恩”，没有回答“这阵风让我明白了什么”，感悟是公共结论。</p>
+        </div>
+        <div class="diag-col diag-right rx">
+          <div class="rx-curtain">转变处方 · 点击揭示</div>
+          <span class="col-label rxlab">转变处方 · 给情绪加追问</span>
+          <p>对准情绪连问三句，把答案写成具体的认识转变：</p>
+          <ul>
+            <li>他为什么这样做？（追问善意/情感的来源）</li>
+            <li>我为什么到今天才发觉？（追问自己的迟钝与麻木）</li>
+            <li>这阵风以后，我看人、看生活的眼光哪里变了？（追问认识的更新）</li>
+          </ul>
+          <p class="rx-note"><b>范文参照《巷口的槐花》：</b>没有停在“豆腐爷爷真好”，而是三个“我想起来”重新称量那碗白吃的豆腐脑，再追问“风从哪儿来？是不是也吹过他一个人守着空巷子的早晨”——由个人受惠追问善意的来源与孤独。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡5 宿命型 -->
+    <div class="diag-card">
+      <div class="diag-head"><span class="diag-no">偏题 05</span><span class="diag-name">宿命型：人在风中无能为力</span><span class="diag-tag hot">违背主体性 · 封顶 30 风险</span></div>
+      <div class="diag-body">
+        <div class="diag-col diag-left">
+          <span class="col-label sym">症状诊断</span>
+          <p>把风写成消极的宿命力量，通篇感叹命运无常、一切随缘、随波逐流，“我”没有任何主动回应。</p>
+          <div class="demo demo-bad">
+            <span class="dm-label">偏题结尾</span>
+            生活就是一阵风，人不过是风中的落叶，随风而逝吧。
+          </div>
+        </div>
+        <div class="diag-col diag-right rx">
+          <div class="rx-curtain">转变处方 · 点击揭示</div>
+          <span class="col-label rxlab">转变处方 · 保留前半，调头后半</span>
+          <p>风的不可控是题目的<b>前提</b>，不是结论。前半篇尽可写风的凛冽；后半篇必须回答：风我拦不住，但风里的什么我接住、我怎样站。</p>
+          <div class="demo demo-good">
+            <span class="dm-label">切题结尾</span>
+            那阵风来的时候我什么都拦不住。但我后来慢慢懂了，<em>落叶不能选择风，可我能选择站稳，还能选择去做吹向别人的那阵风</em>——（接一个具体动作：把那句话说出口 / 重新报了名 / 向那个帮过我的人道了谢）。
+          </div>
+          <p class="rx-note"><b>回应菜单：</b>考验之风→站稳与自省；慰藉之风→接住与传递；记忆之风→接续与珍惜当下。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡6 多风拼盘型 -->
+    <div class="diag-card">
+      <div class="diag-head"><span class="diag-no">偏题 06</span><span class="diag-name">多风拼盘型：故事拼盘</span><span class="diag-tag">“总有”被当成凑数</span></div>
+      <div class="diag-body">
+        <div class="diag-col diag-left">
+          <span class="col-label sym">症状诊断</span>
+          <p>两三个故事都贴着“风”的标签，彼此并列堆叠，没有统一的情思主线与递进，读完说不清这阵风意味着什么。</p>
+        </div>
+        <div class="diag-col diag-right rx">
+          <div class="rx-curtain">转变处方 · 点击揭示</div>
+          <span class="col-label rxlab">转变处方 · 收线</span>
+          <ul>
+            <li><b>砍：</b>800 字只够写透一阵风。狠心留下最有“风性”的那一阵，写透降临、受感、思考、回应。</li>
+            <li><b>或串：</b>用一条成长线串碎片——主线不是“风很多”，而是“<b>我回应风的能力在变</b>”：童年被风吹只觉舒服 → 少年错过了风 → 如今学会主动迎风、甚至把风吹给别人。</li>
+          </ul>
+          <p class="rx-note">有主线递进的多片段是成熟结构；无主线的拼贴，在中心与结构两项同时失分。</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 卡7 议论型 -->
+    <div class="diag-card">
+      <div class="diag-head"><span class="diag-no">偏题 07</span><span class="diag-name">通篇议论型：以议代叙</span><span class="diag-tag hot">文体不符 · 封顶 30</span></div>
+      <div class="diag-body">
+        <div class="diag-col diag-left">
+          <span class="col-label sym">症状诊断</span>
+          <p>通篇讲道理、堆名人例，叙事只是点缀；或记叙、说理都未成主体，文体意识不清。本题明确只收记叙文。</p>
+        </div>
+        <div class="diag-col diag-right rx">
+          <div class="rx-curtain">转变处方 · 点击揭示</div>
+          <span class="col-label rxlab">转变处方 · 文体归位</span>
+          <ul>
+            <li><b>论点翻译成亲历：</b>把中心论点变成“我”的一次具体经历。</li>
+            <li><b>论据换成细节：</b>名人例换成自己的场景、动作、对话、物件。</li>
+            <li><b>道理压到结尾：</b>议论只留两三句，且由事件自然托出。</li>
+          </ul>
+          <p class="rx-note"><b>注意：</b>不是“议论文开头加一个故事”，而是让叙事成为全文主体，思考寄于叙事之中。</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 五、课堂操练 -->
+<section id="sec-tools">
+  <div class="wrap">
+    <div class="sec-head"><span class="sec-no">05</span><h2 class="sec-title">课堂操练：两个删除测试 ＋ 一张自查表</h2></div>
+
+    <div class="steps">
+      <span class="step-flag">第一步 · 同桌互测<small>用两个删除测试给自己的初稿“体检”</small></span>
+      <div class="tools-grid">
+        <div class="tool-card">
+          <span class="op">测试一</span>
+          <h4>删“风”测试</h4>
+          <p>把文中所有“风”字和写景句全部删掉，再读一遍故事。</p>
+          <p class="verdict"><b>故事不塌</b>＝风是贴上去的标签，回到偏题 01，重写触发关系；<br><b>故事塌了</b>＝风真正承担了叙事功能，通过。</p>
+        </div>
+        <div class="tool-card">
+          <span class="op">测试二</span>
+          <h4>删“大词”测试</h4>
+          <p>把“感动、温暖、明白、悟了、坚持、感恩”全部划掉，再读改变与感悟。</p>
+          <p class="verdict"><b>改变看不见</b>＝贴标签，补“风前—风中—风后”的过程；<br><b>改变照样看得见</b>＝过程成立，通过。</p>
+        </div>
+      </div>
+
+      <span class="step-flag">第二步 · 六行自查<small>偏题表现与切题表现逐条对照</small></span>
+      <table class="check-table">
+        <thead><tr><th>自查问题</th><th>偏题表现</th><th>切题表现</th></tr></thead>
+        <tbody>
+          <tr><td>风是什么？</td><td>空泛的“一阵温暖的风”，说不出场景</td><td>有具体时刻、地点、感官、物件、对话，风可感可辨</td></tr>
+          <tr><td>风吹到谁？</td><td>吹在别人身上，我在旁解说</td><td>正面吹到“我”，我是被击中、被唤醒的当事人</td></tr>
+          <tr><td>心怎么动？</td><td>“我十分感动”一句话宣告</td><td>有动作、停顿、感官变化、回忆闪回等受感过程</td></tr>
+          <tr><td>思考开了吗？</td><td>“要感恩、要坚强”公共结论</td><td>说出“我以前不懂、现在懂了”的个人化发现</td></tr>
+          <tr><td>我做了什么？</td><td>风吹过就过了，或一切随缘</td><td>有具体的行动、选择或态度转变，与风的性质匹配</td></tr>
+          <tr><td>为什么是“总有”？</td><td>只写我一人一事，与人人无关</td><td>结尾由我及人，轻轻照见普遍人情与成长经验</td></tr>
+        </tbody>
+      </table>
+
+      <span class="step-flag">第三步 · 同题改写对比<small>课堂示范用</small></span>
+      <div class="compare">
+        <div class="cmp cmp-a">
+          <h5>常见写法：宣布式</h5>
+          <p>用一句话宣布“我被风吹醒了 / 我明白了 / 我学会了感恩”，风前与风后之间是空白的，读者只看到结论。</p>
+          <div class="chips"><span>断言句</span><span>公共道理</span><span>无过程</span></div>
+        </div>
+        <div class="cmp cmp-b">
+          <h5>目标写法：过程式</h5>
+          <p>让读者看见三步：风前我怎样（旧办法、旧认识）→ 风中什么细节让我松动（具体瞬间）→ 风后我哪个做法不同（第一个新行动）。改变可以很小，也可以不成功。</p>
+          <div class="chips"><span>有处境</span><span>有松动的细节</span><span>有不同的动作</span><span>不喊口号</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 卷末 -->
+<footer class="colophon">
+  <div class="wrap">
+    <p class="echo">别告诉读者你被风吹醒了，<br>让他们看见，风是怎样一步步吹开你的。</p>
+    <p class="echo-sub">风前的我 → 风中的松动 → 风后的我</p>
+    <p class="sign">高一语文 · 第五次记叙文训练《总有一阵风吹向你》审题与偏题升格</p>
+    <p class="keys"><kbd>M</kbd> 切换投屏 / 阅读字号　·　<kbd>E</kbd> 遮盖 / 揭示转变处方　·　点击处方区块可单独揭示</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var html = document.documentElement, body = document.body;
+  var btnMode = document.getElementById('btnMode');
+  var btnMask = document.getElementById('btnMask');
+
+  /* ---- 字号：阅读 / 投屏，偏好持久化 ---- */
+  try{
+    var savedMode = localStorage.getItem('feng-mode');
+    if(savedMode === 'stage'){ html.setAttribute('data-mode','stage'); }
+  }catch(e){}
+  function syncModeBtn(){
+    var stage = html.getAttribute('data-mode') === 'stage';
+    btnMode.textContent = stage ? '阅读字号' : '投屏字号';
+    btnMode.classList.toggle('on', stage);
+  }
+  function toggleMode(){
+    var stage = html.getAttribute('data-mode') === 'stage';
+    html.setAttribute('data-mode', stage ? 'reader' : 'stage');
+    try{ localStorage.setItem('feng-mode', stage ? 'reader' : 'stage'); }catch(e){}
+    syncModeBtn();
+  }
+  syncModeBtn();
+  btnMode.addEventListener('click', toggleMode);
+
+  /* ---- 遮盖：每次打开必须复位为不遮盖，不持久化 ---- */
+  var rxList = Array.prototype.slice.call(document.querySelectorAll('.diag-col.rx'));
+  function applyMaskA11y(){
+    var masked = body.classList.contains('ev-masked');
+    rxList.forEach(function(rx){
+      if(masked){
+        rx.setAttribute('role','button');
+        rx.setAttribute('tabindex','0');
+        var revealed = rx.classList.contains('revealed');
+        rx.setAttribute('aria-label', revealed ? '转变处方，已揭示' : '转变处方，按 Enter 或点击揭示');
+        rx.setAttribute('aria-pressed', revealed ? 'true' : 'false');
+      }else{
+        rx.removeAttribute('role');
+        rx.removeAttribute('tabindex');
+        rx.removeAttribute('aria-label');
+        rx.removeAttribute('aria-pressed');
+        rx.classList.remove('revealed');
+      }
+    });
+  }
+  function toggleMask(){
+    body.classList.toggle('ev-masked');
+    var on = body.classList.contains('ev-masked');
+    btnMask.classList.toggle('on', on);
+    btnMask.textContent = on ? '揭示处方' : '遮盖处方';
+    applyMaskA11y();
+  }
+  btnMask.addEventListener('click', toggleMask);
+
+  rxList.forEach(function(rx){
+    rx.addEventListener('click', function(){
+      if(body.classList.contains('ev-masked')){
+        rx.classList.add('revealed');
+        rx.setAttribute('aria-label','转变处方，已揭示');
+        rx.setAttribute('aria-pressed','true');
+      }
+    });
+    rx.addEventListener('keydown', function(e){
+      if(body.classList.contains('ev-masked') && (e.key === 'Enter' || e.key === ' ')){
+        e.preventDefault();
+        rx.classList.add('revealed');
+        rx.setAttribute('aria-label','转变处方，已揭示');
+        rx.setAttribute('aria-pressed','true');
+      }
+    });
+  });
+
+  /* ---- 顶部进度条 ---- */
+  var bar = document.getElementById('progress');
+  function onScroll(){
+    var h = document.documentElement;
+    var max = h.scrollHeight - h.clientHeight;
+    bar.style.width = (max > 0 ? (h.scrollTop / max) * 100 : 0) + '%';
+  }
+  document.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+
+  /* ---- 导航滚动高亮 ---- */
+  var sections = ['sec-chain','sec-five','sec-goal','sec-diag','sec-tools']
+    .map(function(id){ return document.getElementById(id); });
+  var chips = Array.prototype.slice.call(document.querySelectorAll('#navChips .chip'));
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(en){
+      if(en.isIntersecting){
+        chips.forEach(function(c){
+          c.classList.toggle('active', c.getAttribute('href') === '#' + en.target.id);
+        });
+      }
+    });
+  }, {rootMargin:'-32% 0px -60% 0px', threshold:0});
+  sections.forEach(function(s){ if(s) io.observe(s); });
+
+  /* ---- 快捷键 ---- */
+  document.addEventListener('keydown', function(e){
+    if(e.target && /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)) return;
+    var k = e.key.toLowerCase();
+    if(k === 'm'){ e.preventDefault(); toggleMode(); }
+    if(k === 'e'){ e.preventDefault(); toggleMask(); }
+  });
+})();
+</script>
+</body>
+</html>
