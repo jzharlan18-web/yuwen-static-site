@@ -191,6 +191,7 @@ kbd{background:#2b303a;border:1px solid var(--sep);border-bottom-width:2px;borde
 <input id="projectFileInput" type="file" accept=".json,application/json" hidden>
 <button id="showBar">显示工具栏</button>
 <div id="toast"></div>
+<div style="position:fixed;bottom:12px;right:12px;z-index:20;background:#20242c;color:#fff;padding:9px 12px;border-radius:8px;font-size:13px;pointer-events:none">Windows 截图：Win+Shift+S，返回白板后按 Ctrl+V 粘贴</div>
 
 <div id="help">
   <div class="help-card">
@@ -249,7 +250,7 @@ const lessonContext={
 /* 被课件页面以浮层（iframe）方式唤起时：Esc /「返回课件」改为通知父页面收起，
    而不是新开窗口或关闭自身。独立窗口访问时行为保持原样。 */
 const EMBEDDED=(function(){try{return window.parent!==window;}catch(e){return false;}})();
-function notifyHostClose(){ try{ parent.postMessage({type:'wb-close'},'*'); }catch(e){} }
+function notifyHostClose(){ try{ parent.postMessage({type:'wb-close'},location.origin==='null'?'*':location.origin); }catch(e){} }
 
 /* ---------- SVG 图标 ---------- */
 const ICON={
@@ -1508,6 +1509,24 @@ updateUndoRedo();
 updateStatus();
 resize();
 applyLessonLaunch();
+if(EMBEDDED&&location.origin!=='null'){
+ window.addEventListener('message',e=>{
+  if(e.origin!==location.origin||e.source!==window.parent||!e.data||e.data.type!=='wb-import-image') return;
+  const src=e.data.image;
+  if(typeof src!=='string'||!src.startsWith('data:image/png;base64,')) return;
+  ensureImage(src,img=>{
+   if(!img){toast('截图导入失败');return;}
+   let w=img.naturalWidth,h=img.naturalHeight;
+   const max=Math.min(W,H)*0.5;
+   const scale=Math.min(1,max/Math.max(w,h));
+   w=Math.max(1,Math.round(w*scale));h=Math.max(1,Math.round(h*scale));
+   const o={type:'image',src,x:Math.round((W-w)/2),y:Math.round((H-h)/2),w,h,id:newId()};
+   page().objects.push(o);selectedId=o.id;commitHistory();save();render();
+   toast('截图已导入白板');
+  });
+ });
+ parent.postMessage({type:'wb-ready'},location.origin);
+}
 })();
 </script>
 </body>
