@@ -1,0 +1,1752 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>芣苢、插秧歌：回响在历史中的劳动之歌</title>
+<!--
+  设计说明（教师用）：
+  · 单文件课堂演示页，双击打开即可；键盘 ←/→ 翻页，屏幕左右边缘点击也可翻页。
+  · 标有「▸ 点击出示」的虚线框：学生回答后再点击，答案才出现（结论由课堂生成，不预泄）。
+  · 背诵页四个按钮：全显 → 遮动词/句尾（师生接句）→ 留头（看头背尾）→ 全遮。
+  · 每页右上角为本环节参考用时，教师控节奏用。
+  · 全部使用系统字体（楷体），不依赖网络。
+  · 内容依据：学科网课件《回响在历史中的劳动之歌——〈芣苢〉〈插秧歌〉联读》（2025-11-11发布，统编版必修上册第6课）改编；诗文原文以教材为准。
+-->
+<style>
+  :root {
+    --paper: #FAF6EE;
+    --ink: #2B2925;
+    --ink2: #6E675C;
+    --cn: #B03A2E;
+    --cn-deep: #8E2F25;
+    --cn-soft: rgba(176, 58, 46, 0.07);
+    --line: rgba(43, 41, 37, 0.16);
+    --kai: "Kaiti SC", "STKaiti", "KaiTi", "BiauKai", "DFKai-SB", "Songti SC", serif;
+    --ui: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--ui);
+    color: var(--ink);
+    background: var(--paper);
+  }
+
+  /* ============ deck-stage starter CSS（规范写法：display 只写在 .active 上） ============ */
+  deck-stage > section {
+    background: var(--paper);
+    overflow: hidden;
+    position: relative;
+  }
+  deck-stage > section:not(.active) { display: none !important; }
+  deck-stage > section.active { display: block; }
+
+  /* 投屏字号：固定 16:9 画布会抵消浏览器缩放，改为在画布内部放大内容。 */
+  deck-stage > section > .wrap {
+    transition: transform 180ms ease;
+  }
+  body.projection-font deck-stage > section.active > .wrap {
+    transform: scale(1.12);
+    transform-origin: center center;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    deck-stage > section > .wrap { transition: none; }
+  }
+
+  /* ============ 通用页面骨架 ============ */
+  .wrap {
+    width: 1920px;
+    height: 1080px;
+    padding: 70px 130px 60px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  .hd {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--line);
+    font-size: 22px;
+    color: var(--ink2);
+    letter-spacing: 0.06em;
+    flex: none;
+  }
+  .hd .ph { color: var(--cn); font-weight: 600; }
+
+  .body {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .kicker {
+    font-size: 26px;
+    letter-spacing: 0.35em;
+    color: var(--cn);
+    margin-bottom: 26px;
+    font-weight: 600;
+  }
+
+  /* ============ 封面 ============ */
+  .cover .wrap { justify-content: center; align-items: center; text-align: center; }
+  .cover-kicker {
+    font-size: 28px; letter-spacing: 0.5em; color: var(--ink2);
+    margin-bottom: 60px; text-indent: 0.5em;
+  }
+  .cover-title {
+    font-family: var(--kai);
+    font-size: 150px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.25;
+  }
+  .cover-title .dot { color: var(--cn); margin: 0 18px; font-weight: 400; }
+  .cover-src {
+    font-family: var(--kai);
+    font-size: 34px;
+    color: var(--ink2);
+    margin-top: 44px;
+    letter-spacing: 0.15em;
+  }
+  .cover-route {
+    margin-top: 90px;
+    font-size: 30px;
+    letter-spacing: 0.12em;
+    color: var(--ink);
+  }
+  .cover-route .arr { color: var(--cn); margin: 0 20px; }
+  .cover-sub {
+    margin-top: 26px;
+    font-size: 24px;
+    color: var(--ink2);
+    letter-spacing: 0.2em;
+  }
+  .seal {
+    position: absolute;
+    right: 150px;
+    bottom: 120px;
+    width: 92px;
+    height: 92px;
+    background: var(--cn);
+    color: #FAF6EE;
+    font-family: var(--kai);
+    font-size: 58px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 5px;
+    transform: rotate(-3deg);
+    box-shadow: 0 2px 10px rgba(142, 47, 37, 0.25);
+  }
+
+  /* ============ 路线页 ============ */
+  .route-title {
+    font-family: var(--kai);
+    font-size: 72px;
+    font-weight: 700;
+    margin-bottom: 80px;
+  }
+  .route-steps {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+  }
+  .rstep { text-align: center; flex: 1; }
+  .rstep .no {
+    font-family: var(--kai);
+    font-size: 30px;
+    color: var(--cn);
+    margin-bottom: 14px;
+    letter-spacing: 0.3em;
+  }
+  .rstep .nm {
+    font-family: var(--kai);
+    font-size: 64px;
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .rstep .ds {
+    font-size: 26px;
+    color: var(--ink2);
+    line-height: 1.6;
+  }
+  .rstep .tm {
+    font-size: 22px;
+    color: var(--cn);
+    margin-top: 16px;
+  }
+  .route-arr {
+    font-size: 44px;
+    color: var(--cn);
+    align-self: center;
+    padding: 0 8px;
+    margin-top: 40px;
+  }
+  .route-tail {
+    margin-top: 90px;
+    border-top: 1px solid var(--line);
+    padding-top: 34px;
+    text-align: center;
+    font-size: 30px;
+    color: var(--ink);
+    letter-spacing: 0.1em;
+  }
+  .route-tail b { color: var(--cn); }
+
+  /* ============ 诗体大字 ============ */
+  .poem {
+    font-family: var(--kai);
+    font-size: 56px;
+    line-height: 2.1;
+    letter-spacing: 0.1em;
+    text-align: center;
+  }
+  .poem.small { font-size: 52px; }
+  .poem-note {
+    text-align: center;
+    font-size: 27px;
+    color: var(--ink2);
+    margin-top: 46px;
+    letter-spacing: 0.08em;
+  }
+  .poem-note b { color: var(--cn); font-weight: 600; }
+  .poem-title {
+    font-family: var(--kai);
+    font-size: 44px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 34px;
+    letter-spacing: 0.1em;
+  }
+  .poem-title span {
+    font-size: 26px;
+    color: var(--ink2);
+    font-weight: 400;
+    margin-left: 24px;
+  }
+
+  /* ============ 正音通假 ============ */
+  .py-grid {
+    display: flex;
+    gap: 100px;
+    align-items: flex-start;
+  }
+  .py-col { flex: 1; }
+  .py-col h3 {
+    font-family: var(--kai);
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 36px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+    letter-spacing: 0.2em;
+  }
+  .py-col h3 em { font-style: normal; color: var(--cn); }
+  .py-item {
+    display: flex;
+    align-items: baseline;
+    font-size: 34px;
+    padding: 15px 0;
+    border-bottom: 1px dashed rgba(43, 41, 37, 0.1);
+  }
+  .py-item .hz { font-family: var(--kai); font-weight: 700; width: 220px; }
+  .py-item .py { color: var(--cn); font-size: 28px; width: 280px; }
+  .py-item .mn { color: var(--ink2); font-size: 27px; }
+  .tj-item .hz { width: 150px; }
+  .tj-item .py { width: 190px; font-family: var(--kai); font-size: 32px; }
+
+  /* ============ 任务页（自读） ============ */
+  .task-big {
+    font-family: var(--kai);
+    font-size: 84px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+  }
+  .task-big em { font-style: normal; color: var(--cn); }
+  .task-sub {
+    text-align: center;
+    font-size: 32px;
+    color: var(--ink2);
+    margin-top: 56px;
+    letter-spacing: 0.1em;
+  }
+  .task-sub b { color: var(--ink); }
+
+  /* ============ 快问快答 ============ */
+  .qa { margin-bottom: 44px; }
+  .qa .q {
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+  }
+  .qa .q .qn {
+    font-family: var(--kai);
+    color: var(--cn);
+    font-size: 30px;
+    flex: none;
+  }
+  .qa .a-line {
+    font-size: 31px;
+    line-height: 1.75;
+    color: var(--ink);
+    padding-left: 58px;
+  }
+  .qa .a-line b {
+    font-family: var(--kai);
+    color: var(--cn);
+    font-weight: 700;
+    font-size: 33px;
+  }
+
+  /* ============ 点击出示（reveal） ============ */
+  .rv { cursor: pointer; }
+  .rv .rv-slot {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    border: 1.5px dashed rgba(176, 58, 46, 0.45);
+    color: var(--cn);
+    background: var(--cn-soft);
+    font-size: 25px;
+    padding: 10px 26px;
+    letter-spacing: 0.1em;
+    border-radius: 3px;
+    user-select: none;
+  }
+  .rv .rv-slot::before { content: "▸"; font-size: 20px; }
+  .rv .rv-body { display: none; }
+  .rv.on .rv-slot { display: none; }
+  .rv.on .rv-body {
+    display: block;
+    animation: rvIn 0.35s ease both;
+  }
+  @keyframes rvIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .rv-slot-wrap { padding-left: 58px; margin-top: 4px; }
+
+  /* ============ 焦点页 ============ */
+  .focus-core {
+    font-family: var(--kai);
+    font-size: 96px;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: 0.12em;
+    line-height: 1.4;
+  }
+  .focus-core .cm { color: var(--cn); }
+  .focus-ans {
+    text-align: center;
+    margin-top: 50px;
+  }
+  .focus-ans .big-word {
+    display: inline-block;
+    font-family: var(--kai);
+    font-size: 100px;
+    font-weight: 700;
+    color: var(--cn);
+    letter-spacing: 0.45em;
+    text-indent: 0.45em;
+    border-top: 3px solid var(--cn);
+    border-bottom: 3px solid var(--cn);
+    padding: 16px 30px;
+  }
+  .focus-note {
+    text-align: center;
+    font-size: 32px;
+    color: var(--ink2);
+    margin-top: 54px;
+    line-height: 1.8;
+    letter-spacing: 0.06em;
+  }
+  .focus-note b { color: var(--ink); }
+
+  .deep-item { margin-bottom: 40px; }
+  .deep-item .dline {
+    font-family: var(--kai);
+    font-size: 54px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .deep-item .dline .dn {
+    font-size: 30px;
+    color: var(--cn);
+    margin-right: 26px;
+    font-weight: 400;
+  }
+  .deep-item .dnote { font-size: 30px; color: var(--ink2); padding-left: 66px; line-height: 1.6; }
+  .deep-item .dnote b { color: var(--ink); }
+
+  /* ============ 主问题页 ============ */
+  .mq-big {
+    font-family: var(--kai);
+    font-size: 80px;
+    font-weight: 700;
+    text-align: center;
+    line-height: 1.5;
+    margin-bottom: 60px;
+  }
+  .mq-big em { font-style: normal; color: var(--cn); }
+  .mq-subs {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 66px;
+  }
+  .mq-subs span::before { content: "· "; color: var(--cn); }
+  .chain {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 26px;
+    font-family: var(--kai);
+    font-size: 46px;
+    font-weight: 700;
+  }
+  .chain .c-arr { color: var(--cn); font-size: 34px; }
+  .chain .c-end {
+    color: var(--cn);
+    border: 2px solid var(--cn);
+    padding: 6px 26px;
+    border-radius: 3px;
+  }
+
+  /* ============ 检测页 ============ */
+  .ctest { margin-bottom: 66px; }
+  .ctest .ct-q {
+    font-size: 37px;
+    font-weight: 600;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  .ctest .ct-q .src { color: var(--cn); margin-right: 18px; font-family: var(--kai); }
+  .ctest .ct-blank {
+    font-family: var(--kai);
+    color: var(--ink2);
+    font-size: 32px;
+    letter-spacing: 0.2em;
+    padding-left: 58px;
+  }
+  .ctest .rv .rv-body {
+    font-family: var(--kai);
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--cn);
+    letter-spacing: 0.15em;
+  }
+
+  /* ============ 作业页 ============ */
+  .hw-block { margin-bottom: 60px; }
+  .hw-block h3 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: 0.15em;
+  }
+  .hw-block h3 span {
+    font-size: 24px;
+    color: var(--paper);
+    background: var(--cn);
+    padding: 4px 16px;
+    border-radius: 3px;
+    margin-right: 20px;
+    font-weight: 400;
+    vertical-align: 4px;
+  }
+  .hw-block p { font-size: 31px; line-height: 1.8; color: var(--ink); }
+  .hw-block p b { color: var(--cn); }
+  .hw-end {
+    margin-top: 30px;
+    border-top: 1px solid var(--line);
+    padding-top: 44px;
+    text-align: center;
+    font-family: var(--kai);
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+  }
+  .hw-end em { font-style: normal; color: var(--cn); }
+
+  /* ============ 背诵支架 ============ */
+  .recite .poem { margin-bottom: 10px; }
+  .recite .f, .recite .x, .recite .e { transition: color 0.25s ease, background 0.25s ease; }
+  .msk {
+    color: transparent !important;
+    background: linear-gradient(to top, rgba(176, 58, 46, 0.32) 0 10px, transparent 10px);
+    border-radius: 2px;
+  }
+  .recite[data-lv="1"] .e.mskable {}
+  .recite[data-lv="1"] .e { color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px); }
+  .recite[data-lv="2"] .e, .recite[data-lv="2"] .x {
+    color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px);
+  }
+  .recite[data-lv="3"] .e, .recite[data-lv="3"] .x, .recite[data-lv="3"] .f {
+    color: transparent; background: linear-gradient(to top, rgba(176,58,46,0.32) 0 10px, transparent 10px);
+  }
+  .lv-btns {
+    display: flex;
+    justify-content: center;
+    gap: 26px;
+    margin-top: 44px;
+  }
+  .lv-btn {
+    font-family: var(--ui);
+    font-size: 28px;
+    letter-spacing: 0.1em;
+    padding: 14px 40px;
+    background: transparent;
+    border: 1.5px solid var(--line);
+    color: var(--ink);
+    cursor: pointer;
+    border-radius: 3px;
+    transition: all 0.2s ease;
+  }
+  .lv-btn:hover { border-color: var(--cn); color: var(--cn); }
+  .lv-btn.on {
+    background: var(--cn);
+    border-color: var(--cn);
+    color: #FAF6EE;
+  }
+  .recite-tip {
+    text-align: center;
+    font-size: 26px;
+    color: var(--ink2);
+    margin-top: 34px;
+    letter-spacing: 0.08em;
+  }
+  .recite-tip b { color: var(--cn); font-weight: 600; }
+
+  /* ============ 讲义导读 ============ */
+  .handout {
+    margin-top: 26px;
+    padding-top: 16px;
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38);
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    flex: none;
+  }
+  .handout .hb-tag {
+    flex: none;
+    font-size: 22px;
+    letter-spacing: 0.2em;
+    color: #FAF6EE;
+    background: var(--cn);
+    padding: 6px 14px;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+  .handout .hb-body { font-size: 25px; line-height: 1.7; color: var(--ink2); }
+  .handout .hb-body b { color: var(--ink); font-weight: 600; }
+  .handout .hb-body .hb-c { color: var(--cn); font-weight: 600; }
+
+  /* ============ 附页 · 两种读法 ============ */
+  .duel-title {
+    font-family: var(--kai);
+    font-size: 54px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .duel-title span { font-size: 30px; color: var(--ink2); font-weight: 400; margin-left: 16px; }
+  .duel-sub {
+    text-align: center;
+    font-size: 24px;
+    color: var(--ink2);
+    margin-bottom: 28px;
+    letter-spacing: 0.04em;
+  }
+  .duel-grid { display: flex; gap: 56px; }
+  .duel-col {
+    flex: 1;
+    border: 1.5px solid var(--line);
+    border-radius: 4px;
+    padding: 22px 28px;
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .duel-h {
+    font-family: var(--kai);
+    font-size: 33px;
+    font-weight: 700;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .duel-h span {
+    font-size: 20px;
+    color: #FAF6EE;
+    background: var(--cn);
+    border-radius: 3px;
+    padding: 3px 12px;
+    margin-left: 14px;
+    vertical-align: 4px;
+    font-family: var(--ui);
+    letter-spacing: 0.1em;
+  }
+  .duel-def {
+    font-size: 22px;
+    color: var(--ink);
+    background: var(--cn-soft);
+    padding: 10px 16px;
+    border-radius: 3px;
+    margin-bottom: 16px;
+    line-height: 1.5;
+  }
+  .duel-def b { color: var(--cn); }
+  .du-ev {
+    display: flex;
+    gap: 14px;
+    font-size: 21.5px;
+    line-height: 1.55;
+    color: var(--ink);
+    margin-bottom: 11px;
+  }
+  .du-ev span { flex: none; font-family: var(--kai); color: var(--cn); font-weight: 700; }
+  .du-ev b { color: var(--cn); font-weight: 600; }
+  .duel-bottom {
+    margin-top: 24px;
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38);
+    padding-top: 16px;
+    font-size: 22.5px;
+    line-height: 1.7;
+    color: var(--ink2);
+  }
+  .duel-bottom b { color: var(--ink); }
+  .duel-bottom .c { color: var(--cn); font-weight: 600; }
+
+  /* ============ 月夜 弹层 ============ */
+  .moonlnk { color: var(--cn); font-weight: 700; text-decoration: underline dotted; text-underline-offset: 6px; }
+  .du-moon-trigger { cursor: pointer; }
+  .moonlay {
+    position: fixed; inset: 0; z-index: 9999;
+    background: rgba(32, 27, 22, 0.58);
+    display: none; align-items: center; justify-content: center;
+  }
+  .moonlay.open { display: flex; }
+  .moonlay-card {
+    width: 1000px; max-width: 94vw; max-height: 90vh; overflow-y: auto;
+    background: var(--paper); border-radius: 8px;
+    padding: 40px 60px 32px; position: relative;
+    box-shadow: 0 20px 70px rgba(0, 0, 0, 0.4);
+    font-family: var(--ui);
+  }
+  .moon-close {
+    font-family: var(--ui); cursor: pointer;
+    border: 1.5px solid var(--cn); background: transparent; color: var(--cn);
+    font-size: 18px; letter-spacing: 0.1em; padding: 8px 20px; border-radius: 3px;
+  }
+  .moon-close:hover { background: var(--cn); color: #FAF6EE; }
+  .mc-top { position: absolute; top: 26px; right: 30px; }
+  .mc-bottom { display: block; margin: 26px auto 0; font-size: 20px; padding: 12px 44px; }
+  .moon-kicker { font-size: 15px; letter-spacing: 0.3em; color: var(--cn); margin-bottom: 6px; }
+  .moon-title {
+    font-family: var(--kai); font-size: clamp(40px, 4.5vw, 58px); font-weight: 700;
+    text-align: center; letter-spacing: 0.2em; margin-top: 4px;
+  }
+  .moon-author {
+    text-align: center; font-family: var(--kai);
+    font-size: clamp(18px, 1.8vw, 24px); color: var(--ink2); margin: 6px 0 18px;
+  }
+  .moon-poem {
+    font-family: var(--kai); font-size: clamp(24px, 2.6vw, 36px);
+    line-height: 1.9; text-align: center; letter-spacing: 0.12em; margin-bottom: 22px;
+  }
+  .moon-sec { margin-bottom: 20px; }
+  .moon-sec h3 {
+    font-family: var(--kai); font-size: clamp(20px, 2vw, 26px); color: var(--cn);
+    letter-spacing: 0.25em; border-bottom: 1px solid var(--line);
+    padding-bottom: 8px; margin-bottom: 12px;
+  }
+  .moon-notes { padding-left: 24px; }
+  .moon-notes li, .moon-sec p, .moon-list li {
+    font-size: clamp(15px, 1.5vw, 20px); line-height: 1.75; color: var(--ink);
+  }
+  .moon-list { padding-left: 24px; }
+  .moon-list li { margin-bottom: 6px; }
+  .moon-list li b { color: var(--cn); font-family: var(--kai); }
+  .moon-hl { background: var(--cn-soft); padding: 10px 16px; border-radius: 3px; }
+  .moon-sec p b { color: var(--cn); }
+  .moon-bridge {
+    border-top: 1.5px dashed rgba(176, 58, 46, 0.38); margin-top: 8px; padding-top: 14px;
+    text-align: center; font-size: clamp(14px, 1.4vw, 18px); color: var(--ink2);
+  }
+</style>
+
+</head>
+<body>
+
+<deck-stage>
+
+  <!-- 01 封面 -->
+  <section data-screen-label="01 封面">
+    <div class="wrap cover">
+      <div class="cover-kicker">统编版必修上册 · 第二单元 · 第6课</div>
+      <div class="cover-title">芣苢<span class="dot">·</span>插秧歌</div>
+      <div class="cover-src">《诗经 · 周南》 ／ 宋 · 杨万里</div>
+      <div class="cover-route">诵读<span class="arr">→</span>镜头<span class="arr">→</span>品鉴<span class="arr">→</span>立意</div>
+      <div class="cover-sub">对比赏读 · 回响在历史中的劳动之歌</div>
+      <div class="seal">劳</div>
+    </div>
+  </section>
+
+  <!-- 02 路线 -->
+  <section data-screen-label="02 路线">
+    <div class="wrap">
+      <div class="hd"><span>第6课｜芣苢 · 插秧歌</span><span>定向</span></div>
+      <div class="body">
+        <div class="route-title">这节课，怎么走</div>
+        <div class="route-steps">
+          <div class="rstep">
+            <div class="no">壹</div>
+            <div class="nm">确认基调</div>
+            <div class="ds">自由读 · 齐读<br>把握感情基调</div>
+            <div class="tm">≈5′</div>
+          </div>
+          <div class="route-arr">→</div>
+          <div class="rstep">
+            <div class="no">贰</div>
+            <div class="nm">设计镜头</div>
+            <div class="ds">特写镜头展诗境<br>动作里见艺术</div>
+            <div class="tm">≈15′</div>
+          </div>
+          <div class="route-arr">→</div>
+          <div class="rstep">
+            <div class="no">叁</div>
+            <div class="nm">阐述立意</div>
+            <div class="ds">比异同 · 提炼<br>劳动的价值观</div>
+            <div class="tm">≈10′</div>
+          </div>
+        </div>
+        <div class="route-tail">情景任务：<b>拍一部劳动主题微视频</b> · 全程以“小导演”身份完成任务</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 导入 -->
+  <section data-screen-label="03 导入">
+    <div class="wrap">
+      <div class="hd"><span>第6课｜芣苢 · 插秧歌</span><span>导入 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="kicker">导 · 来自远古的绝响</div>
+        <div style="font-size:33px; line-height:2; max-width:1450px">
+          <p style="font-family:var(--kai); font-size:44px; margin-bottom:36px">“民生在勤，勤则不匮。”</p>
+          <p>劳动，是中华民族绵延千年的血脉基因，也是幸福生活的源泉。</p>
+          <p>从《击壤歌》的“日出而作，日入而息”，到《诗经》中的采撷吟唱，再到宋人笔下的插秧图景——那些回荡在田间地头的歌谣，始终是我们民族血液中最滚烫的乐章。</p>
+          <p style="margin-top:30px">今天，让我们一同走进《芣苢》与《插秧歌》，聆听远古的劳动回响，感受<b style="color:var(--cn)">跨越时空的劳动之美</b>。</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 情景任务 -->
+  <section data-screen-label="04 情景任务">
+    <div class="wrap">
+      <div class="hd"><span>第6课｜芣苢 · 插秧歌</span><span>情景任务</span></div>
+      <div class="body">
+        <div class="kicker">学习任务 · 情景导入</div>
+        <div class="task-big" style="margin-bottom:60px">我校举行<em>“诵千年经典，品劳动之美”</em>系列活动<br>我们班决定以<em>拍摄短视频</em>的方式参与</div>
+        <div style="display:flex; gap:40px; justify-content:center; margin-bottom:56px">
+          <div style="border:2px solid var(--cn); border-radius:6px; padding:22px 44px; font-size:32px; font-family:var(--kai); font-weight:700">拍摄选题：两首诗描绘的劳动场景</div>
+        </div>
+        <div class="route-steps" style="max-width:1400px; margin:0 auto">
+          <div class="rstep">
+            <div class="no">任务一</div>
+            <div class="nm" style="font-size:44px">确认基调</div>
+            <div class="ds">视频的感情基调</div>
+          </div>
+          <div class="rstep">
+            <div class="no">任务二</div>
+            <div class="nm" style="font-size:44px">设计画面</div>
+            <div class="ds">设计并录制视频画面</div>
+          </div>
+          <div class="rstep">
+            <div class="no">任务三</div>
+            <div class="nm" style="font-size:44px">阐述意图</div>
+            <div class="ds">视频录制意图</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 学习目标 -->
+  <section data-screen-label="05 学习目标">
+    <div class="wrap">
+      <div class="hd"><span>第6课｜芣苢 · 插秧歌</span><span>学习目标</span></div>
+      <div class="body">
+        <div class="kicker">这节课，要达成三件事</div>
+        <div class="deep-item" style="margin-bottom:56px">
+          <div class="dline"><span class="dn">目标一</span>想象诗歌画面，体会诗歌情感</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">课堂上达成后再点开 · 对照自查</div>
+            <div class="rv-body"><div class="dnote">能在诵读中说出画面里的<b>人和事</b>，并用词概括情绪。</div></div>
+          </div></div>
+        </div>
+        <div class="deep-item" style="margin-bottom:56px">
+          <div class="dline"><span class="dn">目标二</span>鉴赏表现艺术，品味诗歌魅力</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">课堂上达成后再点开 · 对照自查</div>
+            <div class="rv-body"><div class="dnote">能指认<b>重章叠句、动词白描、比喻衬托</b>等手法并结合诗句分析。</div></div>
+          </div></div>
+        </div>
+        <div class="deep-item">
+          <div class="dline"><span class="dn">目标三</span>感受劳动之美，认识劳动价值</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">课堂上达成后再点开 · 对照自查</div>
+            <div class="rv-body"><div class="dnote">能比较两首诗的异同，说出自己对<b>劳动价值</b>的理解。</div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 活动一：诵读 -->
+  <section data-screen-label="06 活动一·诵读">
+    <div class="wrap">
+      <div class="hd"><span>学习活动一｜确认感情基调</span><span>诵读 <b style="color:var(--cn)">≈4′</b></span></div>
+      <div class="body">
+        <div class="qa" style="margin-bottom:50px">
+          <div class="q"><span class="qn">第一步</span>自由朗读——根据你的理解，有感情朗读这两首诗</div>
+        </div>
+        <div class="qa" style="margin-bottom:50px">
+          <div class="q"><span class="qn">第二步</span>齐读——女生《芣苢》，男生《插秧歌》</div>
+        </div>
+        <div class="qa">
+          <div class="q"><span class="qn">第三步</span>边读边想——这两首诗的情感基调是什么？</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">先自由读、齐读，再点击出示任务</div>
+            <div class="rv-body">
+              <div class="dnote" style="font-size:31px; padding-left:0">作为导演，你要为视频定调：《芣苢》配什么样的画面与音乐？《插秧歌》呢？<b>带着这个问题进入下一页诵读。</b></div>
+            </div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 诵·芣苢 -->
+  <section data-screen-label="07 诵·芣苢">
+    <div class="wrap">
+      <div class="hd"><span>学习活动一｜确认感情基调</span><span>诵 · 《芣苢》 <b style="color:var(--cn)">≈3′</b></span></div>
+      <div class="body">
+        <div class="poem-title">芣 苢<span>《诗经 · 周南》</span></div>
+        <div class="poem">
+          采采芣苢，薄言采之。采采芣苢，薄言有之。<br>
+          采采芣苢，薄言掇之。采采芣苢，薄言捋之。<br>
+          采采芣苢，薄言袺之。采采芣苢，薄言襭之。
+        </div>
+        <div class="poem-note">朗诵《芣苢》，注意把握诗歌的<b>节奏</b>——四字二拍：“采采／芣苢，薄言／采之”</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 诵·插秧歌 -->
+  <section data-screen-label="08 诵·插秧歌">
+    <div class="wrap">
+      <div class="hd"><span>学习活动一｜确认感情基调</span><span>诵 · 《插秧歌》 <b style="color:var(--cn)">≈3′</b></span></div>
+      <div class="body">
+        <div class="poem-title">插秧歌<span>宋 · 杨万里</span></div>
+        <div class="poem small">
+          田夫抛秧田妇接，小儿拔秧大儿插。<br>
+          笠是兜鍪蓑是甲，雨从头上湿到胛。<br>
+          唤渠朝餐歇半霎，低头折腰只不答。<br>
+          秧根未牢莳未匝，照管鹅儿与雏鸭。
+        </div>
+        <div class="poem-note">朗诵《插秧歌》，注意把握诗歌的<b>节奏</b>——七言三拍：“田夫／抛秧／田妇接”</div>
+        <div class="handout">
+          <div class="hb-tag">正音</div>
+          <div class="hb-body"><b>兜鍪</b>（dōu móu）头盔 ／ <b>胛</b>（jiǎ）肩胛 ／ <b>莳</b>（shì）移栽种植 ／ <b>匝</b>（zā）完毕</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 基调·导演提问 -->
+  <section data-screen-label="09 基调·导演之问">
+    <div class="wrap">
+      <div class="hd"><span>学习活动一｜确认感情基调</span><span>导演之问 <b style="color:var(--cn)">≈3′</b></span></div>
+      <div class="body">
+        <div class="mq-big">作为导演，你如何把握两首诗的<em>情感基调</em>，<br>用以指导视频的整体风格？</div>
+        <div class="mq-subs"><span>《芣苢》</span><span>《插秧歌》</span></div>
+        <div class="rv-slot-wrap" style="padding-left:0; display:flex; justify-content:center"><div class="rv"><div class="rv-slot">学生发言后，点击出示参考</div>
+          <div class="rv-body">
+            <div style="display:flex; gap:50px; justify-content:center; margin-top:26px">
+              <div style="text-align:center; border:2px solid var(--cn); border-radius:6px; padding:20px 50px">
+                <div style="font-size:26px; color:var(--ink2); letter-spacing:0.2em; margin-bottom:10px">芣 苢</div>
+                <div style="font-family:var(--kai); font-size:52px; font-weight:700; color:var(--cn)">轻快 · 欢乐</div>
+                <div style="font-size:24px; color:var(--ink2); margin-top:12px">画面明亮 · 音乐轻盈 · 节奏舒缓</div>
+              </div>
+              <div style="text-align:center; border:2px solid var(--cn); border-radius:6px; padding:20px 50px">
+                <div style="font-size:26px; color:var(--ink2); letter-spacing:0.2em; margin-bottom:10px">插秧歌</div>
+                <div style="font-family:var(--kai); font-size:52px; font-weight:700; color:var(--cn)">紧张 · 投入</div>
+                <div style="font-size:24px; color:var(--ink2); margin-top:12px">画面真切 · 雨声急促 · 节奏紧凑</div>
+              </div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 活动二：任务说明 -->
+  <section data-screen-label="10 活动二·导演任务">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜设计镜头展诗境</span><span>导演任务</span></div>
+      <div class="body">
+        <div class="task-big">现在要把两首诗分别拍成<em>微视频</em>，<br>歌词就是这两首诗</div>
+        <div class="task-sub" style="margin-top:60px">假如你是宣传视频的小导演，为了使视频更加吸引观众，<br>需要增加几个<b>特写镜头</b>——你会选择哪些特写镜头？<b style="color:var(--cn)">请说明理由。</b></div>
+        <div class="handout" style="margin-top:70px">
+          <div class="hb-tag">提示</div>
+          <div class="hb-body">特写＝把镜头对准<b>局部</b>：一只手、一张脸、一滴雨、一个动作——先回到诗句里找<b>最打动你的细节</b>，再说明它为什么值得拍。</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 芣苢·手部特写 -->
+  <section data-screen-label="11 芣苢·手部特写">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜聚焦《芣苢》特写镜头</span><span>手部特写组图</span></div>
+      <div class="body">
+        <div class="kicker">手部特写组图 · 展现六个动词的完整动作</div>
+        <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:30px; margin-top:10px">
+          <div style="border:1.5px solid var(--line); border-radius:6px; padding:24px 28px; background:rgba(255,255,255,.4)">
+            <div style="font-family:var(--kai); font-size:46px; font-weight:700; color:var(--cn)">采<span style="font-size:24px; color:var(--ink2); margin-left:16px; font-weight:400">lián 之</span></div>
+            <div style="font-size:24px; line-height:1.7; color:var(--ink); margin-top:10px">阳光暖煦的田间，身着素雅米白襦裙的古装女子弯腰采摘芣苢，鲜绿的车前草铺满田垄。</div>
+          </div>
+          <div style="border:1.5px solid var(--line); border-radius:6px; padding:24px 28px; background:rgba(255,255,255,.4)">
+            <div style="font-family:var(--kai); font-size:46px; font-weight:700; color:var(--cn)">有</div>
+            <div style="font-size:24px; line-height:1.7; color:var(--ink); margin-top:10px">她眉眼带笑，身旁竹篮里已盛了不少采撷的芣苢，草叶上沾着晨露。</div>
+          </div>
+          <div style="border:1.5px solid var(--line); border-radius:6px; padding:24px 28px; background:rgba(255,255,255,.4)">
+            <div style="font-family:var(--kai); font-size:46px; font-weight:700; color:var(--cn)">掇</div>
+            <div style="font-size:24px; line-height:1.7; color:var(--ink); margin-top:10px">她蹲身俯身，拇指食指精准摘取草穗，动作轻快利落。</div>
+          </div>
+          <div style="border:1.5px solid var(--line); border-radius:6px; padding:24px 28px; background:rgba(255,255,255,.4)">
+            <div style="font-family:var(--kai); font-size:46px; font-weight:700; color:var(--cn)">捋</div>
+            <div style="font-size:24px; line-height:1.7; color:var(--ink); margin-top:10px">她手持芣苢茎秆，指尖顺着草叶轻轻捋下，草穗簌簌落入掌心。</div>
+          </div>
+          <div style="border:1.5px solid var(--line); border-radius:6px; padding:24px 28px; background:rgba(255,255,255,.4)">
+            <div style="font-family:var(--kai); font-size:46px; font-weight:700; color:var(--cn)">袺</div>
+            <div style="font-size:24px; line-height:1.7; color:var(--ink); margin-top:10px">她将满捧芣苢拢入衣襟兜起，衣袂轻拢草木。</div>
+          </div>
+          <div style="border:1.5px solid var(--line); border-radius:6px; padding:24px 28px; background:rgba(255,255,255,.4)">
+            <div style="font-family:var(--kai); font-size:46px; font-weight:700; color:var(--cn)">襭</div>
+            <div style="font-size:24px; line-height:1.7; color:var(--ink); margin-top:10px">侧身将衣襟中的芣苢掖入腰带间，动作温婉娴熟。</div>
+          </div>
+        </div>
+        <div class="handout" style="margin-top:26px">
+          <div class="hb-tag">正音</div>
+          <div class="hb-body"><b>掇</b>（duō）拾取 ／ <b>捋</b>（luō）用手握物向一端滑动 ／ <b>袺</b>（jié）用衣襟兜起来 ／ <b>襭</b>（xié）把衣襟插在腰带上兜住</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 芣苢·动词探究 -->
+  <section data-screen-label="12 芣苢·动词探究">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜聚焦《芣苢》特写镜头</span><span>探究 <b style="color:var(--cn)">≈4′</b></span></div>
+      <div class="body">
+        <div class="mq-big" style="font-size:64px">纵观六个动词，<em>可以调换顺序吗？</em><br>展现了怎样的劳动场景？</div>
+        <div class="rv-slot-wrap" style="padding-left:0; display:flex; justify-content:center; margin-top:40px"><div class="rv"><div class="rv-slot">学生讨论后，点击出示参考</div>
+          <div class="rv-body">
+            <div style="text-align:center; margin-top:20px">
+              <div style="font-family:var(--kai); font-size:44px; font-weight:700; line-height:1.7">采 → 有 → 掇 → 捋 → 袺 → 襭</div>
+              <div style="font-size:30px; color:var(--ink); margin-top:24px; line-height:1.8">不能调换：从<b style="color:var(--cn)">单手采摘</b>到<b style="color:var(--cn)">成把捋取</b>，从<b style="color:var(--cn)">衣襟兜起</b>到<b style="color:var(--cn)">掖腰带收存</b>——<br>越采越快，越采越多，<b style="color:var(--cn)">收获满满</b>。这是完整的<b style="color:var(--cn)">劳动过程</b>，也是绵延的<b style="color:var(--cn)">劳动欢乐</b>。</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 芣苢·重章叠句 -->
+  <section data-screen-label="13 芣苢·重章叠句">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜聚焦《芣苢》特写镜头</span><span>追问 <b style="color:var(--cn)">≈4′</b></span></div>
+      <div class="body">
+        <div class="mq-big" style="font-size:58px">明明 6 个动词就可以描述的场景，<br>为什么要用 <em>48 个字</em>呢？</div>
+        <div style="text-align:center; font-family:var(--kai); font-size:26px; color:var(--ink2); margin:24px 0; line-height:1.9">
+          采采芣苢，采之，有之，掇之，捋之，袺之，襭之<br>——若精简如此，还剩什么？
+        </div>
+        <div class="rv-slot-wrap" style="padding-left:0; display:flex; justify-content:center"><div class="rv"><div class="rv-slot">学生发言后，点击出示</div>
+          <div class="rv-body">
+            <div style="border:2px solid var(--cn); border-radius:6px; padding:26px 50px; font-size:31px; line-height:1.9; margin-top:16px">
+              <span style="font-family:var(--kai); font-size:44px; font-weight:700; color:var(--cn)">重章叠句</span><br>
+              在不断的重叠中，产生<b style="color:var(--cn)">简单明快、回环往复的音乐感</b>；六个动词的渐变，生动表现了芣苢越采越多、越采越快直到满载而归的<b style="color:var(--cn)">场景美</b>，和采摘时的<b style="color:var(--cn)">情感美</b>。
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 14 芣苢·另三组镜头 -->
+  <section data-screen-label="14 芣苢·另三组镜头">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜聚焦《芣苢》特写镜头</span><span>更多镜头 · 学生生成</span></div>
+      <div class="body">
+        <div class="kicker">除手部特写，你的分镜方案里还可以有——</div>
+        <div class="deep-item" style="margin-bottom:44px">
+          <div class="dline" style="font-size:44px"><span class="dn">镜头组一</span>面部特写</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生先说 · 点击出示参考</div>
+            <div class="rv-body"><div class="dnote">妇女们三五成群，面带轻松愉悦的笑容——传递劳动中<b>发自内心的欢乐</b>，与“群歌互答”的文本相呼应。</div></div>
+          </div></div>
+        </div>
+        <div class="deep-item" style="margin-bottom:44px">
+          <div class="dline" style="font-size:44px"><span class="dn">镜头组二</span>环境空镜</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生先说 · 点击出示参考</div>
+            <div class="rv-body"><div class="dnote">和煦的阳光、茂盛的芣苢草、广阔的田野——渲染<b>明朗美好的劳动氛围</b>，体现“风和日丽”的诗意背景。</div></div>
+          </div></div>
+        </div>
+        <div class="deep-item">
+          <div class="dline" style="font-size:44px"><span class="dn">镜头组三</span>丰收镜头</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生先说 · 点击出示参考</div>
+            <div class="rv-body"><div class="dnote">从空篮到满篮，最后衣裙兜满芣苢——直观展现劳动成果，凸显<b>“收获”的满足与喜悦</b>。</div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 15 芣苢·品·方玉润 -->
+  <section data-screen-label="15 芣苢·品读名家">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜聚焦《芣苢》特写镜头</span><span>品 · 名家点评 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="kicker">品 · 清人方玉润《诗经原始》如是说</div>
+        <div style="font-family:var(--kai); font-size:40px; line-height:2.1; text-align:center; margin-top:20px">
+          “读者试平心静气涵咏此诗，恍听田家妇女，<br>三三五五，于平原绣野、风和日丽中，<br><span style="color:var(--cn)">群歌互答，余音袅袅，若远若近，忽断忽续</span>，<br>不知其情之何以移，而神何以旷。”
+        </div>
+        <div class="poem-note" style="margin-top:50px">你的手部特写、面部特写、环境空镜，拍出这种<b>“恍听”之感</b>了吗？</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 16 插秧歌·动作快剪 -->
+  <section data-screen-label="16 插秧歌·动作快剪">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜聚焦《插秧歌》特写镜头</span><span>动作快剪 <b style="color:var(--cn)">≈4′</b></span></div>
+      <div class="body">
+        <div class="kicker">动作快剪 · 快速切换四个动词镜头</div>
+        <div class="chain" style="font-size:58px; margin:30px 0 50px">
+          <span>抛秧</span><span class="c-arr">→</span><span>接秧</span><span class="c-arr">→</span><span>拔秧</span><span class="c-arr">→</span><span>插秧</span>
+        </div>
+        <div class="rv-slot-wrap" style="padding-left:0"><div class="rv"><div class="rv-slot">先说这组快剪该怎么拍 · 点击出示解析</div>
+          <div class="rv-body">
+            <div style="border-left:4px solid var(--cn); background:var(--cn-soft); padding:22px 32px; font-size:29px; line-height:1.9">
+              <b style="color:var(--cn)">白描勾勒图景：</b>通过“抛”“接”“拔”“插”四个动词，用语直白却极为传神地描绘出<b>全家老少齐上阵、为抢农时忙碌不停</b>的场景。
+            </div>
+          </div>
+        </div></div>
+        <div class="poem-note" style="margin-top:36px">思考：一家四口，为什么人人都有活干、谁也停不下来？——<b style="color:var(--cn)">分工即紧张</b></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 17 插秧歌·雨中特写 -->
+  <section data-screen-label="17 插秧歌·雨中特写">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜聚焦《插秧歌》特写镜头</span><span>雨中特写 <b style="color:var(--cn)">≈4′</b></span></div>
+      <div class="body">
+        <div class="kicker">雨中特写 · 雨点打在斗笠蓑衣上，汗水与雨水交织的脸庞</div>
+        <div class="poem small" style="margin:6px 0 34px">
+          <span style="color:var(--cn); font-weight:700">笠是兜鍪蓑是甲，雨从头上湿到胛。</span>
+        </div>
+        <div class="deep-item" style="margin-bottom:40px">
+          <div class="dline" style="font-size:42px"><span class="dn">手法</span>比喻传达精神</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生先说 · 点击出示</div>
+            <div class="rv-body"><div class="dnote">诗人别出心裁地将<b>斗笠比作头盔</b>、<b>蓑衣比作铠甲</b>——人如战士，田如战场，暗示冒雨插秧恰如一场<b>紧张、持久而艰辛的战斗</b>。</div></div>
+          </div></div>
+        </div>
+        <div class="deep-item">
+          <div class="dline" style="font-size:42px"><span class="dn">作用</span>环境衬托艰辛</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">学生先说 · 点击出示</div>
+            <div class="rv-body"><div class="dnote">“雨从头上湿到胛”写出<b>雨势之猛</b>——恶劣天气里插秧不辍，见出农人的<b>艰辛</b>与<b>吃苦耐劳的忙碌精神</b>。</div></div>
+          </div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 18 插秧歌·小结提问 -->
+  <section data-screen-label="18 插秧歌·劳动特点">
+    <div class="wrap">
+      <div class="hd"><span>学习活动二｜小结</span><span>思考 <b style="color:var(--cn)">≈5′</b></span></div>
+      <div class="body">
+        <div class="mq-big" style="font-size:52px">从《插秧歌》中你体会到劳动的什么特点？<br><em>和《芣苢》一样轻松快乐吗？</em></div>
+        <div class="task-sub" style="margin-top:30px; margin-bottom:40px">（<b style="color:var(--cn)">用一个词概括特点</b>，结合诗句具体分析）</div>
+        <div class="rv-slot-wrap" style="padding-left:0; display:flex; justify-content:center"><div class="rv"><div class="rv-slot">学生概括后，点击出示五个参考角度</div>
+          <div class="rv-body">
+            <div style="display:grid; grid-template-columns:repeat(2,1fr); gap:16px 40px; font-size:26px; line-height:1.6; margin-top:10px">
+              <div><b style="color:var(--cn); font-family:var(--kai); font-size:32px">繁忙</b>——田夫抛、田妇接、小儿拔、大儿插，一家人都在劳动。</div>
+              <div><b style="color:var(--cn); font-family:var(--kai); font-size:32px">紧张</b>——“笠是兜鍪蓑是甲”，雨中插秧如战斗，与老天抢时间。</div>
+              <div><b style="color:var(--cn); font-family:var(--kai); font-size:32px">辛苦</b>——“唤渠朝餐歇半霎”，一大早干活至今，饭顾不上吃、歇不肯歇。</div>
+              <div><b style="color:var(--cn); font-family:var(--kai); font-size:32px">担心</b>——“秧根未牢莳未匝”，怕误农时，又怕鹅儿雏鸭糟蹋秧田。</div>
+              <div style="grid-column:1 / -1"><b style="color:var(--cn); font-family:var(--kai); font-size:32px">和谐</b>——一家人齐心协力、秩序井然，忙碌中见温情。</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 19 活动三：异同比较 -->
+  <section data-screen-label="19 活动三·比异同">
+    <div class="wrap">
+      <div class="hd"><span>学习活动三｜阐述录制意图</span><span>比异同 <b style="color:var(--cn)">≈6′</b></span></div>
+      <div class="body">
+        <div class="kicker">编者为什么把这两首古诗放在一起？请思考异同</div>
+        <div style="display:grid; grid-template-columns:170px 1fr 1fr; gap:0; border:2px solid var(--cn); border-radius:6px; overflow:hidden; font-size:26px">
+          <div style="background:var(--cn); color:#FAF6EE; padding:16px 20px; font-weight:700; letter-spacing:0.2em; display:flex; align-items:center; justify-content:center">比较项</div>
+          <div style="background:var(--cn); color:#FAF6EE; padding:16px 20px; font-weight:700; letter-spacing:0.2em; display:flex; align-items:center; justify-content:center">《芣苢》</div>
+          <div style="background:var(--cn); color:#FAF6EE; padding:16px 20px; font-weight:700; letter-spacing:0.2em; display:flex; align-items:center; justify-content:center">《插秧歌》</div>
+
+          <div style="padding:16px 20px; border-top:1px solid var(--line); font-family:var(--kai); font-weight:700">劳动画面</div>
+          <div style="padding:16px 20px; border-top:1px solid var(--line)" class="cell-rv1"><span class="rv-inline" data-rv="1">▸ 点击出示</span></div>
+          <div style="padding:16px 20px; border-top:1px solid var(--line)" class="cell-rv2"><span class="rv-inline" data-rv="1">▸ 点击出示</span></div>
+
+          <div style="padding:16px 20px; border-top:1px solid var(--line); font-family:var(--kai); font-weight:700">艺术手法</div>
+          <div style="padding:16px 20px; border-top:1px solid var(--line)" class="cell-rv3"><span class="rv-inline" data-rv="2">▸ 点击出示</span></div>
+          <div style="padding:16px 20px; border-top:1px solid var(--line)" class="cell-rv4"><span class="rv-inline" data-rv="2">▸ 点击出示</span></div>
+
+          <div style="padding:16px 20px; border-top:1px solid var(--line); font-family:var(--kai); font-weight:700">情感表达</div>
+          <div style="padding:16px 20px; border-top:1px solid var(--line)" class="cell-rv5"><span class="rv-inline" data-rv="3">▸ 点击出示</span></div>
+          <div style="padding:16px 20px; border-top:1px solid var(--line)" class="cell-rv6"><span class="rv-inline" data-rv="3">▸ 点击出示</span></div>
+        </div>
+        <div class="rv-slot-wrap" style="padding-left:0; margin-top:26px; display:flex; justify-content:center"><div class="rv"><div class="rv-slot">全班交流后 · 点击出示相同点</div>
+          <div class="rv-body">
+            <div style="text-align:center; font-size:30px; margin-top:8px"><b style="color:var(--cn)">相同点：</b>① 主题相同——都写劳动；② 都擅用<b style="color:var(--cn)">动词</b>刻画劳动情境</div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 20 活动三：多元面相 -->
+  <section data-screen-label="20 活动三·小结升格">
+    <div class="wrap">
+      <div class="hd"><span>学习活动三｜阐述录制意图</span><span>小结 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="task-big" style="font-size:60px">两首诗从不同角度<br>共同描绘了<em>劳动的多元面相</em></div>
+        <div style="display:flex; gap:60px; justify-content:center; margin-top:70px">
+          <div style="text-align:center">
+            <div style="font-family:var(--kai); font-size:50px; font-weight:700; color:var(--cn)">收获的欢愉</div>
+            <div style="font-size:26px; color:var(--ink2); margin-top:14px">《芣苢》· 欢歌</div>
+          </div>
+          <div style="font-size:60px; color:var(--cn); align-self:center">＋</div>
+          <div style="text-align:center">
+            <div style="font-family:var(--kai); font-size:50px; font-weight:700; color:var(--cn)">付出的艰辛</div>
+            <div style="font-size:26px; color:var(--ink2); margin-top:14px">《插秧歌》· 颂歌</div>
+          </div>
+        </div>
+        <div class="poem-note" style="margin-top:60px">但都洋溢着<b>积极的劳动精神</b>——这就是你视频里要传递的东西。</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 21 活动三：价值观 -->
+  <section data-screen-label="21 活动三·价值观">
+    <div class="wrap">
+      <div class="hd"><span>学习活动三｜阐述录制意图</span><span>立意 <b style="color:var(--cn)">≈5′</b></span></div>
+      <div class="body">
+        <div class="mq-big" style="font-size:56px">作为导演，你想在视频中<br>传递什么样的<em>价值观</em>？</div>
+        <div class="rv-slot-wrap" style="padding-left:0; display:flex; justify-content:center; margin-top:44px"><div class="rv"><div class="rv-slot">学生阐述后，点击出示三个参考方向</div>
+          <div class="rv-body">
+            <div style="display:flex; flex-direction:column; gap:24px; margin-top:14px">
+              <div style="border:1.5px solid var(--line); border-radius:6px; padding:20px 34px; font-size:28px; line-height:1.7"><b style="color:var(--cn); font-family:var(--kai); font-size:34px">劳动创造幸福</b>　劳动虽艰辛，但能带来物质与精神的双重财富，是幸福生活的源泉。</div>
+              <div style="border:1.5px solid var(--line); border-radius:6px; padding:20px 34px; font-size:28px; line-height:1.7"><b style="color:var(--cn); font-family:var(--kai); font-size:34px">奋斗成就人生</b>　在劳动中磨砺意志、坚定信念，才能实现个人价值，感受奋斗的荣光。</div>
+              <div style="border:1.5px solid var(--line); border-radius:6px; padding:20px 34px; font-size:28px; line-height:1.7"><b style="color:var(--cn); font-family:var(--kai); font-size:34px">精神值得礼赞</b>　中华民族吃苦耐劳、勤奋乐观的劳动精神，跨越古今，值得永远歌颂。</div>
+            </div>
+          </div>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 22 总结 -->
+  <section data-screen-label="22 总结">
+    <div class="wrap">
+      <div class="hd"><span>第6课｜芣苢 · 插秧歌</span><span>总结 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="task-big" style="font-size:56px; line-height:1.9">劳动是辛苦繁忙<br>但劳动者们在辛苦中<em>收获快乐</em></div>
+        <div class="poem-note" style="margin-top:50px; font-size:32px; line-height:2">
+          劳动带来了<b>物质和精神双重财富</b>，帮助我们实现自我价值——<br>于是，也就生出了<b style="color:var(--cn)">美</b>。
+        </div>
+        <div class="seal" style="position:absolute; right:150px; bottom:110px">劳</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 23 背诵·芣苢 -->
+  <section data-screen-label="23 背诵·芣苢">
+    <div class="wrap">
+      <div class="hd"><span>当堂成诵｜芣苢</span><span>降支架背诵 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="recite" id="recite-qy">
+          <div class="poem small">
+            <span class="f">采采芣苢，</span><span class="x">薄言</span><span class="e">采之。</span><br>
+            <span class="f">采采芣苢，</span><span class="x">薄言</span><span class="e">有之。</span><br>
+            <span class="f">采采芣苢，</span><span class="x">薄言</span><span class="e">掇之。</span><br>
+            <span class="f">采采芣苢，</span><span class="x">薄言</span><span class="e">捋之。</span><br>
+            <span class="f">采采芣苢，</span><span class="x">薄言</span><span class="e">袺之。</span><br>
+            <span class="f">采采芣苢，</span><span class="x">薄言</span><span class="e">襭之。</span>
+          </div>
+          <div class="lv-btns">
+            <button class="lv-btn on" data-lv="0">全显</button>
+            <button class="lv-btn" data-lv="1">遮动词</button>
+            <button class="lv-btn" data-lv="2">留“采采”</button>
+            <button class="lv-btn" data-lv="3">全遮</button>
+          </div>
+          <div class="recite-tip"><b>遮动词</b>＝我读起句，你接动词 ｜ <b>留“采采”</b>＝只凭“采采芣苢”背全句 ｜ <b>全遮</b>＝合书背诵</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 24 背诵·插秧歌 -->
+  <section data-screen-label="24 背诵·插秧歌">
+    <div class="wrap">
+      <div class="hd"><span>当堂成诵｜插秧歌</span><span>降支架背诵 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="recite" id="recite-cyg">
+          <div class="poem small">
+            <span class="f">田夫</span><span class="x">抛秧</span><span class="e">田妇接，</span>
+            <span class="f">小儿</span><span class="x">拔秧</span><span class="e">大儿插。</span><br>
+            <span class="f">笠是</span><span class="x">兜鍪</span><span class="e">蓑是甲，</span>
+            <span class="f">雨从</span><span class="x">头上</span><span class="e">湿到胛。</span><br>
+            <span class="f">唤渠</span><span class="x">朝餐</span><span class="e">歇半霎，</span>
+            <span class="f">低头</span><span class="x">折腰</span><span class="e">只不答。</span><br>
+            <span class="f">秧根</span><span class="x">未牢</span><span class="e">莳未匝，</span>
+            <span class="f">照管</span><span class="x">鹅儿</span><span class="e">与雏鸭。</span>
+          </div>
+          <div class="lv-btns">
+            <button class="lv-btn on" data-lv="0">全显</button>
+            <button class="lv-btn" data-lv="1">遮句尾</button>
+            <button class="lv-btn" data-lv="2">留前四字</button>
+            <button class="lv-btn" data-lv="3">全遮</button>
+          </div>
+          <div class="recite-tip"><b>遮句尾</b>＝我读前半句，你接后半 ｜ <b>留前四字</b>＝只凭开头背全句 ｜ <b>全遮</b>＝合书背诵</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 25 当堂检测 -->
+  <section data-screen-label="25 当堂检测">
+    <div class="wrap">
+      <div class="hd"><span>第6课｜芣苢 · 插秧歌</span><span>当堂检测 <b style="color:var(--cn)">≈2′</b></span></div>
+      <div class="body">
+        <div class="kicker">当堂检测 · 写在课本空白处 · 同桌互批</div>
+        <div class="ctest">
+          <div class="ct-q"><span class="src">其一</span>《芣苢》中，写用衣襟兜装、插腰收存芣苢的两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div>
+            <div class="rv-body">采采芣苢，薄言袺之。采采芣苢，薄言襭之。</div>
+          </div></div>
+        </div>
+        <div class="ctest">
+          <div class="ct-q"><span class="src">其二</span>《插秧歌》中，运用比喻把插秧比作战斗的两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div>
+            <div class="rv-body">笠是兜鍪蓑是甲，雨从头上湿到胛。</div>
+          </div></div>
+        </div>
+        <div class="ctest">
+          <div class="ct-q"><span class="src">其三</span>《插秧歌》中，呼应“抢农时”、叮嘱看管鹅鸭的两句：＿＿＿＿＿＿，＿＿＿＿＿＿。</div>
+          <div class="rv-slot-wrap"><div class="rv"><div class="rv-slot">互批时，点击出示答案</div>
+            <div class="rv-body">秧根未牢莳未匝，照管鹅儿与雏鸭。</div>
+          </div></div>
+        </div>
+        <div class="poem-note" style="margin-top:6px">错字，订正三遍</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 26 作业收束 -->
+  <section data-screen-label="26 作业收束">
+    <div class="wrap">
+      <div class="hd"><span>第6课｜芣苢 · 插秧歌</span><span>作业 · 收束</span></div>
+      <div class="body">
+        <div class="hw-block">
+          <h3><span>基础 · 全员</span>背诵巩固</h3>
+          <p>两首诗<b>各背诵一遍</b>并默写，自批订正；<b>明日课前抽背</b>。</p>
+        </div>
+        <div class="hw-block">
+          <h3><span>实践 · 小组</span>完成短视频拍摄</h3>
+          <p>以学习小组为单位，从两首诗中<b>选择一首</b>，合作拍摄一个表现劳动场景的短视频。可从网上搜集资源，也可加入你们的表演；<b>要将诗句中动词所描写的劳动行为展现出来</b>；时长不超过三分钟。</p>
+        </div>
+        <div class="hw-end">一采一插，古今同歌——<em>劳动本身，就是诗。</em></div>
+        <div class="seal" style="position:absolute; right:150px; bottom:100px">劳</div>
+      </div>
+    </div>
+  </section>
+
+</deck-stage>
+
+<script>
+/* ===== 表格单元格点击出示（活动三异同表） ===== */
+(function() {
+  var answers = {
+    'cell-rv1': '一幅妇女们采摘芣苢、收获满满的<b style="color:var(--cn)">欢乐劳动图</b>',
+    'cell-rv2': '一家人齐心协力、紧张忙碌的<b style="color:var(--cn)">插秧图</b>',
+    'cell-rv3': '<b style="color:var(--cn)">重章叠句</b>、回环往复',
+    'cell-rv4': '<b style="color:var(--cn)">比喻</b>（笠＝兜鍪、蓑＝甲）、<b style="color:var(--cn)">细节描写</b>、<b style="color:var(--cn)">环境烘托</b>',
+    'cell-rv5': '劳动者的<b style="color:var(--cn)">欢歌</b>',
+    'cell-rv6': '劳动者的<b style="color:var(--cn)">颂歌</b>'
+  };
+  document.querySelectorAll('.rv-inline').forEach(function(span) {
+    span.style.cssText = 'cursor:pointer; color:var(--cn); border:1.5px dashed rgba(176,58,46,.45); padding:4px 14px; border-radius:3px; font-size:22px; user-select:none;';
+    span.addEventListener('click', function() {
+      var cell = span.parentElement;
+      var key = Array.from(cell.classList).find(function(c) { return answers[c]; });
+      if (key) {
+        cell.innerHTML = '<span style="font-family:var(--kai); line-height:1.6">' + answers[key] + '</span>';
+      }
+    });
+  });
+})();
+</script>
+
+
+<script>
+/* ===== deck-stage web component（幻灯片外壳：缩放/键盘导航/计数/打印） ===== */
+(function() {
+  const STORAGE_KEY_PREFIX = 'deck-stage-slide-';
+
+  class DeckStage extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: 'open' });
+      this._currentSlide = 0;
+      this._slides = [];
+      this._baseDevicePixelRatio = window.devicePixelRatio || 1;
+      this._storageKey = STORAGE_KEY_PREFIX + (location.pathname || 'default');
+    }
+
+    connectedCallback() {
+      this._width = parseInt(this.getAttribute('width')) || 1920;
+      this._height = parseInt(this.getAttribute('height')) || 1080;
+
+      this._render();
+
+      const init = () => {
+        this._collectSlides();
+        this._setupEventListeners();
+        this._restoreSlide();
+        this._updateDisplay();
+        this._setupPrintStyles();
+      };
+
+      if (this.ownerDocument.readyState === 'loading') {
+        this.ownerDocument.addEventListener('DOMContentLoaded', init, { once: true });
+      } else {
+        requestAnimationFrame(init);
+      }
+    }
+
+    _render() {
+      this.shadowRoot.innerHTML = `
+        <style>
+          :host {
+            display: block;
+            position: fixed;
+            inset: 0;
+            background: #000;
+            overflow: hidden;
+            font-family: -apple-system, 'SF Pro Text', 'PingFang SC', sans-serif;
+          }
+
+          :host([noscale]) .stage {
+            transform: none !important;
+            top: 0 !important;
+            left: 0 !important;
+          }
+
+          .stage {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform-origin: top left;
+            will-change: transform;
+            background: #fff;
+          }
+
+          .slide-wrapper {
+            width: 100%;
+            height: 100%;
+            position: relative;
+          }
+
+          ::slotted(section) {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+          }
+
+          ::slotted(section.active) {
+            display: block;
+          }
+
+          .counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.6);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 999px;
+            font-size: 13px;
+            font-variant-numeric: tabular-nums;
+            z-index: 100;
+            user-select: none;
+            opacity: 0.6;
+            transition: opacity 0.2s;
+          }
+
+          .counter:hover {
+            opacity: 1;
+          }
+
+          .nav-zone {
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            width: 15%;
+            cursor: pointer;
+            z-index: 50;
+          }
+
+          .nav-zone.left { left: 0; }
+          .nav-zone.right { right: 0; }
+
+          .nav-hint {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 44px;
+            height: 44px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            opacity: 0;
+            transition: opacity 0.2s;
+          }
+
+          .nav-zone.left .nav-hint { left: 20px; }
+          .nav-zone.right .nav-hint { right: 20px; }
+
+          .nav-zone:hover .nav-hint {
+            opacity: 1;
+          }
+
+          @media print {
+            :host {
+              position: static;
+              background: #fff;
+            }
+            .counter, .nav-zone {
+              display: none !important;
+            }
+            .stage {
+              position: static;
+              transform: none !important;
+              page-break-after: always;
+            }
+            ::slotted(section) {
+              display: block !important;
+              position: relative !important;
+              page-break-after: always;
+              width: 100%;
+              height: 100%;
+            }
+          }
+        </style>
+
+        <div class="stage" id="stage" style="width: ${this._width}px; height: ${this._height}px;">
+          <div class="slide-wrapper">
+            <slot></slot>
+          </div>
+        </div>
+
+        <div class="nav-zone left" id="navLeft">
+          <div class="nav-hint">‹</div>
+        </div>
+        <div class="nav-zone right" id="navRight">
+          <div class="nav-hint">›</div>
+        </div>
+
+        <div class="counter" id="counter">1 / 1</div>
+      `;
+    }
+
+    _collectSlides() {
+      this._slides = Array.from(this.querySelectorAll(':scope > section'));
+
+      this._slides.forEach((slide, idx) => {
+        if (!slide.hasAttribute('data-screen-label')) {
+          const num = String(idx + 1).padStart(2, '0');
+          slide.setAttribute('data-screen-label', num);
+        }
+      });
+    }
+
+    _setupEventListeners() {
+      window.addEventListener('resize', () => this._updateScale());
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', () => this._updateScale());
+      }
+
+      document.addEventListener('keydown', (e) => {
+        if (e.target.matches('input, textarea, [contenteditable]')) return;
+
+        switch (e.key) {
+          case 'ArrowRight':
+          case ' ':
+          case 'PageDown':
+            e.preventDefault();
+            this.next();
+            break;
+          case 'ArrowLeft':
+          case 'PageUp':
+            e.preventDefault();
+            this.prev();
+            break;
+          case 'Home':
+            e.preventDefault();
+            this.goTo(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            this.goTo(this._slides.length - 1);
+            break;
+        }
+      });
+
+      this.shadowRoot.getElementById('navLeft').addEventListener('click', () => this.prev());
+      this.shadowRoot.getElementById('navRight').addEventListener('click', () => this.next());
+
+      window.addEventListener('hashchange', () => this._handleHash());
+      if (location.hash) {
+        setTimeout(() => this._handleHash(), 0);
+      }
+    }
+
+    _handleHash() {
+      const match = location.hash.match(/^#slide-(\d+)$/);
+      if (match) {
+        const idx = parseInt(match[1]) - 1;
+        if (idx >= 0 && idx < this._slides.length) {
+          this.goTo(idx);
+        }
+      }
+    }
+
+    _restoreSlide() {
+      try {
+        const stored = localStorage.getItem(this._storageKey);
+        if (stored !== null) {
+          const idx = parseInt(stored);
+          if (idx >= 0 && idx < this._slides.length) {
+            this._currentSlide = idx;
+          }
+        }
+      } catch (e) {}
+    }
+
+    _saveSlide() {
+      try {
+        localStorage.setItem(this._storageKey, String(this._currentSlide));
+      } catch (e) {}
+    }
+
+    _updateScale() {
+      if (this.hasAttribute('noscale')) {
+        const stage = this.shadowRoot.getElementById('stage');
+        stage.style.transform = 'none';
+        stage.style.top = '0';
+        stage.style.left = '0';
+        return;
+      }
+
+      const stage = this.shadowRoot.getElementById('stage');
+      if (!stage) return;
+
+      const viewportW = window.innerWidth;
+      const viewportH = window.innerHeight;
+      const fitScale = Math.min(viewportW / this._width, viewportH / this._height);
+
+      /* 固定画布默认会随浏览器缩放缩回窗口，视觉上抵消 ⌘+/Ctrl+。
+         将浏览器缩放比例乘回画布：放大时以画面中心扩展，允许边缘裁切。 */
+      const currentDevicePixelRatio = window.devicePixelRatio || this._baseDevicePixelRatio;
+      const browserZoom = currentDevicePixelRatio / this._baseDevicePixelRatio;
+      const scale = fitScale * browserZoom;
+      const scaledW = this._width * scale;
+      const scaledH = this._height * scale;
+      const offsetX = (viewportW - scaledW) / 2;
+      const offsetY = (viewportH - scaledH) / 2;
+
+      stage.style.transform = `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+      stage.style.top = '0';
+      stage.style.left = '0';
+    }
+
+    _updateDisplay() {
+      this._slides.forEach((slide, idx) => {
+        slide.classList.toggle('active', idx === this._currentSlide);
+      });
+
+      const counter = this.shadowRoot.getElementById('counter');
+      if (counter) {
+        counter.textContent = `${this._currentSlide + 1} / ${this._slides.length}`;
+      }
+
+      this._updateScale();
+
+      try {
+        window.postMessage({
+          slideIndexChanged: this._currentSlide,
+          totalSlides: this._slides.length
+        }, '*');
+      } catch (e) {}
+
+      try {
+        if (window.parent && window.parent !== window) {
+          window.parent.postMessage({
+            slideIndexChanged: this._currentSlide,
+            totalSlides: this._slides.length
+          }, '*');
+        }
+      } catch (e) {}
+    }
+
+    _setupPrintStyles() {
+      const printStyle = document.createElement('style');
+      printStyle.textContent = `
+        @media print {
+          @page {
+            size: ${this._width}px ${this._height}px;
+            margin: 0;
+          }
+          body {
+            margin: 0;
+            padding: 0;
+          }
+          deck-stage {
+            position: static !important;
+          }
+          deck-stage > section {
+            display: block !important;
+            position: relative !important;
+            width: ${this._width}px !important;
+            height: ${this._height}px !important;
+            page-break-after: always;
+            overflow: hidden;
+          }
+          deck-stage > section:last-child {
+            page-break-after: auto;
+          }
+        }
+      `;
+      document.head.appendChild(printStyle);
+    }
+
+    next() {
+      if (this._currentSlide < this._slides.length - 1) {
+        this._currentSlide++;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    prev() {
+      if (this._currentSlide > 0) {
+        this._currentSlide--;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    goTo(idx) {
+      if (idx >= 0 && idx < this._slides.length) {
+        this._currentSlide = idx;
+        this._saveSlide();
+        this._updateDisplay();
+      }
+    }
+
+    get currentSlide() {
+      return this._currentSlide;
+    }
+
+    get totalSlides() {
+      return this._slides.length;
+    }
+  }
+
+  customElements.define('deck-stage', DeckStage);
+
+  window.DeckStage = DeckStage;
+})();
+</script>
+
+
+<script>
+/* ===== 教学交互：点击出示（.rv）＋ 背诵降支架（.recite） ===== */
+(function() {
+  // 点击出示：点击虚线框区域切换
+  document.addEventListener('click', function(e) {
+    var rv = e.target.closest('.rv');
+    if (rv) { rv.classList.toggle('on'); }
+  });
+
+  // 背诵降支架：按钮切换层级
+  document.querySelectorAll('.recite').forEach(function(recite) {
+    var btns = recite.querySelectorAll('.lv-btn');
+    btns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        var lv = btn.getAttribute('data-lv');
+        recite.setAttribute('data-lv', lv);
+        btns.forEach(function(b) { b.classList.remove('on'); });
+        btn.classList.add('on');
+      });
+    });
+  });
+
+  // 月夜弹层：打开 / 关闭（按钮、背景、Esc）
+  var moonlay = document.getElementById('moonlay');
+  document.querySelectorAll('.du-moon-trigger').forEach(function(el) {
+    el.addEventListener('click', function(e) { e.stopPropagation(); moonlay.classList.add('open'); });
+  });
+  moonlay.addEventListener('click', function(e) {
+    if (e.target === moonlay || e.target.closest('.moon-close')) moonlay.classList.remove('open');
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') moonlay.classList.remove('open');
+  });
+})();
+</script>
+
+
+  <script src="../../../../assets/js/whiteboard-launcher.js"></script>
+</body>
+</html>

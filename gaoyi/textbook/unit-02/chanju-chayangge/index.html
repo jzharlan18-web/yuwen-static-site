@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>芣苢、插秧歌：回响在历史中的劳动之歌 - 高一语文</title>
+  <link rel="stylesheet" href="../../../../assets/css/style.css">
+  <style>
+    body { margin: 0; background: #1c1917; }
+    .lesson-bar {
+      height: 44px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 0 16px;
+      background: #292524;
+      border-bottom: 1px solid #44403c;
+      color: #fafaf9;
+      font-size: 15px;
+    }
+    .lesson-bar a {
+      color: #fafaf9;
+      text-decoration: none;
+      border: 1px solid #57534e;
+      border-radius: 6px;
+      padding: 5px 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .lesson-bar a:hover { background: #44403c; }
+    .lesson-bar .title { font-weight: 700; letter-spacing: .02em; }
+    .lesson-bar .spacer { flex: 1; }
+    .lesson-bar .hint { color: #a8a29e; font-size: 13px; }
+    .lesson-bar button {
+      appearance: none;
+      border: 1px solid #78716c;
+      border-radius: 6px;
+      background: #292524;
+      color: #fafaf9;
+      padding: 5px 12px;
+      font: inherit;
+      font-size: 14px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .lesson-bar button:hover,
+    .lesson-bar button:focus-visible { background: #44403c; border-color: #a8a29e; }
+    .lesson-bar button[aria-pressed="true"] { background: #b03a2e; border-color: #d9776c; }
+    #deck-frame {
+      display: block;
+      width: 100%;
+      height: calc(100vh - 44px);
+      border: 0;
+      background: #faf6ee;
+    }
+  </style>
+</head>
+<body>
+  <div class="lesson-bar">
+    <a href="../index.html">← 返回教材课文</a>
+    <span class="title">芣苢、插秧歌：回响在历史中的劳动之歌</span>
+    <span class="spacer"></span>
+    <span class="hint">← / → 翻页 · M 切换字号 · 建议 F11 全屏</span>
+    <button id="font-mode" type="button" aria-pressed="false" title="切换阅读 / 投屏字号（快捷键 M）">投屏字号</button>
+  </div>
+  <iframe id="deck-frame" src="deck.html" title="芣苢、插秧歌 对比赏读 课堂演示" allowfullscreen autofocus></iframe>
+
+  <script>
+    (function() {
+      var frame = document.getElementById('deck-frame');
+      var button = document.getElementById('font-mode');
+      var key = 'chanju-chayangge-font-mode';
+
+      function applyMode(mode) {
+        var isProjection = mode === 'projection';
+        try {
+          frame.contentDocument.body.classList.toggle('projection-font', isProjection);
+        } catch (e) {}
+        button.setAttribute('aria-pressed', String(isProjection));
+        button.textContent = isProjection ? '阅读字号' : '投屏字号';
+      }
+
+      function currentMode() {
+        return button.getAttribute('aria-pressed') === 'true' ? 'projection' : 'read';
+      }
+
+      frame.addEventListener('load', function() {
+        var saved = 'read';
+        try { saved = localStorage.getItem(key) || 'read'; } catch (e) {}
+        applyMode(saved === 'projection' ? 'projection' : 'read');
+        try {
+          frame.contentDocument.addEventListener('keydown', function(e) {
+            if (e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'm') return;
+            e.preventDefault();
+            button.click();
+          });
+        } catch (e) {}
+      });
+
+      button.addEventListener('click', function() {
+        var next = currentMode() === 'projection' ? 'read' : 'projection';
+        applyMode(next);
+        try { localStorage.setItem(key, next); } catch (e) {}
+        try { frame.contentWindow.focus(); } catch (e) {}
+      });
+
+      document.addEventListener('keydown', function(e) {
+        if (e.metaKey || e.ctrlKey || e.altKey || e.key.toLowerCase() !== 'm') return;
+        e.preventDefault();
+        button.click();
+      });
+    })();
+  </script>
+
+  <script src="../../../../assets/js/whiteboard-launcher.js"></script>
+</body>
+</html>
