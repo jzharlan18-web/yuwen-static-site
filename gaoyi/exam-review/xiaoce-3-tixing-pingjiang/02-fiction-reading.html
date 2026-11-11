@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><link rel="icon" href="data:,">
+  <title>校测三 · 小说阅读讲评</title><style>
+:root{--bg:#f4f2ed;--paper:#fff;--ink:#182734;--muted:#68737c;--navy:#173a56;--navy2:#285775;--red:#a33c31;--red-soft:#fcf2ef;--blue-soft:#edf4f8;--line:#dce2e6;--warm:#f7f4ed;--green:#285f55;--shadow:0 6px 24px rgba(23,58,86,.05);--sans:"PingFang SC","Microsoft YaHei","Noto Sans CJK SC",sans-serif;--serif:"Songti SC","STSong","SimSun",serif}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:82px}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.82 var(--sans)}button{font:inherit}a{color:inherit}button:focus-visible,a:focus-visible,summary:focus-visible{outline:3px solid #b97b35;outline-offset:3px}.topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:20px;min-height:64px;padding:10px 32px;background:rgba(255,255,255,.97);border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:12px;font-weight:650;white-space:nowrap}.brand-mark{font-family:var(--serif);font-size:22px;letter-spacing:.15em;color:var(--navy)}.brand small{font-weight:400;color:var(--muted)}.top-links{display:flex;align-items:center;gap:8px}.btn,.top-links a{border:1px solid var(--line);background:#fff;color:var(--navy);padding:6px 12px;border-radius:4px;text-decoration:none;cursor:pointer;white-space:nowrap;font-size:13px}.btn:hover,.top-links a:hover{border-color:var(--navy2);background:var(--blue-soft)}.hero{position:relative;background:var(--navy);color:#fff;padding:42px max(32px,calc((100vw - 1340px)/2)) 36px;overflow:hidden}.hero:after{content:"讲";position:absolute;right:max(20px,calc((100vw - 1330px)/2));top:-64px;font:230px/1 var(--serif);color:rgba(255,255,255,.035);pointer-events:none}.eyebrow{font-size:12px;letter-spacing:.22em;color:#bed0dd;margin:0 0 12px}.hero h1{font:600 clamp(30px,3.5vw,46px)/1.25 var(--serif);letter-spacing:.04em;margin:0 0 14px}.hero p{margin:7px 0;color:#d8e3eb;font-size:15px;max-width:850px}.hero-meta{display:flex;flex-wrap:wrap;gap:10px 26px;margin-top:20px;font-size:13px;color:#c8d7e1}.hero-meta strong{color:#fff}.teacher-bar{padding:11px 16px;margin:20px 0 0;background:#153249;border-left:3px solid #d7b57a;color:#e7edf1;font-size:13px;max-width:1080px}.layout{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:222px minmax(0,1fr);gap:30px;padding:28px 32px 90px}.sidebar{position:sticky;top:92px;align-self:start;max-height:calc(100vh - 114px);overflow:auto}.side-title{font-size:12px;letter-spacing:.18em;color:var(--muted);margin:4px 0 12px}.side-link{display:flex;gap:10px;align-items:baseline;padding:9px 10px;border-left:2px solid transparent;text-decoration:none;color:#4f5e6a;font-size:14px}.side-link:hover{background:#eaeef0}.side-link.active{border-left-color:var(--red);color:var(--navy);background:#fff;font-weight:650}.side-link b{font-family:var(--serif);min-width:30px}.side-sep{height:1px;background:var(--line);margin:13px 8px}.side-help{font-size:12px;line-height:1.75;color:var(--muted);padding:8px}.main{min-width:0}.card{background:var(--paper);border:1px solid #dde3e6;box-shadow:var(--shadow);margin-bottom:24px;scroll-margin-top:88px}.material-card{padding:28px 34px}.section-kicker{font-size:12px;letter-spacing:.15em;color:var(--muted);margin-bottom:8px}.material-card h2,.question-card h2{font:600 25px/1.4 var(--serif);color:var(--navy);margin:0 0 14px}.material-body{font-family:var(--serif);font-size:17px;line-height:2}.material-body p{margin:.7em 0}.material-body blockquote{font-family:var(--sans);font-size:13px;margin:0 0 16px;padding:8px 12px;background:var(--red-soft);border-left:3px solid var(--red);color:#874238}.material-body strong{font-weight:700}.material-body .table-wrap{font-family:var(--sans);font-size:14px;margin-top:22px}.material-body table{line-height:1.65}.reading-title{text-align:center;font-weight:700;font-size:24px}.material-card .source{color:var(--muted);text-align:right}.question-card{overflow:hidden}.q-head{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:21px 30px 17px;border-bottom:1px solid var(--line);background:#fbfcfc}.q-head h2{margin:0;font-size:23px}.q-no{display:inline-block;background:var(--navy);color:#fff;padding:4px 9px;font:15px/1.4 var(--serif);margin-right:9px;vertical-align:2px}.q-tools{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.q-tools button{background:transparent;border:1px solid var(--line);border-radius:3px;color:var(--muted);font-size:12px;padding:4px 8px;cursor:pointer}.q-tools button:hover{color:var(--navy);border-color:var(--navy)}.q-body{padding:8px 30px 24px}.material-ref{font-size:12px;color:var(--muted);margin:5px 0 12px}.material-ref a{color:var(--navy2);text-decoration:none}.block{padding:17px 0 14px;border-bottom:1px solid var(--line)}.block:last-child{border-bottom:0}.block-title{display:flex;align-items:center;gap:9px;font-size:14px;font-weight:700;letter-spacing:.08em;color:var(--navy);margin:0 0 13px}.block-title:before{content:"";width:3px;height:16px;background:var(--navy2)}.block.question .block-title{color:var(--ink)}.block.question .block-title:before{background:#8f9ba4}.block.answer{background:var(--red-soft);margin:4px -16px 0;padding:18px 16px;border:1px solid #eedbd5;border-width:1px 0}.block.answer .block-title{color:var(--red)}.block.answer .block-title:before{background:var(--red)}.block.analysis .block-title{color:var(--green)}.block.analysis .block-title:before{background:var(--green)}.block.thinking .block-title{color:var(--navy2)}.block p{margin:8px 0;line-height:1.85}.block.question p{font-family:var(--serif);font-size:17px;line-height:1.9}.block.question li{font-family:var(--serif);font-size:16px}.block.thinking{background:linear-gradient(90deg,#fff, #fbfcfd)}.block ul,.block ol{margin:8px 0;padding-left:1.55em}.block li{padding-left:3px;margin:5px 0}.block strong{font-weight:700;color:var(--ink)}.signal{color:var(--navy2);background:var(--blue-soft);padding:2px 5px;border-radius:2px;margin-right:4px}.boundary{color:#6f6148;background:#f7f3ea;padding:2px 4px}.block.answer strong{color:#883a30}blockquote{margin:12px 0;padding:11px 15px;background:var(--blue-soft);border-left:3px solid var(--navy2);font-size:14px}.wavy{text-decoration:underline wavy;text-underline-offset:4px}u{text-underline-offset:4px}.blank{letter-spacing:0;color:#3c4c57;font-family:var(--serif)}.table-wrap{overflow-x:auto;margin:12px 0}table{border-collapse:collapse;width:100%;font-size:13px}th{text-align:left;background:#f2f5f6;color:#435563;font-weight:650}th,td{padding:9px 11px;border:1px solid var(--line);vertical-align:top;line-height:1.7}td:first-child{white-space:nowrap}details.fold{margin:14px 0}details.fold>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:9px 12px;border:1px solid var(--line);background:#fafbfb;color:var(--navy);font-size:13px;font-weight:650}details.fold>summary::-webkit-details-marker{display:none}details.fold>summary:after{content:"展开";font-size:11px;font-weight:400;color:var(--muted)}details.fold[open]>summary:after{content:"收起"}.fold-content{padding:2px 13px 12px;border:1px solid var(--line);border-top:0}.fold-content .block:last-child{padding-bottom:5px}.q-foot{font-size:11px;color:var(--muted);padding:9px 0 0}.notes{font-size:13px;color:var(--muted);padding:20px 26px;background:#ecefeb;border:1px solid var(--line)}.notes p{margin:6px 0}.footer{max-width:1400px;margin:0 auto;padding:20px 32px 40px;color:var(--muted);font-size:12px;display:flex;justify-content:space-between;gap:20px}.footer a{color:var(--navy)}.class-tools{position:fixed;right:20px;bottom:20px;z-index:30;display:flex;gap:6px;padding:6px;background:rgba(255,255,255,.95);border:1px solid var(--line);box-shadow:0 6px 18px rgba(20,40,60,.12)}.class-tools button{border:0;background:#fff;color:var(--navy);cursor:pointer;padding:5px 8px;font-size:12px}.class-tools button:hover{background:var(--blue-soft)}body.large{font-size:19px}body.large .material-body{font-size:20px}body.large .block.question p{font-size:20px}body.large .block.question li{font-size:18px}body.large .block p,body.large .block li{font-size:18px}.backtop{text-decoration:none}.index-wrap{max-width:1200px;margin:0 auto;padding:32px 32px 80px}.index-intro{font-size:16px;color:var(--muted);margin-bottom:28px;max-width:860px}.index-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.type-card{position:relative;background:#fff;border:1px solid var(--line);padding:23px 25px;text-decoration:none;transition:.18s;box-shadow:var(--shadow)}.type-card:hover{border-color:#9fb3c2;transform:translateY(-2px)}.type-num{font:13px var(--serif);letter-spacing:.13em;color:var(--red)}.type-card h2{font:600 23px var(--serif);color:var(--navy);margin:7px 0}.type-card p{font-size:13px;color:var(--muted);margin:5px 0}.type-tags{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.type-tags span{font-size:11px;padding:3px 7px;background:var(--blue-soft);color:var(--navy2)}.index-note{background:#fff;border-left:3px solid var(--navy);padding:16px 20px;margin:25px 0;font-size:13px}.index-note p{margin:5px 0}.structure-table td:first-child{white-space:normal}.status-ok{color:var(--green);font-weight:650}
+@media(max-width:1000px){.layout{grid-template-columns:175px minmax(0,1fr);gap:20px;padding:22px}.topbar{padding:10px 22px}.brand small{display:none}.q-body{padding:8px 22px 20px}.q-head{padding:18px 22px}.material-card{padding:24px}.hero{padding-left:28px;padding-right:28px}}
+@media(max-width:720px){.topbar{position:static;flex-wrap:wrap;gap:8px;padding:12px 16px}.top-links{width:100%;overflow:auto}.hero{padding:30px 20px}.hero h1{font-size:31px}.layout{display:block;padding:18px 14px 70px}.sidebar{position:static;max-height:none;display:flex;gap:5px;overflow:auto;margin-bottom:18px;padding-bottom:5px}.side-title,.side-sep,.side-help{display:none}.side-link{white-space:nowrap;border-left:0;border-bottom:2px solid transparent;padding:7px 9px}.side-link.active{border-left:0;border-bottom-color:var(--red)}.material-card{padding:20px}.material-body{font-size:16px}.q-head{display:block;padding:17px 18px}.q-tools{justify-content:flex-start;margin-top:10px}.q-body{padding:5px 18px 18px}.q-head h2{font-size:20px}.index-grid{grid-template-columns:1fr}.index-wrap{padding:24px 16px 70px}.class-tools{position:static;justify-content:center;margin:0 14px 18px;flex-wrap:wrap}.footer{padding:20px 16px}.top-links .btn{padding:5px 8px}.material-card h2{font-size:21px}}
+@media print{body{background:#fff;font-size:11pt}.topbar,.sidebar,.q-tools,.class-tools,.footer,.hero .teacher-bar{display:none!important}.hero{background:#fff;color:#000;padding:0 0 14px;border-bottom:2px solid #173a56}.hero h1,.hero p,.hero-meta,.hero-meta strong{color:#000}.hero:after{display:none}.layout{display:block;max-width:none;padding:0}.card{box-shadow:none;border:0;margin:0 0 14px;break-inside:auto}.material-card,.q-body{padding:12px 0}.q-head{padding:10px 0;background:#fff}.block,.block.answer{background:#fff!important;margin:0;padding:10px 0;break-inside:avoid}details.fold>summary{display:none}details.fold .fold-content{display:block!important;border:0;padding:0}.material-body{font-size:11pt}.question-card h2,.material-card h2{font-size:16pt}.notes{padding:10px}.table-wrap{overflow:visible}.index-grid{display:block}.type-card{break-inside:avoid;margin:8px 0;box-shadow:none}.type-card h2{font-size:16pt}.index-wrap{padding:0}a{text-decoration:none}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style></head>
+<body id="top"><header class="topbar"><a class="brand" href="index.html" style="text-decoration:none"><span class="brand-mark">校测三</span><small>分题型讲评</small></a><nav class="top-links" aria-label="页面工具"><a href="../index.html">← 试卷讲评</a><a href="index.html">题型总目录</a><button class="btn" id="show-all" type="button">展开答案与解析</button><button class="btn" id="hide-all" type="button">全部收起</button></nav></header>
+<section class="hero"><p class="eyebrow">WENXIN CLASSROOM REVIEW / 02</p><h1>小说阅读</h1><p>内容理解 · 艺术特色 · 梦境作用 · 比较鉴赏</p><div class="hero-meta"><span><strong>第 6—9 题｜16 分</strong></span><span>原题 · 原参考答案 · 解题思路</span></div><div class="teacher-bar">教师专用｜建议先让学生回原文找证据，再展开参考答案；本页所有「课堂追问」均为建议提问，不代表学生已经作答。</div></section>
+<div class="layout"><aside class="sidebar" aria-label="题目导航"><div class="side-title">本页题目</div><a class="side-link" href="#q6"><b>06</b><span>单选</span></a><a class="side-link" href="#q7"><b>07</b><span>单选（艺术特色）</span></a><a class="side-link" href="#q8"><b>08</b><span>简答（作用／用意）</span></a><a class="side-link" href="#q9"><b>09</b><span>简答（比较鉴赏）</span></a><div class="side-sep"></div><div class="side-help">先展示题目与思路，按需展开原答案。<br>快捷键：Home 回顶部，End 到页尾。</div></aside><main class="main"><section class="card material-card" id="material-m02"><div class="section-kicker">共读材料 · M02</div><h2>《梦里的庄稼》蒙福森（第 6—9 题共用｜试题卷 P047—P074）</h2><div class="material-body"><p>梦里的庄稼</p>
+<p>蒙福森</p>
+<p>深夜，月色朦胧，万籁无声。突然，沙沙沙，沙沙沙，野猪来了，成群结队，一溜儿来到山脚下老田的玉米地。它们啃玉米，咔嚓一棵，咔嚓一棵，一会儿，啃倒了一大片。老田抄起铁锹，蹑手蹑脚地摸过去。野猪听到动静，哗啦一下，跑了。</p>
+<p>老田就醒了，原来是一个梦。醒来后，老田再也睡不着了，脑海里全是玉米花生水稻，一片片绿油油的庄稼。</p>
+<p>老田辗转反侧，把老伴儿桂珍弄醒了。她问：“怎么，又做梦了？梦见庄稼了？”“嗯。”老田说着，然后，轻轻地叹息一声。</p>
+<p>几天前，儿子打来电话，催老田两口子进城去。再过十几日，就是儿媳妇的预产期了，他们的宝贝孙子就要出生了。桂珍收拾好东西，准备进城去照看儿媳妇和孙子。老田不愿去，他放不下地里的庄稼。</p>
+<p>“你一个人在家行吗？”桂珍说。</p>
+<p>“咋不行？”老田说，“我能吃能睡，能扛能挑，你担心啥？”</p>
+<p>桂珍说：“村头那个龚伯，你知道的……”</p>
+<p>几年前，村里有一个孤寡老人龚伯，死在家里好几天，等人发现时，已经有臭味了。</p>
+<p>“龚伯是龚伯，我是我。他病恹恹的，骨瘦如柴，弱不禁风，他咋能跟我比！”老田气咻咻地说。</p>
+<p>桂珍说不过老田，打电话给儿子。儿子在电话里苦口婆心地劝说，可老田就是不答应。</p>
+<p>从那时起，老田就开始做梦了，夜夜梦见地里的庄稼，一大片一大片。在梦里，郁郁葱葱的庄稼不是旱死了，被野猪糟蹋了，被洪水淹死了，就是被轰隆隆的铲车铲掉了，一铲一铲地铲到卡车上，运到河边倒掉。</p>
+<p>醒来时，老田的眼里含着泪花。</p>
+<p>近年来，城市不断扩展，到处开发得热火朝天。轰隆隆的铲车、挖掘机伸展着巨大的手臂，昼夜不停地作业。城市像一条饥饿的巨蚕，村里的农田像一张张桑叶，不断地被蚕食着、吞噬着。绿色的农田不见了，代之以一栋栋拔地而起的高楼大厦。</p>
+<p>村里的地越来越少，老田的地越来越少。谁能料到，哪一天，他的地会被城市这条贪吃蛇吞噬得一干二净？到那时，他该怎么办？</p>
+<p>年轻人高兴得很，地被征了，得了一大笔土地补偿款，逃离乡村，到城里去买了房，成了城市人；或者，游手好闲，不分日夜在村头的小卖部打牌赌钱，浑浑噩噩地过日子。有的人，大手大脚花钱，奢侈浪费，挥霍无度。老田就不一样了，他幼时贫穷，吞糠咽菜，是吃过苦的人，视土地如生命。他在剩下的土地上，精耕细作，日出而作，日落而息，一丝不苟地种庄稼。老田来到田头，昨天刚浇过地，田里的泥土还是湿漉漉的，一股泥土的气息和庄稼叶子的清香扑鼻而来。<u>隐隐约约地，老田似乎听到了庄稼噼噼啪啪生长的拔节声。他蹲下来，轻轻地抚摸着透着鲜嫩翠绿的庄稼叶子，一时百感交集，眼眶潮湿。</u></p>
+<p>老田下定决心，不去儿子家了，让老伴儿去带孙子，他要留在乡下老家，在他的土地被征收之前，在有生之年，好好种地。</p>
+<p>桂珍拗不过他，儿子拗不过他，只好作罢，留下他一个人。临走前，老伴儿再三叮嘱老田这呀那呀，又请邻居帮他们照看老田，毕竟，他已年逾七十了。</p>
+<p>儿子把桂珍的行李放到车里。突然，桂珍说：“等等，我去地里摘些青菜，家里的青菜没化肥农药，鲜嫩得很呢。”</p>
+<p>桂珍就去了田里。</p>
+<p>日上中天了，桂珍还没回来。</p>
+<p>咋回事呢？老田和儿子刚想去地里找，一个人急匆匆地跑来，告诉他们，桂珍在地里晕倒了，不省人事。</p>
+<p>他们赶到地里时，桂珍坐在田边，已经醒过来了。“要不要去医院？”老田心急如焚地问。“不用，歇一会儿就好。”桂珍说。</p>
+<p>这下，老田放心不下老伴儿了，近段时间她在家里已经昏倒几次了。思前想后，最后老田把田里的庄稼低价租给邻居，老两口儿坐儿子的车去了省城。</p>
+<p>几天后，孙子出生了，桂珍忙前忙后，手脚麻利。儿子疑惑地问：“妈那天你在田……”桂珍嘘了一声，低声说：“我不这样，你爹哪肯离开他的庄稼啊？丢下他孤零零一个人在老家，我咋能放心？”</p>
+<p>那时，老田站在阳台上，目光穿过高楼大厦，默默地看着老家的方向，一言不发。桂珍知道，他昨晚又做梦了，梦见了葳蕤郁葱的庄稼……</p>
+<p>（选自《小小说选刊》）</p><details class="fold" id="fold-m02"><summary>讲评证据索引｜按题定位原文</summary><div class="fold-content"><p><strong>讲评证据索引</strong></p>
+<div class="table-wrap"><table><thead><tr><th>题号</th><th>建议直接引的关键句</th></tr></thead><tbody>
+<tr><td>6</td><td>「<strong>视土地如生命</strong>」「精耕细作，日出而作，日落而息」「一时百感交集，眼眶潮湿」；结尾「默默地看着老家的方向，一言不发」</td></tr>
+<tr><td>7</td><td>划线句「<strong>似乎听到了</strong>庄稼噼噼啪啪生长的<strong>拔节声</strong>」「轻轻地<strong>抚摸</strong>着…眼眶潮湿」（画线部分见上）</td></tr>
+<tr><td>8</td><td>开头梦境「野猪…啃倒了一大片」；中间「<strong>从那时起</strong>…夜夜梦见…被轰隆隆的<strong>铲车</strong>铲掉了」；结尾「他<strong>昨晚又做梦了</strong>」</td></tr>
+<tr><td>9</td><td>「老田<strong>不愿去</strong>，他放不下地里的庄稼」「把田里的庄稼<strong>低价租给</strong>邻居」「目光穿过高楼大厦…」</td></tr>
+</tbody></table></div></div></details></div></section><article class="card question-card" id="q6">
+<header class="q-head"><h2><span class="q-no">06</span>阅读Ⅱ｜单选｜3 分</h2><div class="q-tools"><button type="button" data-fold="q6-answer" aria-expanded="false">答案</button><button type="button" data-jump="material">材料</button></div></header>
+<div class="q-body"><div class="material-ref">对应材料：<a href="#material-m02">M02</a>　｜　原文见本页上方共读材料与证据索引</div><div class="block question"><h3 class="block-title">题目</h3><ol>
+<li>下列对小说相关内容的理解，不正确的一项是（　　）（3分）</li>
+</ol>
+<p>A. 日出而作、日落而息的老田视庄稼和土地如生命，他的形象是中国千千万万传统农民形象的缩影。</p>
+<p>B. 桂珍不放心老田一人在家，假装晕倒，不明就里的老田只好放弃庄稼进了城，可见老田夫妇间深厚的感情。</p>
+<p>C. 年轻农民得到土地征收补偿款后，有的逃离农村，有的养成不良生活嗜好，这些社会问题令人担忧。</p>
+<p>D. 面对轰轰烈烈的城镇化进程，老田依然想着固守土地，表现了他思想保守、难以与时俱进的一面。</p></div><details class="fold" id="q6-answer"><summary>原参考答案｜点击展开，先让学生说依据</summary><div class="fold-content"><div class="block answer"><h3 class="block-title">参考答案</h3><p>【答案】6. D　“表现了他思想保守、难以与时俱进的一面”错误。老田固守土地不愿进城的行为表明他对土地的热爱。故选D。</p><span class="q-foot">原答案卷 P023，原文照录</span></div></div></details><div class="block thinking"><h3 class="block-title">解题思路</h3><p><strong class="signal">一句话点破</strong>：这类题考的是<strong>分寸</strong>——选项给人物贴的定性标签，必须能从叙述者的态度里找到依据，不能用读者自己的价值判断去替换小说的立场。</p>
+<p><strong class="signal">任务拆解</strong>：D 是一个「行为 + 评价」结构。「固守土地」是行为（原文确有），「思想保守、难以与时俱进」是评价。要判的是<strong>评价有没有文本依据</strong>。</p>
+<p><strong class="signal">证据 → 推理</strong>：</p>
+<ol>
+<li>让学生把小说里所有写老田的「带温度的词」圈出来：「视土地如生命」「精耕细作，日出而作，日落而息，一丝不苟」「轻轻地抚摸着…一时百感交集，眼眶潮湿」「默默地看着老家的方向，一言不发」。</li>
+<li>再看叙述者怎么写城镇化：「<strong>饥饿的巨蚕</strong>」「<strong>贪吃蛇</strong>」「不断地被蚕食着、吞噬着」——比喻的贬义指向开发者，不是指向老田。</li>
+<li>对照：全文没有一处用讽刺、否定或批判的语气写老田，反而在结尾把他的沉默处理成令人牵挂的画面。叙述立场是<strong>理解与珍视</strong>。</li>
+<li>因此 D 的判词与全文情感倾向相冲突；它是把「不愿进城」放进「现代化＝进步」的外部框架里下的结论，不是从小说内部读出来的。</li>
+</ol>
+<p><strong class="signal">课堂追问（建议提问）</strong>：「作者是站在谁一边写老田的？请从原文找三个词证明。找到以后，再看『思想保守』这四个字，还贴得上吗？」</p>
+<p><strong class="signal">易错与争议</strong>：</p>
+<ul>
+<li>B 项容易被误判为错。桂珍「假装晕倒」是<strong>文末才揭晓</strong>的（「我不这样，你爹哪肯离开他的庄稼啊」），选项在题干里提前点破，属于把全文信息压缩进选项，作为「内容理解」是成立的；且「不放心老田一人在家」有前文「请邻居帮他们照看老田」「近段时间她在家里已经昏倒几次了」的铺垫。若学生拿「读到一半还不知道是装的」来质疑，可说明选择题考的是读完全文后的理解。</li>
+<li>C 项的「令人担忧」是概括性态度词，对应原文「游手好闲…浑浑噩噩」「大手大脚花钱，奢侈浪费，挥霍无度」的贬义叙述，成立。</li>
+</ul>
+<p><strong class="signal">可迁移动作</strong>：小说选项里出现对人物的<strong>定性形容词</strong>（保守、愚昧、自私、虚荣、觉醒），一律回原文找叙述者的态度证据（比喻的褒贬、形容词、结尾镜头的处理）。<strong class="boundary">边界</strong>：这条用于判「评价是否合文本立场」；若选项只是陈述情节事实（如 B），仍按情节核对。</p>
+<hr></div><details class="fold" id="q6-analysis-3"><summary>参考解析｜原答案卷内容</summary><div class="fold-content"><div class="block analysis"><h3 class="block-title">参考解析</h3><p>答案卷未单列解析栏，判断理由已含在上方参考答案中。</p></div></div></details></div></article><article class="card question-card" id="q7">
+<header class="q-head"><h2><span class="q-no">07</span>阅读Ⅱ｜单选（艺术特色）｜3 分</h2><div class="q-tools"><button type="button" data-fold="q7-answer" aria-expanded="false">答案</button><button type="button" data-jump="material">材料</button></div></header>
+<div class="q-body"><div class="material-ref">对应材料：<a href="#material-m02">M02</a>　｜　原文见本页上方共读材料与证据索引</div><div class="block question"><h3 class="block-title">题目</h3><ol>
+<li>下列对小说艺术特色的鉴赏，不正确的一项是（　　）（3分）</li>
+</ol>
+<p>A. 第四自然段运用插叙这一叙述方式，交代了老田夫妇将要进城的缘由，也为下文情节的发展做了铺垫。</p>
+<p>B. 文中画线的句子，运用夸张和通感的修辞手法，形象地表达了老田对自己熟悉的土地和庄稼的复杂感情。</p>
+<p>C. 小说以第三人称全知视角叙述故事，能够灵活自由地描写老田的心理，展现城镇化进程中农民的生活状态。</p>
+<p>D. 小说的语言质朴自然、简洁明快，充满了乡土气息，与文中叙写的内容和所塑造的人物形象相得益彰。</p></div><details class="fold" id="q7-answer"><summary>原参考答案｜点击展开，先让学生说依据</summary><div class="fold-content"><div class="block answer"><h3 class="block-title">参考答案</h3><ol>
+<li>B　“运用夸张和通感的修辞手法”错误。这一句中“似乎听到……拔节声”是夸张手法，“抚摸着透着鲜嫩翠绿的庄稼叶子”是细节描写，不是“通感”的修辞手法。故选B。</li>
+</ol><span class="q-foot">原答案卷 P024，原文照录</span></div></div></details><div class="block thinking"><h3 class="block-title">解题思路</h3><p><strong class="signal">一句话点破</strong>：术语题不能靠「看着像」——<strong>要能指认出术语成立所必需的那个具体语言事实</strong>，指认不出来，这个术语就用不上。</p>
+<p><strong class="signal">任务拆解</strong>：划线句「隐隐约约地，老田似乎听到了庄稼噼噼啪啪生长的拔节声。他蹲下来，轻轻地抚摸着透着鲜嫩翠绿的庄稼叶子，一时百感交集，眼眶潮湿。」B 项声称有两种修辞（夸张、通感），逐一代入检验即可。</p>
+<p><strong class="signal">证据 → 推理</strong>：</p>
+<ol>
+<li>先给「通感」下可操作的定义：<strong>把一种感官的感觉移用到另一种感官</strong>去写（如「微风过处，送来缕缕清香，仿佛远处高楼上渺茫的歌声」——嗅觉写成听觉）。</li>
+<li>逐词标感官归属：「似乎<strong>听到</strong>…<strong>拔节声</strong>」＝听觉写听觉对象；「<strong>抚摸</strong>着透着鲜嫩翠绿的庄稼叶子」＝触觉／视觉写触觉／视觉对象；「眼眶潮湿」＝视觉。<strong>没有任何一处把甲感官写成乙感官</strong>。</li>
+<li>那「似乎听到」是什么？庄稼拔节本无声可闻，这是老田极度专注、与土地近乎相通时生出的<strong>想象／虚写</strong>，是心理描写的外化，同时「轻轻地抚摸…眼眶潮湿」是<strong>细节（动作）描写</strong>。三者合起来写「复杂感情」，B 项后半句的情感判断反而没错，错在术语。</li>
+<li>结论：B 项的「通感」无文本依据，判错。</li>
+</ol>
+<p><strong class="signal">课堂追问（建议提问）</strong>：给两句对照，一句真通感（可用课本《荷塘月色》那句）、一句本句，问：「哪一句把『闻到的』写成『听到的』了？本句有没有换通道？」——先给判据，再让学生自己判，比宣布「这不是通感」扎实。</p>
+<p><strong class="signal">易错与争议（本版独立核对后标注，供教师取舍）</strong>：</p>
+<ul>
+<li>原答案把「似乎听到…拔节声」判为<strong>夸张</strong>。这一判据偏弱：该句的重点不在「把小的说成大的」，而在「本无声而被听见」的想象与心理外化；若学生追问「夸张在哪里」，不易给出可指认的词。建议<strong>把「无感官挪移」作为否定通感的主判据</strong>（最硬、最不易被反驳），把「想象／虚写＋细节描写」作为该句的正解，原答案的「夸张」作为可并存的说法，不必在课堂上强行坐实。</li>
+<li>以上是讲题判据的补强，<strong>不改动原参考答案</strong>，也不改变 B 为不正确项的结论。</li>
+<li>A 项「第四自然段插叙」：该段回溯「几天前儿子打来电话」，属插叙并交代进城缘由，成立；C 项全知视角能自由进入老田心理（「谁能料到…他该怎么办？」），成立；D 项语言风格判断与文本相符。</li>
+</ul>
+<p><strong class="signal">可迁移动作</strong>：判修辞先背出该修辞的<strong>成立条件</strong>，再回原句找对应词语；找不到就判「无」。<strong class="boundary">边界</strong>：不是所有「似乎听到」都叫通感，也不是所有带「像」的句子都是比喻——术语判定必须落到具体词的感官／本体喻体归属上。</p>
+<hr></div><details class="fold" id="q7-analysis-3"><summary>参考解析｜原答案卷内容</summary><div class="fold-content"><div class="block analysis"><h3 class="block-title">参考解析</h3><p>答案卷未单列解析栏，判断理由已含在上方参考答案中。</p></div></div></details></div></article><article class="card question-card" id="q8">
+<header class="q-head"><h2><span class="q-no">08</span>阅读Ⅱ｜简答（作用／用意）｜4 分</h2><div class="q-tools"><button type="button" data-fold="q8-answer" aria-expanded="false">答案</button><button type="button" data-jump="material">材料</button></div></header>
+<div class="q-body"><div class="material-ref">对应材料：<a href="#material-m02">M02</a>　｜　原文见本页上方共读材料与证据索引</div><div class="block question"><h3 class="block-title">题目</h3><ol>
+<li>小说开头和中间都较为详细地叙写了老田的庄稼梦，有何用意？（4分）</li>
+</ol></div><details class="fold" id="q8-answer"><summary>原参考答案｜点击展开，先让学生说依据</summary><div class="fold-content"><div class="block answer"><h3 class="block-title">参考答案</h3><ol>
+<li>内容上：梦境中庄稼被糟蹋、被铲除的场景，突出老田对土地被征收的担忧，以及对庄稼、土地的珍视与眷恋之情。</li>
+</ol>
+<p>结构上：开头的梦境引出老田不愿进城的情节，中间的梦境推动情节发展，为后文老田最终离开土地做铺垫，同时前后呼应，强化主题。</p><span class="q-foot">原答案卷 P025—P026，原文照录</span></div></div></details><div class="block thinking"><h3 class="block-title">解题思路</h3><p><strong class="signal">一句话点破</strong>：题目特意点「开头<strong>和中间</strong>」，就是在提示<strong>两处梦分工不同</strong>；只笼统答「表现他爱土地」，等于没读题干。答法必须是「内容轴 + 结构轴」，结构轴还要分处说。</p>
+<p><strong class="signal">任务拆解</strong>：四步——找出所有写梦的句子并标位置 → 看梦的<strong>内容指向什么</strong> → 看每处梦<strong>前后发生了什么情节</strong> → 说出反复出现对主题的作用。</p>
+<p><strong class="signal">证据 → 推理</strong>：</p>
+<ol>
+<li><strong>梦的内容不是随机的</strong>：开头「野猪…啃倒了一大片」，中间「不是旱死了，被野猪糟蹋了，被洪水淹死了，就是被轰隆隆的<strong>铲车</strong>铲掉了，一铲一铲地铲到卡车上，运到河边倒掉」。前三种是自然灾害，最后一种直接对应现实中的征地开发（「城市像一条饥饿的巨蚕」「吞噬」）。梦＝老田对失去土地的恐惧的外化。</li>
+<li><strong>开头那处管「起」</strong>：梦醒→「再也睡不着」→夫妻对话→「老田不愿去，他放不下地里的庄稼」→请出「龚伯」的插叙与儿子的电话劝说不果。<strong>梦引出了进城冲突</strong>。</li>
+<li><strong>中间那处管「承与加压」</strong>：位置在「儿子…苦口婆心地劝说，可老田就是不答应」<strong>之后</strong>，「醒来时，老田的眼里含着泪花」→紧接着是城镇化扩张的大段描写→「老田下定决心，不去儿子家了」。梦把矛盾从「劝不动」推到「公开对抗」。</li>
+<li><strong>结尾还有第三处</strong>：「桂珍知道，他昨晚又做梦了，梦见了葳蕤郁葱的庄稼……」——人已进城，梦还在，且梦里的庄稼是「葳蕤郁葱」的。前后呼应，从「被毁」到「繁盛」，反衬现实中的失去，把个人心事推到农耕文明退场的无奈。</li>
+</ol>
+<p><strong class="signal">课堂追问（建议提问）</strong>：「把三处写梦的句子抄下来，每句旁边写上『这段前后发生了什么』。写完看看：开头那处和中间那处，各自把情节往哪推了一步？」</p>
+<p><strong class="signal">易错与争议</strong>：</p>
+<ul>
+<li>三类典型失分：只答内容不答结构；只写「做铺垫」却不说是<strong>为哪个情节</strong>铺垫；把两处梦混成一处，看不出分工。</li>
+<li>参考答案的「前后呼应」若只写首尾，容易漏掉中间那处的「推动」作用；建议按「引出—加压—呼应」三段讲，学生更容易复现。</li>
+<li>评分细则（内容／结构各几分）原卷未提供；按 4 分题惯例可作「内容 2 + 结构 2」的备课参考，<strong>不是原卷细则</strong>。</li>
+</ul>
+<p><strong class="signal">可迁移动作</strong>：凡问「某细节反复出现有何用意」，按「写了什么（内容）→ 每次出现时情节走到哪（结构，分处说）→ 反复之后主题多了什么（主题）」三步走。<strong class="boundary">边界</strong>：若题目只问「某处描写的作用」而非「反复出现」，则不必强行找呼应，重点放回本处的上下文关系。</p>
+<hr></div><details class="fold" id="q8-analysis-3"><summary>参考解析｜原答案卷内容</summary><div class="fold-content"><div class="block analysis"><h3 class="block-title">参考解析</h3><p>解析;内容上：梦境具体呈现了庄稼被野猪啃食、洪水淹没、铲车铲除等场景。这些意象并非偶然，它们直接映射了老田内心对城镇化进程中土地被无情征用、农耕生活方式面临消亡的强烈不安。梦境正是他潜意识里对土地与庄稼极度的眷恋、珍视以及对不可抗变迁的无力感的集中外化。</p>
+<p>结构上：开篇的梦境体现老田因魂牵梦绕于庄稼而不愿进城，直接引出了他与家人的冲突，推动了情节展开。中间的梦境则进一步强化了这一矛盾，并暗示了外部环境对老田内心世界的持续压迫，为后文他最终被迫离开土地的结局做了情绪和逻辑上的铺垫。结尾处桂珍透露真相，与老田的梦境形成呼应。这种首尾圆合的梦境描写，强化了小说关于传统农耕文明在现代化进程中失落与无奈的主题。</p>
+<blockquote>注：「解析;」的半角分号为原答案卷所有，照录。</blockquote><span class="q-foot">原答案卷 P027—P028，原文照录</span></div></div></details></div></article><article class="card question-card" id="q9">
+<header class="q-head"><h2><span class="q-no">09</span>阅读Ⅱ｜简答（比较鉴赏）｜6 分</h2><div class="q-tools"><button type="button" data-fold="q9-answer" aria-expanded="false">答案</button><button type="button" data-jump="material">材料</button></div></header>
+<div class="q-body"><div class="material-ref">对应材料：<a href="#material-m02">M02</a>　｜　原文见本页上方共读材料与证据索引</div><div class="block question"><h3 class="block-title">题目</h3><ol>
+<li>小说表现了主人公对于土地与乡村的深厚情感，本学期所学《归园田居》一诗中也有类似的情感表达。二者有何不同？请结合诗歌及小说内容简要分析。（6分）</li>
+</ol></div><details class="fold" id="q9-answer"><summary>原参考答案｜点击展开，先让学生说依据</summary><div class="fold-content"><div class="block answer"><h3 class="block-title">参考答案</h3><ol>
+<li>（1）情感出发点不同：陶渊明在《归园田居》中是主动逃离官场，厌恶官场的勾心斗角，追求田园生活的闲适自在；老田是被动面对土地被征收的现实，他热爱土地，不愿离开，是对传统农耕生活的坚守。</li>
+</ol>
+<p>（2）情感内涵不同：《归园田居》的情感是洒脱、愉悦的，充满对田园风光和劳作生活的热爱，如“晨兴理荒秽，带月荷锄归”体现的是悠然自得；老田的情感是沉重、无奈的，他面对城镇化进程中土地被蚕食的现状，充满担忧与不舍，最终被迫离开土地。</p>
+<p>（3）主旨指向不同：《归园田居》表达的是对官场的否定和对田园生活的向往，突出个人的精神追求；小说通过老田的故事，反映了城镇化进程中传统农民的生存困境，引发人们对时代发展与乡土文化保护的思考。</p><span class="q-foot">原答案卷 P029—P034，原文照录</span></div></div></details><div class="block thinking"><h3 class="block-title">解题思路</h3><p><strong class="signal">一句话点破</strong>：两边写的都是「爱土地」，比较题的价值全在<strong>那一字之差</strong>——陶渊明是「<strong>归</strong>」（我主动回来），老田是「<strong>守</strong>」（我被带走）。抓住这个，三条比较轴自然立得住。</p>
+<p><strong class="signal">任务拆解</strong>：比较题要先<strong>定轴</strong>，再在每一轴下<strong>两边各落一条证据</strong>。题干「结合诗歌及小说内容」是硬要求：不能只写结论，两边都得有引文或可核对的情节。</p>
+<p><strong>证据 → 推理</strong>（建议板书三列两行）：</p>
+<div class="table-wrap"><table><thead><tr><th>比较轴</th><th>《归园田居》</th><th>《梦里的庄稼》</th></tr></thead><tbody>
+<tr><td>谁做决定</td><td>「<strong>误落尘网中，一去三十年</strong>」「<strong>守拙归园田</strong>」——主动辞官、自己选的</td><td>「老田<strong>不愿去</strong>」「桂珍拗不过他，儿子拗不过他」→ 最终「把田里的庄稼<strong>低价租给</strong>邻居」「坐儿子的车去了省城」——被家人的爱与现实推着走</td></tr>
+<tr><td>情绪色调</td><td>「<strong>晨兴理荒秽，带月荷锄归</strong>」「户庭无尘杂，虚室有余闲」——劳作有诗意，闲适自得</td><td>梦见庄稼被毁、「眼里含着泪花」「百感交集，眼眶潮湿」——担忧、恐惧、沉重</td></tr>
+<tr><td>结尾姿态</td><td>「<strong>久在樊笼里，复得返自然</strong>」——回来了，安顿了</td><td>「站在阳台上，目光穿过高楼大厦，<strong>默默地看着老家的方向，一言不发</strong>」「他昨晚又做梦了」——离开了，还回头看</td></tr>
+</tbody></table></div>
+<ol>
+<li>从「谁做决定」推出<strong>出发点</strong>差异：一个是对官场的否定与精神自由的追求，一个是对即将失去的生活方式的不舍与坚守。</li>
+<li>从「情绪色调」推出<strong>内涵</strong>差异：洒脱愉悦 vs 沉重无奈。</li>
+<li>从「结尾姿态」推出<strong>主旨</strong>差异：个人精神解放 vs 城镇化中传统农民处境与乡土文化的退场。</li>
+</ol>
+<p><strong class="signal">课堂追问（建议提问）</strong>：「两篇都在写『爱土地』，可一个是自己走回去，一个是被人接走。请各找一句原文，证明『谁做的决定』。」——先只做第一轴，学生能落地了，再放开二三轴。</p>
+<p><strong class="signal">易错与争议</strong>：</p>
+<ul>
+<li>三类典型失分：两边都写「热爱土地、依恋乡村」却不给差异；只分析小说、把陶诗一句带过；堆三条轴却每条都无引文。</li>
+<li>原答案给了三条轴，但 6 分题不必然要求「三条全写才满分」；若学生只写透两条、每条两边都有具体证据，也应据质量判分。<strong>评分细则原卷未提供</strong>，三条轴是答案卷的作答示范，不是评分细则，请备课组自行确定分值与采分方式。</li>
+<li>《归园田居》引句以教材版本为准；若学生引「羁鸟恋旧林，池鱼思故渊」来证「主动回归」，属于合理异答，不必按答案措辞强求。</li>
+</ul>
+<p><strong class="signal">可迁移动作</strong>：比较鉴赏先找<strong>一个能把两边分开的动词或姿态</strong>（归／守、去／留、看／被看），再沿「谁决定—什么情绪—走向哪里」铺开，每格都回填原文。<strong class="boundary">边界</strong>：本题的轴由「同为爱土地但处境相反」给定，换成别的比较对象要重新定轴，不能固定套「出发点／内涵／主旨」三条。</p>
+<hr></div><details class="fold" id="q9-analysis-3"><summary>参考解析｜原答案卷内容</summary><div class="fold-content"><div class="block analysis"><h3 class="block-title">参考解析</h3><p>解析：（1）陶渊明回归田园是追求精神自由的自觉行动，是“守拙归园田”的积极人生转向。老田则是被动承受，他无法割舍现有的、即将被迫改变的生活，是对即将失去的农耕生活方式的本能坚守与被迫告别。</p>
+<p>（2）《归园田居》展现田园风光、生活的优美、闲适，以及劳作的诗意。这是一种获得解脱与满足后的悠然心境。本文中老田的情感交织着对土地深沉的挚爱、对失去的恐惧以及面对时代洪流的无力感，最终离乡是带着沉重的牵挂与妥协。</p>
+<p>（3）《归园田居》通过对比，歌颂了返璞归真、摆脱物役的人生哲学，主旨在于个人内在精神的解放与高洁品格的持守。本文通过老田的个人遭遇，折射了城镇化进程中农耕文明与现代城市文明冲突下的个体命运，主旨在于引发对社会发展、文化传承与个体生存处境的深刻反思。</p><span class="q-foot">原答案卷 P029—P034 附「解析」，原文照录</span></div></div></details></div></article><aside class="notes"><strong>使用边界</strong><p>本页含原参考答案、解析与教师讲评提示，仅用于教师备课和课堂讲评，不作学生独立检测卷直接分发。原参考答案照录；解题思路为新增讲解，合理异答须依文本与任务审查。</p><p>未取得本班原答、答题卡及评分细则，不据此推断班级错误分布；作文未提供数字评分档。</p></aside></main></div>
+<div class="class-tools" aria-label="课堂工具"><button type="button" id="toggle-large" aria-pressed="false">大字投屏</button><button type="button" id="print-page">打印本类题</button><button type="button" id="back-top">回到顶部</button></div>
+<footer class="footer"><span>高一年级语文校测三 · 教师讲评</span><a href="index.html">返回 8 类题型总目录</a></footer>
+<script>
+(()=>{
+ const folds=[...document.querySelectorAll('details.fold')];
+ const setFold=(el,open)=>{el.open=open; const btn=document.querySelector(`[data-fold="${el.id}"]`); if(btn){btn.textContent=open?'收起':'展开';btn.setAttribute('aria-expanded',String(open));}};
+ document.querySelectorAll('[data-fold]').forEach(btn=>btn.addEventListener('click',()=>{const el=document.getElementById(btn.dataset.fold);if(el)setFold(el,!el.open)}));
+ folds.forEach(el=>el.addEventListener('toggle',()=>{const btn=document.querySelector(`[data-fold="${el.id}"]`);if(btn){btn.textContent=el.open?'收起':'展开';btn.setAttribute('aria-expanded',String(el.open));}}));
+ const setAll=open=>folds.forEach(el=>setFold(el,open));
+ const show=document.getElementById('show-all'); if(show)show.addEventListener('click',()=>setAll(true));
+ const hide=document.getElementById('hide-all'); if(hide)hide.addEventListener('click',()=>setAll(false));
+ const large=document.getElementById('toggle-large'); if(large)large.addEventListener('click',()=>{const on=document.body.classList.toggle('large');large.textContent=on?'标准字号':'大字投屏';large.setAttribute('aria-pressed',String(on));});
+ const print=document.getElementById('print-page'); if(print)print.addEventListener('click',()=>{setAll(true);window.print();});
+ const top=document.getElementById('back-top'); if(top)top.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+ const links=[...document.querySelectorAll('.side-link[href^="#"]')];
+ if('IntersectionObserver' in window){const map=new Map(links.map(a=>[a.getAttribute('href').slice(1),a]));const io=new IntersectionObserver(entries=>{const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>a.boundingClientRect.top-b.boundingClientRect.top)[0];if(visible){links.forEach(a=>a.classList.remove('active'));const a=map.get(visible.target.id);if(a)a.classList.add('active');}},{rootMargin:'-90px 0px -65% 0px',threshold:0});map.forEach((a,id)=>{const el=document.getElementById(id);if(el)io.observe(el)});}
+ document.addEventListener('keydown',e=>{if(e.altKey||e.ctrlKey||e.metaKey||e.target.matches('input,textarea,select,summary'))return;if(e.key==='Home'){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'});}if(e.key==='End'){e.preventDefault();window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'});}});
+})();
+</script><script>document.querySelectorAll('[data-jump="material"]').forEach(b=>b.addEventListener('click',()=>{const m=document.querySelector('.material-card');if(m)m.scrollIntoView({behavior:'smooth',block:'start'});}));</script></body></html>
