@@ -73,15 +73,45 @@
       padding: 14px 16px;
     }
     .steps .step b { color: var(--warm); display: block; margin-bottom: 6px; }
+    .print-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 4px 0 10px;
+      flex-wrap: wrap;
+    }
+    .print-bar .button { cursor: pointer; }
+    .print-bar .print-hint { color: var(--muted); font-size: 0.86rem; }
+    @media print {
+      .print-bar { display: none !important; }
+    }
     @media (max-width: 720px) {
       .steps { grid-template-columns: 1fr; }
       .mindmap { font-size: 0.72rem; }
     }
     @media print {
-      .site-header, .footer, .anchor-nav { display: none !important; }
+      .site-header, .footer, .anchor-nav, .print-bar { display: none !important; }
+      body { background: #fff !important; }
+      main { width: 100% !important; max-width: none !important; }
+      .page-title h1 { max-width: none; font-size: 20pt; }
       .mindmap, .entry-table, .steps .step { box-shadow: none; }
-      section.section { break-inside: auto; }
-      tr, .step { break-inside: avoid; }
+      .mindmap {
+        border: 1px solid #999;
+        overflow: hidden;
+      }
+      .mindmap pre {
+        /* 宽幅字符画缩放到纸宽，避免 A4 纵向截断 */
+        transform: scale(0.62);
+        transform-origin: top left;
+        width: 161%; /* 1 / 0.62，配合 scale 使内容撑满纸宽 */
+        font-size: 10pt;
+      }
+      .entry-table { font-size: 9.5pt; }
+      .entry-table th, .entry-table td { border-color: #aaa; }
+      section.section { break-inside: auto; margin: 10pt 0; }
+      tr, .step, .mnemonic { break-inside: avoid; }
+      h2 { font-size: 14pt; margin-bottom: 8pt; }
+      a { text-decoration: none; }
     }
   </style>
 </head>
@@ -108,6 +138,11 @@
       <h1>诗歌鉴赏"表达技巧"总纲思维导图</h1>
       <p class="lead">一句话抓手：表达技巧（广义"手法"）＝ <strong>写什么</strong>（表达方式）＋ <strong>怎么写</strong>（修辞／表现手法／结构）＋ <strong>为什么写</strong>（抒情达意）。答题时先辨题干问的是哪一层，再从对应分支"对号入座"。</p>
     </section>
+
+    <div class="print-bar">
+      <button type="button" class="button" id="print-page">🖨 打印本页（可发学生）</button>
+      <span class="print-hint">打印时自动隐藏导航与按钮，保留全部内容；建议 A4 纵向、勾选“背景图形”以保留底色。</span>
+    </div>
 
     <nav class="anchor-nav" aria-label="分节导航">
       <a href="#zonggang">一级总纲</a>
@@ -322,6 +357,11 @@
   <footer class="footer">
     <p><a href="index.html">返回试卷讲评</a> ｜ <a href="../index.html">返回高一语文</a></p>
   </footer>
+  <script>
+    document.getElementById('print-page').addEventListener('click', function () {
+      window.print();
+    });
+  </script>
   <script src="../../assets/js/whiteboard-launcher.js"></script>
 </body>
 </html>
