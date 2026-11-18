@@ -1,5 +1,14 @@
 # 当前课件审核状态
 
+## 2026-11-18《这一空，究竟缺哪句话？》语用补写讲评
+
+- **审核状态：定稿完成。** 教师给出「审核通过并发布」，并反馈本地课件可以使用，要求推送。页面页脚保留生成阶段的待审核标记，以本记录为准。
+- 发布范围仅限 `gaoyi/exam-review/blank-filling-review/index.html`、`gaoyi/exam-review/index.html` 和本记录；不改其他课件或共享白板。`site-and-publishing.md` 缺失，沿用此前已确认的 README 与人工审核红线。
+- 已核实：45分钟教学环节、三道迁移小测、题面短引及出处；模拟答句有标注，无学生原答、姓名、成绩或答卷照片；本地资源和链接静态检查、Chrome 投屏首屏渲染已检查。
+- 验收边界：教师反馈可用；自动浏览器交互测试超时，未独立确认答案点击和白板书写。白板截图授权、Windows 粘贴和教室设备未验证。沿用现行 `whiteboard-launcher.js`，不重复加载旧入口。
+
+---
+
 ## 2026-11-11《人物通讯阅读与写作：七个关键点》课堂精讲课件
 
 - 课件：`gaoyi/textbook/unit-02/renwu-tongxun-qige-guandian/index.html`；入口：`gaoyi/textbook/index.html`（新增 1 张卡片）；本地母版：`outputs/人物通讯阅读与写作-七个关键点-课堂讲课.html`。
