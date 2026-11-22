@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#f6f4ed"><title>文心教伴｜WorkBuddy 小程序使用指南</title>
+<style>
+:root{color-scheme:light;--ink:#1a2c25;--sub:#4c5d54;--green:#185644;--paper:#f6f4ed;--line:#d8dfd7;--soft:#edf5ef;--white:#fffefb}*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.72 system-ui,-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;overflow-wrap:anywhere}main,footer{max-width:760px;margin:auto;padding:0 clamp(16px,5vw,36px)}header{padding:38px 0 20px}h1,h2,h3,p,ol,ul{margin:0}h1{font-size:clamp(30px,7vw,50px);line-height:1.16;letter-spacing:-.025em;margin:12px 0 15px}h2{font-size:clamp(22px,5vw,29px);line-height:1.3;margin-bottom:13px}h3{font-size:18px;margin:13px 0 5px}p+p,p+ul,p+ol{margin-top:8px}li+li{margin-top:5px}ol,ul{padding-left:1.35em}.kicker{color:var(--green);font-size:14px;font-weight:800;letter-spacing:.05em}.intro,.muted,footer{color:var(--sub)}nav{display:flex;gap:8px;flex-wrap:wrap;margin:9px 0 18px}nav a,button,.primary{min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:10px;padding:7px 13px;border:1px solid var(--line);background:var(--white);font-weight:700;font:inherit;color:var(--green);text-decoration:none}button{cursor:pointer;font-weight:700}.primary{background:var(--green);color:white;border-color:var(--green)}a{color:var(--green);text-underline-offset:.2em}:focus-visible{outline:3px solid #96672c;outline-offset:3px}section{background:var(--white);border:1px solid var(--line);border-radius:17px;padding:clamp(16px,4vw,26px);margin:14px 0;scroll-margin-top:14px}.num{display:inline-grid;place-items:center;background:var(--soft);color:var(--green);border-radius:8px;font-size:14px;width:31px;height:31px;vertical-align:3px;margin-right:7px}.note{background:var(--soft);border-left:3px solid var(--green);padding:10px 13px;margin:12px 0 0;border-radius:0 8px 8px 0}.warn{background:#fff3df;border-left-color:#9b621e}.route{font-weight:700;color:var(--green)}textarea{width:100%;margin:0;display:block;background:#f3f7f3;border:1px solid var(--line);border-radius:10px;padding:12px;min-height:174px;resize:vertical;color:var(--ink);font:inherit;line-height:1.6}.short{min-height:125px}.actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:8px}.status{font-size:14px;color:var(--sub)}details{border-top:1px solid var(--line);margin-top:12px;padding-top:5px}summary{cursor:pointer;color:var(--green);font-weight:700;padding:9px 0;min-height:44px}details>p{padding-bottom:5px}footer{font-size:14px;padding-top:7px;padding-bottom:30px}footer a{display:inline-block;margin:5px 12px 2px 0}.skip{position:absolute;left:12px;top:4px;transform:translateY(-150%)}.skip:focus{transform:none;background:white;z-index:1;padding:6px}
+</style>
+</head>
+<body>
+<a class="skip" href="#open">跳到操作步骤</a>
+<main>
+<header>
+<p class="kicker">教师手机上手指南 · WorkBuddy 微信小程序</p>
+<h1>文心教伴</h1>
+<p class="route">高中语文非作文 · 教师个别辅导助手</p>
+<p class="intro"><strong>拿一份答卷，知道该怎么跟这个学生讲。</strong>先看原答和给分依据，再决定先问哪一句、接着怎么练、最后怎么验收。</p>
+<p style="margin-top:16px"><a class="primary" href="#open">跟着做：先试评一道题</a></p>
+</header>
+<nav aria-label="操作目录"><a href="#open">打开小程序</a><a href="#materials">准备材料</a><a href="#send">发送指令</a><a href="#coach">辅导学生</a><a href="#help">遇到问题</a></nav>
+<section id="open">
+<h2><span class="num">01</span>打开小程序，选上技能</h2>
+<ol>
+<li>打开微信，下拉进入小程序搜索，搜索 <strong>腾讯 WorkBuddy</strong>，打开并按提示登录。</li>
+<li>材料已在手机上时，用<strong>云上模式</strong>开始一条新对话，无须开电脑。</li>
+<li>点输入框左边的 <strong>＋</strong>，再点 <strong>添加技能</strong>，选中 <strong>文心教伴</strong>，回到对话。选中的技能在当前对话生效。</li>
+</ol>
+<details><summary>列表里找不到这个技能怎么办？</summary><p>按官方说明，可到 <a href="https://skillhub.tencent.com/">SkillHub</a> 搜索「文心教伴」，核对发布者和来源；找到后复制<strong>该条目的安装指令</strong>，回到小程序对话粘贴并发送。安装成功后再从「＋ → 添加技能」选中。</p><p>若仍搜不到，先向技能发布者索取可用入口；不要安装同名但来源不明的条目。把技能文件当附件上传，不等于安装。</p></details>
+</section>
+<section id="materials">
+<h2><span class="num">02</span>准备三样材料</h2>
+<ol><li><strong>试题：</strong>带上相关原文、完整题干、题号和分值。阅读题不要只拍题干，漏掉文章。</li><li><strong>参考答案：</strong>与试题是同一套；有评分细则就一起给，无须先批分。</li><li><strong>一名学生的原答：</strong>清晰的答题纸照片，或逐字录入。不要替学生润色；看不清的地方标明待核对。</li></ol>
+<p class="note warn"><strong>先脱敏，再添加。</strong>遮盖姓名、考号、学校、班级和条码等身份信息，不遮题号和作答。只提交本次需要的内容；未经学校允许上传的材料不要提交。</p>
+<p style="margin-top:12px"><strong>怎么加附件：</strong>点输入框左侧「＋」；纸质材料可用「摄像头」，已经拍好的选「照片/视频」，电子材料选「手机文件」或「微信文件」。照片题建议选带「视觉」标签的模型。发送前看一眼输入框上方，核对附件是否齐全、有没有传错。</p>
+</section>
+<section id="send">
+<h2><span class="num">03</span>复制指令，先评一道题</h2>
+<p>点下方「复制试评指令」，切回小程序，长按输入框粘贴。<strong>把第 8 题改成实际题号</strong>，确认选对技能和附件后点发送。同一名学生后续追问留在这条对话，换学生另开对话。</p>
+<h3><label for="first">首次试用：复核一道阅读题</label></h3>
+<textarea id="first" readonly>请用「文心教伴」先独立复核第 8 题。引用学生原答，说明给了哪些分、哪里没得分；答案不同但有文本依据的，请复核能否给分。给我一条可以当面问学生的话，再给学生一个重答任务。看不清或材料不全的地方请标明，不要猜。</textarea>
+<div class="actions"><button class="primary" type="button" data-copy="first">复制试评指令</button><span class="status" role="status"></span></div>
+<details><summary>熟悉后：评整份非作文答卷</summary><label for="whole" class="muted">整卷诊断指令</label><textarea class="short" id="whole" readonly>请独立评这份答卷的所有非作文题。给我教师辅导页和学生训练页，只抓证据最充分、最值得先补的 1—3 项；逐题得分和暂缓项目放到附录。</textarea><div class="actions"><button type="button" data-copy="whole">复制整卷指令</button><span class="status" role="status"></span></div></details>
+</section>
+<section id="coach">
+<h2><span class="num">04</span>拿着结果，当面辅导</h2>
+<ol><li><strong>先核分。</strong>对照评分附录和真实原答，核对给分依据。材料不清就补图或逐字补录；没有适用细则时，分数是建议分，最终由教师复核。</li><li><strong>先问，再讲。</strong>用教师辅导页的追问确认学生卡在哪一步。比如原答只有结论、没写依据，先问：「你是从原文哪一句看出来的？」能指出来，就让他把依据补进答案；找不到，再带他按题干回原文定位。</li><li><strong>让学生自己做一次。</strong>用学生训练页上的任务，让他补写关键句或独立做一道同任务新题。新题先给题面，不给答案和提示；收回作答后，再核对他能否说清依据、写完整答案。</li></ol>
+<p class="note">只把核过的学生训练内容单独给本人，不把教师用的评分推断、答案或原答截图发到班群。一次重答通过，只能说明这次做到了。</p>
+<h3><label for="follow">学生做完后，继续追问</label></h3>
+<textarea class="short" id="follow" readonly>这是学生独立重答后的原文：【粘贴脱敏后的作答】。请按前面的验收标准逐项核对：哪一步已经做到、哪一步还没做到？引用原答说明，只给一条下一步建议。</textarea>
+<div class="actions"><button type="button" data-copy="follow">复制追问指令</button><span class="status" role="status"></span></div>
+</section>
+<section id="help">
+<h2>遇到问题，怎么处理？</h2>
+<details><summary>学生说「语用考砸了」，要不要马上补？</summary><p>先让技能用这一板块的原答和实际得分核对。若没有明显失分，告诉学生具体做对了什么；若确实需要补，再讲「审题—定位—作答」里卡住的一步，最后只发一道自编同任务新题供独立作答。</p></details>
+<details><summary>字迹看不清，或者少拍了一页？</summary><p>补拍受影响的部分，或照原答逐字补录。看不清、缺页或归属不明的题先暂缓，不算零分；确认为空白才按未作答计。</p></details>
+<details><summary>能评什么？能不能评作文？</summary><p>支持现代文阅读、文言文阅读、古诗鉴赏、默写和语言文字运用，不评作文。一条任务处理同一学生的一道题、同篇多题或一份非作文答卷，不要混传多人答题纸。</p></details>
+</section>
+</main>
+<footer><p>本网页只提供操作说明与指令，不接收学生答卷。小程序按钮以实际界面为准。</p><p><a href="https://www.workbuddy.cn/docs/workbuddymini/quick-start/Quickstart">官方：小程序快速开始</a><a href="https://www.workbuddy.cn/docs/workbuddymini/features/Attachments-and-Skills">官方：添加附件与技能</a></p></footer>
+<script>
+for (const button of document.querySelectorAll('button[data-copy]')) {
+  button.addEventListener('click', async () => {
+    const input = document.getElementById(button.dataset.copy);
+    const status = button.nextElementSibling;
+    try {
+      if (!navigator.clipboard || !window.isSecureContext) throw new Error('unavailable');
+      await navigator.clipboard.writeText(input.value);
+      status.textContent = '已复制，回小程序粘贴。';
+      return;
+    } catch (_) {
+      input.focus();
+      input.select();
+      input.setSelectionRange(0, input.value.length);
+      let copied = false;
+      try { copied = document.execCommand('copy'); } catch (_) {}
+      status.textContent = copied ? '已复制，回小程序粘贴。' : '请长按上方文字，选择「全选 → 复制」。';
+    }
+  });
+}
+</script>
+</body></html>
